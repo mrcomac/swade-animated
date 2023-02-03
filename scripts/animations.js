@@ -1,6 +1,6 @@
 import { 
     getHashName
-} from './new_constants.js';
+} from './constants.js';
 
 //templates play ranged using template as base (for cone)
 // //let template = canvas.templates?.placeables?.[0]?.document;

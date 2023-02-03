@@ -1,6 +1,7 @@
 import {
     PATH,
-    ANIMATIONTYPE
+    ANIMATIONTYPE,
+    CopyObj
 } from './constants.js';
 
 import {
@@ -69,10 +70,10 @@ let UIConfigItemModel = {
 function getUIConfigItem(item) {
     
     //let itemConfig = item.flags?.swadeanimated;
-    let itemConfig = {}; //Object.assign({},ItemConfigModel);
+    let itemConfig = Object.assign({},ItemConfigModel);
     itemConfig = retrieveItemConfiguration(item);
-    let UIConfigItem = {}; //Object.assign({},UIConfigItemModel);
-    let itemRAW = {}; //Object.assign({},ItemData);
+    let UIConfigItem = Object.assign({},UIConfigItemModel);
+    let itemRAW = Object.assign({},ItemData);
     console.log("getUIConfigItem ");
     console.log("IMTECONFIG");
     console.log(itemConfig);
@@ -164,7 +165,7 @@ export function retrieveItemConfiguration(item,rolls) {
     let itemConfig = {};//Object.assign({},ItemConfigModel);
     if(item.flags?.swadeanimated?.config) {
         console.log("HABEMUS CONFI}G NO ITEM");
-        itemConfig = item.flags.swadeanimated.config;
+        itemConfig = CopyObj(item.flags.swadeanimated.config);
         itemConfig.isValid = true;
 
     } else {
@@ -287,7 +288,7 @@ class DocumentConfigForm extends FormApplication {
             return;
         }
         
-        let itemConfig = {};
+        let itemConfig = Object.assign({},ItemConfigModel);
         formData = { ...{ _version: saConfigVersion }, ...formData };
         console.log(formData);
 

@@ -3,7 +3,7 @@ import {
     ANIMATIONTYPE,
     ROLLRESULT,
     CopyObj
-} from './new_constants.js';
+} from './constants.js';
 
 import {
     PowerList,

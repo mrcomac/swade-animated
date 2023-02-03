@@ -3,7 +3,7 @@ import {
     PATH,
     ANIMATIONTYPE,
     ROLLRESULT
-} from './new_constants.js';
+} from './constants.js';
 
 export let ConsumableList = [];
 
