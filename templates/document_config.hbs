@@ -1,0 +1,85 @@
+<form id="swadeanimated-document-config">
+    
+    <section class="content">
+        {{#if options.animation.enabled}}
+        <h2>Select Animation</h2>
+            <hr/>
+            <div class="form-group">
+                <input value="{{ options.animationType }}" name="animationType" id="animationType"type="hidden">
+                        <label><input type="radio" name="isDefaultAnimation" id="true" value="true" {{#if options.animation.isDefault }}checked=""{{/if}}>
+                        &nbsp;Default Animation</label>
+                    <br />
+
+                    <div class="form-fields">
+                        <select name="defaultAnimation" id="defaultAnimation">
+                        {{#each options.animation.defaultOptions }}
+                            <option value="{{ this.label }}" {{#if this.active }}selected=""{{/if}}>{{ this.label }}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    
+                    <p class="notes"></p>
+                    <label>
+                    <input type="radio" name="isDefaultAnimation" id="false" value="false" {{#if options.animation.isCustom }}checked=""{{/if}}>
+                    &nbsp;Custom Animation</label>
+                    <input type="text" name="customAnimation" placeholder="{{ options.customAnimationPH }}" value="{{ options.animation.file }}">
+                    
+                    <p class="notes">For more animations please check the <a href="https://www.jb2a.com/Library_Preview/" target="_blank">JB2A Asset Library</a></p>
+            </div>
+    </section>
+    {{/if}}
+    {{#if options.animationEffect.enabled}}
+    <section class="content">
+        <h2>Select Effect</h2>
+            <hr/>
+            <div class="form-group">
+                    <label>
+                        <input type="radio" name="effectAnimationType" id="default" value="default" {{#if options.animationEffect.isDefault }}checked=""{{/if}}>
+                        &nbsp;Default Effects</label>
+                    <div class="form-fields">
+                        <select name="defaultEffect" id="defaultEffect">
+                        {{#each options.animationEffect.defaultOptions  }}
+                            <option value="{{ this.label }}" {{#if this.active }}selected=""{{/if}}>{{ this.label }}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    
+                    <p class="notes"></p>
+                        <label><input type="radio" name="effectAnimationType" id="custom" value="custom" {{#if options.animationEffect.isCustom }}checked=""{{/if}}>
+                        &nbsp;Custom Sound</label>
+                    <input type="text" name="customEffectAnimation" placeholder="{{ options.customSoundPH }}" value="{{ options.animationEffect.file }}">
+                    
+                    <p class="notes">For more animations please check the <a href="https://www.jb2a.com/Library_Preview/" target="_blank">JB2A Asset Library</a></p>
+            </div>
+    </section>
+    {{/if}}
+    {{#if options.sound.enabled}}
+    <section class="content">
+        <h2>Select Sound</h2>
+            <hr/>
+            <div class="form-group">
+                        <label><input type="radio" name="soundType" id="default" value="default" {{#if options.sound.isDefault }}checked=""{{/if}}>
+                        &nbsp;Default Sound</label>
+                    <div class="form-fields">
+                        <select name="defaultSound" id="defaultSound">
+                        {{#each options.sound.defaultOptions }}
+                            <option value="{{ this.label }}" {{#if this.active }}selected=""{{/if}}>{{ this.label }}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    
+                    <p class="notes"></p>
+                        <label><input type="radio" name="soundType" id="custom" value="custom" {{#if options.sound.isCustom }}checked=""{{/if}}>
+                        &nbsp;Custom Sound</label>
+                    <input type="text" name="customSound" placeholder="{{ options.customSoundPH }}" value="{{ options.sound.file }}">
+                    
+                    <p class="notes">For more sounds please check the <a href="https://www.wowhead.com/" target="_blank">WoW Head</a></p>
+            </div>
+    </section>
+    {{/if}}
+    <footer class="sheet-footer flexrow">
+        <button type="submit" name="submit">
+            <i class="far fa-save"></i> SAVE
+        </button>
+    </footer>
+</form>

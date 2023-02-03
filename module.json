@@ -1,0 +1,57 @@
+{
+  "title": "SWADE Animated",
+  "description": "Animation for SWADE",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Marcos",
+      "flags": {}
+    }
+  ],
+  "styles": [
+    "scripts/configuration/templates/tooltip.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/init.js"
+  ],
+  "socket": true,
+  "url": "https://github.com/mrcomac/swade-animated",
+  "manifest": "https://github.com/mrcomac/swade-animated/-/raw/master/module.json",
+  "download": "https://github.com/mrcomac/swade-animated/-/archive/master/foundryvtt-swade-animated.zip",
+  "id": "swade-animated",
+
+  "relationships": {
+    "requires": [
+      {
+        "id": "sequencer",
+        "type": "module",
+        "manifest": "https://github.com/Haxxer/FoundryVTT-Sequencer/releases/latest/download/module.json",
+        "compatibility": {}
+      },
+      {
+          "id": "socketlib",
+          "type": "module"
+      }
+    ],
+    "systems": [
+      {
+        "id": "swade",
+        "type": "system",
+        "compatibility": {}
+      }
+    ]
+  },
+  "minimumCoreVersion": "10",
+  "compatibility": {
+      "minimum": "10",
+      "verified": "10"
+  }
+}
