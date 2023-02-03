@@ -9,7 +9,7 @@
     }
   ],
   "styles": [
-    "scripts/configuration/templates/tooltip.css"
+    "scripts/configuration/tooltip.css"
   ],
   "languages": [
     {
