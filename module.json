@@ -24,8 +24,8 @@
   ],
   "socket": true,
   "url": "https://github.com/mrcomac/swade-animated",
-  "manifest": "https://github.com/mrcomac/swade-animated/-/raw/master/module.json",
-  "download": "https://github.com/mrcomac/swade-animated/-/archive/master/foundryvtt-swade-animated.zip",
+  "manifest": "https://raw.githubusercontent.com/mrcomac/swade-animated/main/module.json",
+  "download": "https://github.com/mrcomac/swade-animated/blob/main/swade-animated.zip?raw=true",
   "id": "swade-animated",
 
   "relationships": {
