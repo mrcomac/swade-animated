@@ -7,3 +7,6 @@ Important changes.
 
 Test version
 
+## [0.0.2]
+
+Functional version
