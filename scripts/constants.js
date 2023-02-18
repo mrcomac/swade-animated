@@ -7,7 +7,9 @@ export const ANIMATIONTYPE = {
     MELEE:  1,
     RANGED: 2,
     TARGET: 3,
-    TEMPLATE: 4
+    TEMPLATE: 4,
+    ITEMBASED: 5, //the type if template, ranged or melee will be decided by the item behaviour
+    SPECIAL: 10
 };
 
 export const ROLLRESULT = {
@@ -24,6 +26,18 @@ export const PATH = {
     VIDEO : MODS + moduleName + '/videos/',
     TEMPLATE: MODS + moduleName + '/templates/',
 };
+
+export const NOSOUND = { file: PATH.AUDIO + "Empty_Audio.ogg", delay: 0, volume: 0.0, duration: 0 };
+
+let ntemplates = 0;
+
+export function setNTemplate(value) {
+    ntemplates = value;
+}
+
+export function getNTemplate() {
+    return ntemplates;
+}
 
 export function getHashName(str) {
     let hash = 0;
@@ -67,4 +81,16 @@ export function CopyObj(obj) {
     }
 
     throw new Error("Unable to copy obj! Its type isn't supported.");
+}
+
+export const TMFXEffectsList = ["Deflection"];
+
+let DEBUG = false;
+export function debug(msg, ...args) {
+  if (DEBUG) {
+    console.log("[SWADE Animated]");
+    console.log(msg, ...args);
+    console.log("[/SWADE Animated]");
+
+  }
 }

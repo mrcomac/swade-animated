@@ -3,6 +3,13 @@
   "SAT.Power.ArcaneProtection": "Arcane Protection",
   "SAT.Power.Blind": "Blind",
   "SAT.Power.Protection": "Protection",
+  "SAT.Power.Burst": "Burst",
+  "SAT.Power.Deflection": "Deflection",
+  "SAT.Power.Healing": "Healing",
+  "SAT.Power.Fly": "Fly",
+  "SAT.Power.Burrow": "Burrow",
+  
+  
   "SAT.Consumable.Damage": "Damage",
   "SAT.Consumable.Healing": "Healing",
   "SAT.Consumable.Protection": "Protection",
@@ -14,138 +21,25 @@
   "SAT.Consumable.Fly": "Fly",
   "SAT.Consumable.Growth": "Growth",
   "SAT.Consumable.Speed": "Speed",
+  
   "SAT.Weapons.Bow": "Bow",
   "SAT.Weapons.Sword": "Sword",
+  "SAT.Weapons.MonkAttack": "Monk Attack",
+  "SAT.Weapons.Knife": "Knife",
+  "SAT.Weapons.Rapier": "Rapier",
+  "SAT.Weapons.Scimitar": "Scimitar",
+  "SAT.Weapons.Spear": "Spear",
+  "SAT.Weapons.Warhammer": "Warhammer",
+  "SAT.Weapons.Dagger": "Dagger",
+  "SAT.Weapons.Claws": "Claws",
 
-  "SAT.Effect.ArcaneProtection": "Arcane Protection",
+  "SAT.Effect.ArcaneProtectionNormal": "Arcane Protection (Normal)",
+  "SAT.Effect.ArcaneProtectionRise": "Arcane Protection (Rise)",
   "SAT.Effect.ProtectionNormal": "Protection (Normal)",
   "SAT.Effect.ProtectionRaise": "Protection (Raise)",
-  "DeadlandsEnchantments": {
-    "NoToken": "Please select a token",
-    "NoFxMaster": "The Fx Master module is not installed so the animation can´t be played",
-    "CommaWarning": "Deadlands Gun Enchantments Warning:  There are commas present in either your weapon or creature lists.  Be sure to convert all commas between each type to vertical bars (|).  This warning can be disabled in module settings.",
-    "powers": {
-      "bolt": "Bolt",
-      "arcaneprotection": "Arcane Protection"
-    },
-    "Settings": {
-      "save": "Save",
-      "animationFilesPage": {
-        "title": "Animation file templates"
-      },
-      "gunTypesPage": {
-        "title": "Assign gun to gunTypes"
-      },
-      "bloodSettingsPage": {
-        "title": "Assign blood type to creature/actor"
-      },
-      "animationTemplate": {
-        "name": {
-          "title": "Animation"
-        },
-        "file": {
-          "title": "File"
-        },
-        "title": "Animation file",
-        "note": "Select the animation file you want to use."
-      },
-      "gunType": {
-        "name": {
-          "title": "Gun Types"
-        },
-        "title": "Guns by gun type",
-        "note": "Provide the gun names for the selected gun type, separated by vertical bars (|), you can also drag and drop from the items tab, from a compendium or from the actor or creature sheet"
-      },
-      "bloodTypes": {
-        "name": {
-          "title": "Blood types"
-        },
-        "title": "Creature/Actor by blood type",
-        "note": "Provide the creature/actor names for the selected blood type, separated by vertical bars (|), you can also drag and drop from the actors tab or from a compendium"
-      },
-
-      "scream": {
-        "name": "Enable \"Wilhelm\" scream",
-        "hint": "This plays the \"Wilhem\" scream sound effect when a target is hit with a raise."
-      },
-
-      "commaCheck": {
-        "name": "Enable comma delimiter check",
-        "hint": "This enables checking for commas in the current settings to warn the GM to make sure all commas are properly converted to vertical bars for the weapon and creature lists."
-      },
-
-      "animationFiles": {
-        "name": "Animation files by gun type",
-        "label": "Animations",
-        "hint": "Here you can config the animation files by gun type"
-      },
-      "gunTypes": {
-        "name": "Gun names by type",
-        "label": "Guns by type",
-        "hint": "Here you can pair the gun names with the gun types to activate animations and sound effects"
-      },
-      "bloodSettings": {
-        "name": "Blood configuration by creature",
-        "label": "Blood",
-        "hint": "Here you can assign the blood color per creature name (red by default)"
-      },
-
-      "separated": ", separated by vertical bars (|).",
-
-      "animationFileHint": "The animation file for ",
-      "animationFileCredit": "credit for default animation: ",
-      "animationFileCreditUnknown": "unknown source - if discovered, please raise an issue so it can be attributed.",
-
-      "Flash": "single shot flash",
-      "BarrageFlash": "multiple shot flash",
-      "SingleShot": "single bullet",
-      "Shotgun": "shotgun blast",
-      "Barrage": "multiple bullet",
-      "Laser": "single laser bolt",
-      "BarrageLaser": "multiple laser bolt",
-      "Flamethrower": "flamethrower",
-      "Bow": "arrow",
-      "Rocket": "rocket",
-      "Grenade": "grenade",
-      "Dynamite": "dynamite",
-      "Hatchet": "hatchet",
-      "Knife": "knife",
-      "Tomahawk": "tomahawk",
-      "Spear": "spear",
-      "Hammer": "hammer",
-      "Stone": "stone",
-
-      "weapons": "weapons",
-      "weaponHint": "Provide weapon names for ",
-
-      "derringer": "Derringers",
-      "singleAction": "Single Action Revolvers",
-      "doubleAction": "Double Action Revolvers",
-      "carbine": "Carbines",
-      "rifle": "Rifles",
-      "shotgun": "Shotguns",
-      "gatling": "Gatling Guns",
-      "automatic": "Automatic Guns",
-      "assault": "Assault-Rifle/Machine Guns",
-      "laser": "Laser Guns",
-      "laserMachine": "Laser Machine Guns",
-      "flame": "Flamethrowers",
-      "bow": "Bows",
-      "rocket": "Rockets",
-      "grenade": "Grenades",
-      "dynamite": "Dynamite",
-      "hatchet": "Thrown Hatchets",
-      "knife": "Thrown Knives",
-      "tomahawk": "Thrown Tomahawks",
-      "spear": "Thrown Spears",
-      "hammer": "Thrown Hammers",
-      "stone": "Thrown Stones",
-
-      "bloodHint": "Provide a list of ",
-
-      "blackBlood": "Black Blood Creatures",
-      "blueBlood": "Blue Blood Creatures",
-      "greenBlood": "Green Blood Creatures"
-    }
-  }
+  "SAT.Effect.FlyNormal": "Fly (Normal)",
+  "SAT.Effect.FlyRaise": "Fly (Raise)",
+  "SAT.Effect.BlindNormal": "Blind (Normal)",
+  "SAT.Effect.BlindRaise": "Blind (Raise)",
+  "SAT.Effect.Burrow": "Burrow"
 }

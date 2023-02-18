@@ -1,21 +1,16 @@
-//dependencies
-/**
- * advanced macros
- *   - lib-wrapper
- *   - socketlib
- * sequencer
- * JBA
- */
-
 import {
     MODULE, 
     ROLLRESULT,
-    getHashName
+    getHashName,
+    debug,
+    TMFXEffectsList,
+    ANIMATIONTYPE,
+    setNTemplate,
+    getNTemplate
 } from "./constants.js"
 
 import {
-    getRollResult,
-    //RollResult,
+    getRollResult
 } from "./ManagerRoll.js";
 
 import {
@@ -28,9 +23,14 @@ import {
     my_open_item_config
 } from './ManagerConfiguration.js';
 
+import {
+    burrowOff,
+    stopFly
+} from './animations.js';
 
+let ready = false;
 Hooks.once('init', () => {
-    console.log("INIT MODULE");
+    debug("INIT MODULE");
     Handlebars.registerHelper('clean', function (aString) {
         return aString.replaceAll("'","");
     });
@@ -41,7 +41,8 @@ Hooks.once('init', () => {
  * Basic Hooks
  */
 Hooks.once('ready', () => {
-    console.log("Hooks on ready");
+    debug("Hooks on ready");
+    ready = true;
     initAnimations();
 });
 
@@ -50,14 +51,14 @@ Hooks.once('ready', () => {
  */
 
 Hooks.on('swadeAction', (swadeActor, swadeItem, actionType, roll, id) => {
-    console.log("Hooks on swadeAction");
-    console.log(swadeItem);
+    debug("Hooks on swadeAction");
+    debug(swadeItem);
     const token = swadeActor.parent?.token || canvas.tokens.placeables.find(token => token.actor?.items?.get(swadeItem.id))
     let targets =Array.from(game.user.targets);
     let rolls = getRollResult(roll, targets, MODULE.SWADE);
     
     playMeAnAnimation(swadeItem,token,targets,rolls);
-    //
+    
 });
 
 /**
@@ -66,7 +67,7 @@ Hooks.on('swadeAction', (swadeActor, swadeItem, actionType, roll, id) => {
 
 
 Hooks.on('getItemSheetHeaderButtons', (sheet, buttons) => {
-    console.log("Hooks on  getItemSheetHeaderButtons");
+    debug("Hooks on getItemSheetHeaderButtons");
     buttons.unshift({
         class: 'swadeaimated_config_button',
         label: 'ANI',
@@ -76,12 +77,14 @@ Hooks.on('getItemSheetHeaderButtons', (sheet, buttons) => {
 });
 
 Hooks.on('swadeConsumeItem', (swadeItem, charges, usage) => {
-    console.log("Hooks on  swadeConsumeItem");
+    debug("Hooks on  swadeConsumeItem");
     const token = swadeItem.parent?.token || canvas.tokens.placeables.find(token => token.actor?.items?.get(swadeItem.id));
-    let rolls = [];
-    rolls[0] = {};
-    rolls[0].result = ROLLRESULT.HIT;
-    playMeAnAnimation(swadeItem,token,[token],rolls);
+    let rolls = {
+        targets: [ { token: token, result: ROLLRESULT.HIT } ],
+        type: ANIMATIONTYPE.TARGET,
+        rawValue: 0
+    };
+    playMeAnAnimation(swadeItem,token,rolls);
 });
 
 /**
@@ -89,42 +92,72 @@ Hooks.on('swadeConsumeItem', (swadeItem, charges, usage) => {
  */
 
 Hooks.on("createActiveEffect", (effect, data, userId) => {
-    console.log("Hooks on  getItemSheetHeaderButtons");
+    debug("Hooks on  getItemSheetHeaderButtons");
 });
 
-async function disableEffect(effectName,token_item) {
-    console.log("DISABLE EFFECT");
-    let label = getHashName(effectName);
-    console.log(label);
-    await Sequencer.EffectManager.endEffects({ name: String(label), object: token_item });
+async function disableEffect(effect,token_item) {
+    debug("DISABLE TMFX EFFECT");
+    debug("Token ID: "+token_item.id);
+    if(TMFXEffectsList.includes(effect.label)) {
+        console.log(effect.flags);
+        token_item.TMFXdeleteFilters(effect.label);
+    } else {
+        let label = getHashName(effect.label);
+        await Sequencer.EffectManager.endEffects({ name: String(label), object: token_item });
+    }
+    
+    if(effect.label.toLowerCase().includes("fly")) {
+        stopFly(token_item);
+    } else if(effect.label.toLowerCase().includes("burrow")) {
+        burrowOff(token_item);
+    }
 }
 
 
 Hooks.on("preDeleteActiveEffect", (effect, data, userId) => {
-    console.log("Hooks on  preDeleteActiveEffect");
-    const token = effect.parent?.token || canvas.tokens.placeables.find(token => token.actor?.effects?.get(effect.id))
+    debug("Hooks on  preDeleteActiveEffect");
+    const token = canvas.tokens.placeables.find(token => token.actor?.effects?.get(effect.id))
     
-    disableEffect(effect.label,token);
+    disableEffect(effect,token);
 
 });
 
 Hooks.on("dropCanvasData", async  (data1, data2) => {
-    console.log("dropCanvasData");
-    console.log(data1);
-    console.log(data2);
+    debug("dropCanvasData");
+    debug(data1);
+    debug(data2);
 
 });
 
 /**
  * Support to better rolls
  */
-
 Hooks.on("BRSW-RollItem", async (data, html) => {
-    console.log("Hooks on BRSW-RollItem");
+    debug("Hooks on BRSW-RollItem");
+    const token = data.token || canvas.tokens.placeables.find(token => token.actor?.items?.get(data.item_id))
+    const swadeItem = data.item;
+    let targets =Array.from(game.user.targets);
+    let rolls = getRollResult(data.message, targets, MODULE.BR2);
+    debug("ROLLS",rolls);
+    playMeAnAnimation(swadeItem,token,rolls);
+    
 });
 Hooks.on("BRSW-BeforePreviewingTemplate", async (template, data, ev) => {
-    console.log("Hooks on BRSW-BeforePreviewingTemplate");
+    debug("Hooks on BRSW-BeforePreviewingTemplate");
 })
 Hooks.on("BRSW-CreateItemCardNoRoll", async (data) => {
-    console.log("Hooks on BRSW-CreateItemCardNoRoll");
+    debug("Hooks on BRSW-CreateItemCardNoRoll");
+});
+
+Hooks.on('renderChatMessage', (message, html) => {
+    console.log(message);
+    if(getNTemplate() == 0) {
+        setNTemplate(canvas.templates.placeables.length)
+        
+        console.log("TEMPLATES NA MESA");
+        console.log(getNTemplate());  
+    }
+    /*NTEMPLATES =  canvas.templates.placeables.length;
+    console.log("TEMPLATES NA MESA");
+    console.log(NTEMPLATES);*/
 });

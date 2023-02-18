@@ -2,67 +2,105 @@
 import {
     MODULE,
     ANIMATIONTYPE,
-    ROLLRESULT
+    ROLLRESULT,
+    CopyObj,
+    debug
 } from "./constants.js"
 
-export const RollResult = [{
-    result: "",
-    token: {}
-}];
+export const TheRoll = {
+    targets: [],
+    type: "",
+    rawValue: 0
+};
 
-const Roll = {
-    type: 0,
-    result: 0
-}
+
 
 export function getRollResult(_roll, targets, origin) {
-    let roll = Object.assign({},Roll);
-    var rollResult = Object.assign({},RollResult);
+    let _theroll = CopyObj(TheRoll);
+
     if(origin == MODULE.BR2) {
-        roll = getBR2RollResult(_roll,targets);
+        _theroll = getBR2RollResult(_roll,targets);
     } else {
-        roll = getSWADERollResult(_roll);
+        _theroll = getSWADERollResult(_roll);
     }
-    rollResult = isItHits(targets,roll);
-    return rollResult;
+    _theroll = isItHits(targets,_theroll);
+    debug("getRollResult",_theroll)
+    return _theroll;
 }
 
 function isItHits(targets, roll) {
-    let rollResult = []; //Object.assign({},RollResult);
-    console.log("isItHits");
-    console.log(roll);
     if(roll.type == ANIMATIONTYPE.RANGED) {
-        console.log("RANGED");
         let _result = ROLLRESULT.MISSED;
-        if(roll.result >= 8) {
+        if(roll.rawValue >= 8) {
             _result = ROLLRESULT.RAISE;
-        } else if(roll.result >= 4) {
+        } else if(roll.rawValue >= 4) {
             _result = ROLLRESULT.HIT;
         }
         for(let i = 0; i < targets.length; i++) {
-            rollResult.push({ result: _result, token: targets[i] });
+            roll.targets.push({ token: targets[i], result: _result })
         }
-        if(targets.length == 0) {
-            rollResult.push({ result: _result, token: {} });
-        }
-    } else {
+    } else if(roll.type == ANIMATIONTYPE.MELEE) {
         let _result = ROLLRESULT.MISSED;
-        if(roll.result >= 8) {
-            _result = ROLLRESULT.RAISE;
-        } else if(roll.result >= 4) {
-            _result = ROLLRESULT.HIT;
-        }
+
         for(let i = 0; i < targets.length; i++) {
-            rollResult.push({ result: _result, token: targets[i] })
-        }
-        if(targets.length == 0) {
-            rollResult.push({ result: _result, token: {} });
+            if(roll.rawValue >= (targets[i].document.actor.system.stats.parry.value+targets[i].document.actor.system.stats.parry.modifier)) {
+                if((roll.rawValue-(targets[i].document.actor.system.stats.parry.value+targets[i].document.actor.system.stats.parry.modifier)) >= 4) {
+                    roll.targets.push({ token: targets[i], result: ROLLRESULT.RAISE })    
+                } else {
+                    roll.targets.push({ token: targets[i], result: ROLLRESULT.HIT })
+                }
+            } else {
+                roll.targets.push({ token: targets[i], result: ROLLRESULT.MISSED })
+            }  
         }
     }
-    return rollResult;
+    debug("isItHits",roll);
+    return roll;
 }
 
-function getBR2RollResult(roll) {
+function getBR2RollResult(_roll) {
+    let _theroll = CopyObj(TheRoll);
+    
+    let modifier = 0;
+    let rangedAttack = ["shooting", "athetics" ];
+    if(_roll.flags['betterrolls-swade2']?.render_data.skill_title.toLowerCase().includes("fighting")) {
+        _theroll.type = ANIMATIONTYPE.MELEE;
+    } else if(rangedAttack.includes(_roll.flags['betterrolls-swade2']?.render_data.skill_title.toLowerCase().replace(/d[0-9]{1,2}/g, "").trim())) {
+        _theroll.type = ANIMATIONTYPE.RANGED;
+    } else {
+        _theroll.type = ANIMATIONTYPE.RANGED;
+    }
+    if(_roll.flags['betterrolls-swade2']?.render_data.damage_rolls.length > 0) {
+        debug("ERROR","BETTER ROLLS no Data");
+        return _theroll;
+    } else {
+        let rolls = _roll.flags['betterrolls-swade2'].render_data.trait_roll.dice;
+        if(rolls.length > 1) {
+            let r1 = 0;
+            let r2 = 0;
+            for(let b = 0; b<rolls[0].results.length; b++) {
+                r1 += rolls[0].results[b];
+            }
+            for(let b = 0; b<rolls[1].results.length; b++) {
+                r2 += rolls[1].results[b];
+            }
+
+            if(r1 > r2) {
+                _theroll.rawValue = r1;
+            } else {
+                _theroll.rawValue = r2;
+            }
+        }
+
+        let modifiers = _roll.flags['betterrolls-swade2']?.render_data.trait_roll.modifiers;
+        
+        for(let i=0;i<modifiers.length;i++) {
+            modifier += modifiers[i].value;
+        }
+    }
+    _theroll.rawValue += modifier;
+    debug("getBR2RollResult", _theroll);
+    return _theroll;
 
 }
 
@@ -77,30 +115,14 @@ function getMeleeResult(results) {
 }
 
 function getSWADERollResult(_roll) {
-    console.log("getSWADERollResult");
-    let roll = Object.assign({},Roll);
-    roll.result = _roll._total;
+    debug("getSWADERollResult");
+    let roll = CopyObj(TheRoll);
+    roll.rawValue = _roll._total;
     if(_roll.terms[0].terms[0].includes("Fighting")) {
         roll.type = ANIMATIONTYPE.MELEE;
     } else {
         roll.type = ANIMATIONTYPE.RANGED;
     }
-    console.log(roll);
     return roll;
-    //let resultArray = Object.assign({},rollResultArray);
-    /*let result = 0;
-    let type = ACTIONTYPE.RANGED;
-    if(roll.terms[0].terms[0].includes("Fighting")) {
-        resultArray = getMeleeResult(roll.terms[0].results);
-    } else {
-        result = getRangedResult(roll.terms[0].results);
-    }*/
-        
-/*    console.log(roll.terms[0].results[1].active);
-
-    console.log(roll.terms[0].results[0].active);
-    
-    console.log();
-    console.log(roll._total);*/
 }
 

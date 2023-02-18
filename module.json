@@ -27,6 +27,17 @@
   "manifest": "https://raw.githubusercontent.com/mrcomac/swade-animated/main/module.json",
   "download": "https://github.com/mrcomac/swade-animated/blob/main/swade-animated.zip?raw=true",
   "id": "swade-animated",
+  "packs": [
+    {
+      "label": "SWADE Animated",
+      "type": "Item",
+      "name": "swade-animated",
+      "path": "packs/swade-animated.db",
+      "private": false,
+      "system": "swade",
+      "flags": {}
+    }
+  ],
   "relationships": {
     "requires": [
       {
@@ -39,6 +50,12 @@
         "id": "socketlib",
         "type": "module",
         "compatibility": {}
+      },
+      {
+        "id": "tokenmagic",
+        "manifest": "https://raw.githubusercontent.com/Feu-Secret/Tokenmagic/master/tokenmagic/module.json",
+        "compatibility": {},
+        "type": "module"
       }
     ],
     "systems": [

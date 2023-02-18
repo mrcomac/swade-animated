@@ -2,7 +2,8 @@ import {
     PATH,
     ANIMATIONTYPE,
     ROLLRESULT,
-    CopyObj
+    CopyObj,
+    debug
 } from './constants.js';
 
 import {
@@ -40,16 +41,16 @@ export let ItemData =  {
 
 export function iniIt() {
     initPowers();
-    initConsumables();
     initWeapons();
+    initConsumables();
 }
 
 export function getItem(item) {
-    console.log("GETITEM");
-    console.log(item);
+    debug("GETITEM");
+    debug(item);
     let itemData ={};
     if(item.type == "consumable") {
-        console.log("Consumable");
+        debug("Consumable");
         for(let i=0;i<ConsumableList.length;i++) {
             if(item.name.trim().toLocaleLowerCase().includes(ConsumableList[i].name.trim().toLocaleLowerCase())) {
                 itemData = ConsumableList[i];
@@ -59,8 +60,8 @@ export function getItem(item) {
     } else if(item.type == "power") {
         for(let i=0;i<PowerList.length;i++) {
             if(item.name.trim().toLocaleLowerCase().includes(PowerList[i].name.trim().toLocaleLowerCase())) {
-                console.log("INTERNO");
-                console.log(PowerList[i]);
+                debug("INTERNO");
+                debug(PowerList[i]);
                 itemData = PowerList[i];
                 break;
             }
@@ -68,7 +69,7 @@ export function getItem(item) {
     } else if(item.type == "weapon") {
         for(let i=0;i<WeaponList.length;i++) {
             if(item.name.trim().toLocaleLowerCase().includes(WeaponList[i].name.trim().toLocaleLowerCase())) {
-                console.log(WeaponList[i]);
+                debug(WeaponList[i]);
                 itemData = WeaponList[i];
                 break;
             }
@@ -79,35 +80,38 @@ export function getItem(item) {
 
 
 export function getElementItem(item,elementName,elementType) {
-    console.log("GETELEMENT");
+    debug("GETELEMENT");
     let itemData = getItem(item);
     let elementData = [];
 
     if(elementType == 'animation') {
-        console.log("IS ANIMATION");
-        console.log(elementName);
+        debug("IS ANIMATION");
+        debug(elementName);
         for(let i = 0; i < itemData.animations.length;i++) {
             if(itemData.animations[i].label == elementName) {
                 elementData = itemData.animations[i];
+                break;
             }
         }
     } else if(elementType == "animationEffect") {
         for(let i = 0; i < itemData.animationEffects.length;i++) {
             if(itemData.animationEffects[i].label == elementName) {
                 elementData = itemData.animationEffects[i];
+                break;
             }
         }
 
     } else if(elementType == "sound") {
-        console.log("WHERE IS MY SOUND");
-        console.log(elementName);
+        debug("WHERE IS MY SOUND");
+        debug(elementName);
         for(let i = 0; i < itemData.sounds.length;i++) {
             if(itemData.sounds[i].label == elementName) {
                 elementData = itemData.sounds[i];
+                break;
             }
         }
 
     }
-    console.log(elementData);
+    debug(elementData);
     return CopyObj(elementData);
 }

@@ -1,13 +1,13 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG] Add Short Description"
+title: "[BUG] <Add Short Description>"
 labels: ''
 assignees: ''
 
 ---
 
-*[Please be in mind if you are not able to fill the items below I won't be able to help. Also those text below, including this one, are descriptions for each section, please remove them accordingly]*
+*[Please be aware if you are not able to fill the items below I won't be able to help. Also those text below, including this one, are descriptions for each section, please remove accordingly]*
 
 **Describe the bug**
 A clear and concise description of what the bug is.
