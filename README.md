@@ -11,7 +11,7 @@ Website: https://www.wowhead.com/
 Website: https://www.wowhead.com/
 
 # Scripts
-I didn't reinvent the wheel. I'm using [Sequencer]{https://github.com/fantasycalendar/FoundryVTT-Sequencer} and [Token Magic]{https://github.com/Feu-Secret/Tokenmagic}. Also I'm using the macros created by [EskieMoh@]{https://twitter.com/EskieMoh} and [SWADE Immersive Macros]{https://github.com/SalieriC/SWADE-Immersive-Macros}.
+I didn't reinvent the wheel. I'm using [Sequencer](https://github.com/fantasycalendar/FoundryVTT-Sequencer) and [Token Magic](https://github.com/Feu-Secret/Tokenmagic). Also I'm using the macros created by [EskieMoh@](https://twitter.com/EskieMoh) and [SWADE Immersive Macros](https://github.com/SalieriC/SWADE-Immersive-Macros).
 
 Licenses
 - GNU GPL 2.0
