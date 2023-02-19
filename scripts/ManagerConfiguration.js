@@ -91,14 +91,11 @@ function getUIConfigItem(item) {
     }
     
     if(itemRAW.animationEffects.length > 0) {
-        console.log("DASDSDASDSADADASD11");
         if(itemRAW.animationEffects[0]?.params) {
-            console.log("DASDSDASDSADADASD22");
             UIConfigItem.animationEffect.enabled = false;
         } else {
             UIConfigItem.animationEffect.enabled = true;
             if(itemConfig.animationEffect[0].isDefault) {
-                console.log("DASDSDASDSADADASD");
                 UIConfigItem.animationEffect.isDefault = true;
                 UIConfigItem.animationEffect.isCustom = false;
                 UIConfigItem.animationEffect.file = "";
@@ -209,7 +206,6 @@ function retrieveDefaultItemConfiguration(item,rolls) {
     for( let i = 0; itemData.animationEffects.length; i++) {
         if(itemData.animationEffects[i].active) {
             configItem.animationEffect.push(itemData.animationEffects[i]);
-            console.log("ANIMATION EFFECT");
             configItem.animationEffect[0].isDefault = true;
             break;
         }

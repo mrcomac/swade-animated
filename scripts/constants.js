@@ -88,9 +88,6 @@ export const TMFXEffectsList = ["Deflection"];
 let DEBUG = false;
 export function debug(msg, ...args) {
   if (DEBUG) {
-    console.log("[SWADE Animated]");
-    console.log(msg, ...args);
-    console.log("[/SWADE Animated]");
-
+    console.log("[SWADE-Animated]",msg, ...args);
   }
 }

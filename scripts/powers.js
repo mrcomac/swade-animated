@@ -7,6 +7,19 @@ import {
 } from './constants.js';
 
 export let PowerList = {};
+/*
+Arcane Protection [done]
+Blind [done]
+Burrow [in progress]
+Fly [in progress]
+Healing [in progress]
+Bolt [done]
+Deflection [in progress]
+Burst [in progress]
+Protection [in progress]
+Sound/Silence [in progress]
+
+*/
 
 export function initPowers() {
     PowerList = [

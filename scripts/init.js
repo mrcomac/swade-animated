@@ -99,7 +99,6 @@ async function disableEffect(effect,token_item) {
     debug("DISABLE TMFX EFFECT");
     debug("Token ID: "+token_item.id);
     if(TMFXEffectsList.includes(effect.label)) {
-        console.log(effect.flags);
         token_item.TMFXdeleteFilters(effect.label);
     } else {
         let label = getHashName(effect.label);
@@ -150,14 +149,10 @@ Hooks.on("BRSW-CreateItemCardNoRoll", async (data) => {
 });
 
 Hooks.on('renderChatMessage', (message, html) => {
-    console.log(message);
     if(getNTemplate() == 0) {
+        if(canvas.templates.placeables.length == 0)
+            setNTemplate(-1)
+        else
         setNTemplate(canvas.templates.placeables.length)
-        
-        console.log("TEMPLATES NA MESA");
-        console.log(getNTemplate());  
     }
-    /*NTEMPLATES =  canvas.templates.placeables.length;
-    console.log("TEMPLATES NA MESA");
-    console.log(NTEMPLATES);*/
 });

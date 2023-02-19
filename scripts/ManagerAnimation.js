@@ -62,8 +62,6 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                 await playOnToken(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,notWait);
             }
         } else if(itemData.animation[0].type == ANIMATIONTYPE.TEMPLATE) {
-            console.log("TEMPLATES eram MESA 22");
-            console.log(getNTemplate());
             if(getNTemplate() == canvas.templates.placeables.length) {
                 for(let i = 0; i < rolls.targets.length; i++) {
                     debug("playMeAnAnimation onToken",itemData);
