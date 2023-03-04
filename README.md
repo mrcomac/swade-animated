@@ -1,10 +1,24 @@
+# Overview
+
+Select animation from a list ([it requires JBA Patreon](https://www.patreon.com/JB2A/posts)).
+
+[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/9Xn2PGEN40s)
+
+Effects are applied accordingly.
+
+[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/pfzChspmplY)
+
+Templates are allowed.
+
+[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/vm48nEE9b9o)
+
 # Note
 There is no stable version yet. I don't have more than 4 hours per week to work on this. 
 # swade-animated
 Foundryvtt swade animated module is just for fun.
 
 # Icons Credit
-Author: J. W. Bjerk (eleazzaar) -- www.jwbjerk.com/art  -- find this and other open art at: http://opengameart.org
+J. W. Bjerk (eleazzaar) -- www.jwbjerk.com/art  -- find this and other open art at: http://opengameart.org
 Website: https://www.wowhead.com/
 
 # Sounds
