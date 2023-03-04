@@ -8,6 +8,8 @@
   "SAT.Power.Healing": "Healing",
   "SAT.Power.Fly": "Fly",
   "SAT.Power.Burrow": "Burrow",
+  "SAT.Power.SoundSilence": "Sound/Silence",
+  
   
   
   "SAT.Consumable.Damage": "Damage",
@@ -34,12 +36,14 @@
   "SAT.Weapons.Claws": "Claws",
 
   "SAT.Effect.ArcaneProtectionNormal": "Arcane Protection (Normal)",
-  "SAT.Effect.ArcaneProtectionRise": "Arcane Protection (Rise)",
+  "SAT.Effect.ArcaneProtectionRaise": "Arcane Protection (Raise)",
   "SAT.Effect.ProtectionNormal": "Protection (Normal)",
   "SAT.Effect.ProtectionRaise": "Protection (Raise)",
   "SAT.Effect.FlyNormal": "Fly (Normal)",
   "SAT.Effect.FlyRaise": "Fly (Raise)",
   "SAT.Effect.BlindNormal": "Blind (Normal)",
   "SAT.Effect.BlindRaise": "Blind (Raise)",
-  "SAT.Effect.Burrow": "Burrow"
+  "SAT.Effect.Burrow": "Burrow",
+  "SAT.Effect.SilenceNormal": "Silence (Normal)",
+  "SAT.Effect.SilenceRaise": "Silence (Raise)"
 }

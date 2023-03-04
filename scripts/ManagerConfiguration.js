@@ -73,7 +73,7 @@ function getUIConfigItem(item) {
             itemRAW.animations[0].active = false;
             UIConfigItem.animation.file = "";
         } else {
-            UIConfigItem.animation.file = itemConfig.animation.file;
+            UIConfigItem.animation.file = itemConfig.animation[0].file;
             UIConfigItem.animation.isDefault = false; 
             UIConfigItem.animation.isCustom = true;
         }
@@ -106,8 +106,8 @@ function getUIConfigItem(item) {
             } else {  
                 UIConfigItem.animationEffect.isDefault = false; 
                 UIConfigItem.animationEffect.isCustom = true; 
-                UIConfigItem.animationEffect.file = itemConfig.animationEffect.file;
-                UIConfigItem.animationEffect.name = itemConfig.animationEffect.name;
+                UIConfigItem.animationEffect.file = itemConfig.animationEffect[0].file;
+                UIConfigItem.animationEffect.name = itemConfig.animationEffect[0].name;
                 
             }
         
@@ -286,13 +286,13 @@ class DocumentConfigForm extends FormApplication {
 
         if(itemData.animations.length > 0) {
             if(formData.isDefaultAnimation == "true") {
-                //PRECISO DO TYPO E NOME DO ELEMENTO
                 itemConfig.animation.push(getElementItem(this.object,formData.defaultAnimation,'animation'));
                 itemConfig.animation[0].isDefault = true;
                 itemConfig.animation[0].active = true;
                 debug("Animation is configured from default",itemConfig);
             } else {
-                itemConfig.animation = [{ type: itemData.animationType, isDefault: false, file: formData.customAnimation, label: "Custom", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { } }];
+                itemConfig.animation = [{type: itemData.animationType,  isDefault: false, file: formData.customAnimation, label: "Custom", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  }];
+                                        
             }
         } else {
             itemConfig.animation = [];
@@ -304,7 +304,7 @@ class DocumentConfigForm extends FormApplication {
                 itemConfig.animationEffect[0].isDefault = true;
                 debug("Effect Animation is configured from default",itemConfig);
             } else {
-                itemConfig.animationEffect = [{type: itemData.animationType, isDefault: false, file: formData.customEffectAnimation, label: "Custom", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { } }];
+                itemConfig.animationEffect = [{type: itemData.animationType, isDefault: false, file: formData.customEffectAnimation, label: "Custom", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0}];
             }
         } else if(itemData.animationEffects.length > 0) {
             if(itemData.animationEffects[0].params)

@@ -62,7 +62,8 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                 await playOnToken(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,notWait);
             }
         } else if(itemData.animation[0].type == ANIMATIONTYPE.TEMPLATE) {
-            if(getNTemplate() == canvas.templates.placeables.length) {
+            debug("TEMPLATE: ",getNTemplate());
+            if(getNTemplate()==0) {
                 for(let i = 0; i < rolls.targets.length; i++) {
                     debug("playMeAnAnimation onToken",itemData);
                     await playOnToken(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,true);
@@ -93,6 +94,11 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
     for(let j = 0; j < rolls.targets.length; j++) {
         if(rolls.targets[j].result != ROLLRESULT.MISSED)
             applyEffect(itemData,rolls.targets[j],SwadeItem);
+    }
+    if(itemData.animationEffect.length > 0) {
+        if(itemData.animationEffect[0].type == ANIMATIONTYPE.TEMPLATE) {
+            setNTemplate(0);
+        }
     }
     
 }
@@ -158,13 +164,20 @@ export async function applyEffect(item,target,SwadeItem) {
             if(TMFXEffectsList.includes(effectName) && item.animationEffect.length > 0) {
                 applyEffectTMFX(target.token,item.animationEffect[0]);            
             } else if(SwadeItem.name.toLowerCase().includes("fly")) { 
-                await fly(target.token,item.animationEffect[0],item.sound[0],animationName,true);
+                await fly(target.token,item.animationEffect[0],item.sound[0],animationName,false);
             } else if(SwadeItem.name.toLowerCase().includes("burrow")) { 
                 debug("burrowOn");
                 await burrowOn(target.token,item.animationEffect[0],item.sound[0],animationName,true);
             }
         } else if(item.animationEffect[0].type == ANIMATIONTYPE.TEMPLATE) {
-            playOnTemplate(item.animationEffect[0],EFFECTSOUND, ROLLRESULT.HIT, animationName);
+            debug("TEMPLATES: ",getNTemplate());
+            if(getNTemplate()==0) {
+                debug("playMeAnAnimation onToken",item);
+                await playOnToken(target.token,item.animationEffect[0],EFFECTSOUND,animationName,false);
+            } else {
+                debug("playMeAnAnimation onTemplate",item);
+                playOnTemplate(item.animationEffect[0],EFFECTSOUND, ROLLRESULT.HIT, animationName);
+            }
         } else {
             if(item.animationEffect[0].attachTo) {
                 await playOnToken(target.token,item.animationEffect[0],EFFECTSOUND,animationName);
@@ -177,52 +190,4 @@ export async function applyEffect(item,target,SwadeItem) {
 
 export function initAnimations() {
     iniIt();
-}
-
-function getConePoints() {
-    let template = canvas.templates?.placeables?.[canvas.templates.placeables.length - 1]?.document;
-    const location = { x: template.x, y: template.y }
-    const toLocation = { x: template.x, y: location.y }
-
-    let seno = [];
-    seno[0] = 0.08715574;
-    seno[1] = 0.17364818;
-    seno[2] = 0.25881905;
-    seno[3] = 0.34202014;
-    seno[4] = 0.34202014; //20
-    seno[5] = 0.42261826; //25
-    seno[6] = 0.5; //30
-    seno[7] = 0.57357644; //35
-    seno[8] = 0.64278761; //40
-    seno[9] = 0.70710678; //45
-    seno[10] = 0.76604444; //50
-    seno[11] = 0.81915204; //55
-    seno[12] = 0.8660254; //60
-    seno[13] =  0.90630779; //65
-    seno[14] = 0.93969262; //70
-    seno[15] = 0.96592583; //75
-    seno[16] = 0.98480775;
-    seno[17] = 0.9961947;
-    seno[18] = 1;
-
-    if(template.direction <= 90) {
-        toLocation.x = template.x+(seno[(90-template.direction)/5]*(template.distance*100));
-        toLocation.y = template.y+(seno[(template.direction)/5]*(template.distance*100));
-        } else if(template.direction <= 180) {
-        let angulo = template.direction - 90;
-        toLocation.x = template.x-(seno[(90-angulo)/5]*(template.distance*100));
-        toLocation.y = template.y+(seno[(angulo)/5]*(template.distance*100));
-        } else if(template.direction <= 270) {
-        let angulo = template.direction - 180;
-        toLocation.x = template.x-(seno[(90-angulo)/5]*(template.distance*100));
-        toLocation.y = template.y-(seno[(angulo)/5]*(template.distance*100));
-        } else {
-        let angulo = template.direction - 270;
-        toLocation.x = template.x+(seno[(angulo)/5]*(template.distance*100));
-        toLocation.y = template.y-(seno[(90-angulo)/5]*(template.distance*100));
-        }
-
-    //canvas.scene.deleteEmbeddedDocuments('MeasuredTemplate',[template.id]);
-    return [location, toLocation];
-
 }

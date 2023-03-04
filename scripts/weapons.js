@@ -16,10 +16,12 @@ export function initWeapons() {
             name: game.i18n.localize("SAT.Weapons.Bow"),
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {type: ANIMATIONTYPE.RANGED, file: "jb2a.arrow.physical.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.arrow.physical.white", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.arrow.physical.orange", label: "Orange", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.arrow.physical.blue", label: "Blue", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
             ],
             sounds: [ 
-                { label: "Fire", file: PATH.AUDIO + "/weapons/Projectile_Arrow_Impact01.ogg", active: true, delay: 500, volume: 1.0, duration: 500 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/Projectile_Arrow_Impact01.ogg", active: true, delay: 500, volume: 1.0, duration: 500 }
             ],
             animationEffects: [
             ],
@@ -59,12 +61,8 @@ export function initWeapons() {
             sounds: [ 
                 { label: "Punch", file: PATH.AUDIO + "/weapons/monk_attack.ogg", active: true, delay: 500, volume: 1.0,  duration: 1000 }
             ],
-            animationEffects: [
-                
-            ],
-            activeEffects: [
-                
-            ],
+            animationEffects: [],
+            activeEffects: [],
         },
         { // Rapier v1
             name: game.i18n.localize("SAT.Weapons.Rapier"),
@@ -78,7 +76,7 @@ export function initWeapons() {
 
             ],
             sounds: [ 
-                { label: "Sword", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
             ],
             animationEffects: [],
             activeEffects: [],
@@ -95,7 +93,7 @@ export function initWeapons() {
     
             ],
             sounds: [ 
-                { label: "Sword", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
             ],
             animationEffects: [],
             activeEffects: [],
@@ -112,7 +110,7 @@ export function initWeapons() {
     
             ],
             sounds: [ 
-                { label: "Sword", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/Spear_Sound_Effect.ogg", active: true, delay: 1200, volume: 2.0, duration: 1000 }
             ],
             animationEffects: [],
             activeEffects: [],
@@ -129,7 +127,7 @@ export function initWeapons() {
     
             ],
             sounds: [ 
-                { label: "Sword", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/Hammer.ogg", active: true, delay: 200, volume: 1.0, duration: 4000 }
             ],
             animationEffects: [],
             activeEffects: [],
@@ -143,7 +141,7 @@ export function initWeapons() {
 
             ],
             sounds: [ 
-                { label: "Punch", file: PATH.AUDIO + "/empty_audio.ogg", active: true, delay: 0, volume: 0.0,  duration: 0 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/KnifeStab.ogg", active: true, delay: 700, volume: 1.0,  duration: 1000 }
             ],
             animationEffects: [
                 
@@ -176,4 +174,5 @@ export function initWeapons() {
             ],
         }
     ];
+    Object.freeze(WeaponList);
 }

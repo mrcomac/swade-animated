@@ -85,7 +85,7 @@ export function CopyObj(obj) {
 
 export const TMFXEffectsList = ["Deflection"];
 
-let DEBUG = false;
+let DEBUG = true;
 export function debug(msg, ...args) {
   if (DEBUG) {
     console.log("[SWADE-Animated]",msg, ...args);

@@ -10,12 +10,12 @@ export let PowerList = {};
 /*
 Arcane Protection [done]
 Blind [done]
-Burrow [in progress]
-Fly [in progress]
-Healing [in progress]
+Burrow [done]
+Fly [done]
+Healing [done]
 Bolt [done]
 Deflection [in progress]
-Burst [in progress]
+Burst [ok]
 Protection [in progress]
 Sound/Silence [in progress]
 
@@ -23,8 +23,8 @@ Sound/Silence [in progress]
 
 export function initPowers() {
     PowerList = [
-        { 
-            name: game.i18n.localize("SAT.Power.Bolt"), //v1
+        {  //Bolt v1
+            name: game.i18n.localize("SAT.Power.Bolt"),
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
                 {type: ANIMATIONTYPE.RANGED, file: "jb2a.fire_bolt.orange", label: "Fire",        active: true,  size: 1, persist: false, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
@@ -42,8 +42,8 @@ export function initPowers() {
             animationEffects: [],
             activeEffects: [],
         },
-        { 
-            name: game.i18n.localize("SAT.Power.ArcaneProtection"), //v1
+        { // Arcane Protection v1
+            name: game.i18n.localize("SAT.Power.ArcaneProtection"),
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
                 {type: ANIMATIONTYPE.TARGET, file: "jb2a.token_border.circle.spinning.blue.002", label: "Blue", active: true, size: 2, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0   },
@@ -59,19 +59,17 @@ export function initPowers() {
 
             ],
             animationEffects: [
-                {type: ANIMATIONTYPE.TARGET, file: "jb2a.shield.01.complete.01.blue", label: "Blue", active: true, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  },    
-                {type: ANIMATIONTYPE.TARGET, file: "jb2a.shield.01.complete.01.green", label: "Green (Patreon)", active: false, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  },
-                {type: ANIMATIONTYPE.TARGET, file: "jb2a.shield.01.complete.01.purple", label: "Purple (Patreon)", active: false, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  },
-                {type: ANIMATIONTYPE.TARGET, file: "jb2a.shield.01.complete.01.red", label: "Red (Patreon)", active: false, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  },
-                {type: ANIMATIONTYPE.TARGET, file: "jb2a.shield.01.complete.01.yellow", label: "Yellow (Patreon)", active: false, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  }
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.token_border.circle.static.blue.002", label: "Blue", active: true, size:2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  },    
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.token_border.circle.static.orange.002", label: "Orange (Patreon)", active: false, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  },
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.token_border.circle.static.purple.002", label: "Purple (Patreon)", active: false, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  }
             ],
             activeEffects: [
                 { label: game.i18n.localize("SAT.Effect.ArcaneProtectionNormal"), type: ROLLRESULT.HIT },
                 { label: game.i18n.localize("SAT.Effect.ArcaneProtectionRaise"), type: ROLLRESULT.RAISE }
             ]
         },
-        { 
-            name: game.i18n.localize("SAT.Power.Blind"), //v1
+        {  // Blind v1
+            name: game.i18n.localize("SAT.Power.Blind"),
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
                 {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.markers.light.loop.blue", label: "Blue", active: true, size: 2, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0 },
@@ -97,12 +95,16 @@ export function initPowers() {
                 { label: game.i18n.localize("SAT.Effect.BlindRaise"), type: ROLLRESULT.RAISE }
             ]
         },
-        { 
-            name: game.i18n.localize("SAT.Power.Burrow"), //v1
+        { // Burrow v1
+            name: game.i18n.localize("SAT.Power.Burrow"),
             animationType: ANIMATIONTYPE.TARGET,
             animations: [],
             sounds: [
-                { label: "No Audio", file: PATH.AUDIO + "powers/novice/protection/DivineShield.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 }
+                { label: "Rocks Falling 01", file: PATH.AUDIO + "powers/novice/burrow/FX_Rock_FallingSmall_01.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Rocks Falling 02", file: PATH.AUDIO + "powers/novice/burrow/FX_Rock_FallingSmall_02.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Rocks Falling 03", file: PATH.AUDIO + "powers/novice/burrow/FX_Rock_FallingSmall_03.ogg", active: true, delay: 0, volume: 1.0,  duration: 2000 },
+                { label: "Rocks Falling 04", file: PATH.AUDIO + "powers/novice/burrow/FX_Rock_FallingSmall_04.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Rocks Falling 05", file: PATH.AUDIO + "powers/novice/burrow/FX_Rock_FallingSmall_05.ogg", active: true, delay: 0, volume: 1.0,  duration: 2000 }
             ],
             animationEffects: [
                 {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.impact.ground_crack.orange.01", label: "Orange (Patreon)", active: true, size: 2, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0, attachTo: true   },
@@ -116,15 +118,19 @@ export function initPowers() {
                 { label: game.i18n.localize("SAT.Effect.Burrow"), type: ROLLRESULT.RAISE }
             ]
         },
-        { 
-            name: game.i18n.localize("SAT.Power.Protection"), //v1
+        { // Protection v1
+            name: game.i18n.localize("SAT.Power.Protection"),
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
                 {type: ANIMATIONTYPE.TARGET, file: "jb2a.token_border.circle.spinning.blue.001", label: "Blue", active: true, size: 2, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0   }
                 
             ],
             sounds: [
-                { label: "No Audio", file: PATH.AUDIO + "powers/novice/protection/DivineShield.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 }
+                { label: "Default", file: PATH.AUDIO + "powers/novice/protection/Spell_PA_Artifact_TyrsProtection_Cast_01.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Divine", file: PATH.AUDIO + "powers/novice/protection/DivineShield.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Light", file: PATH.AUDIO + "powers/novice/protection/FX_BurningLightBeam_Impact_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Fire", file: PATH.AUDIO + "powers/novice/protection/Hellfire_Raid_FX_Explosion01.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Shadow", file: PATH.AUDIO + "powers/novice/protection/Spell_Corruption_Cast01.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 }
             ],
             animationEffects: [
                 {type: ANIMATIONTYPE.TARGET, file: "jb2a.token_border.circle.static.blue.001", label: "Blue", active: true, size: 2, attachTo: true, persist: true, filter: "ColorMatrix", filterData: {},  startTime: 0  },    
@@ -134,8 +140,8 @@ export function initPowers() {
                 { label: game.i18n.localize("SAT.Effect.ProtectionRaise"), type: ROLLRESULT.RAISE }
             ]
         },
-        { 
-            name: game.i18n.localize("SAT.Power.Burst"), //v1
+        { // Burst v1
+            name: game.i18n.localize("SAT.Power.Burst"),
             animationType: ANIMATIONTYPE.TEMPLATE,
             animations: [ ],
             sounds: [
@@ -153,21 +159,23 @@ export function initPowers() {
             activeEffects: [
             ]
         },
-        { 
-            name: game.i18n.localize("SAT.Power.Healing"), //v1
+        { // Healing v1
+            name: game.i18n.localize("SAT.Power.Healing"),
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
                 {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.healing_generic.burst.greenorange", label: "Green/Orange", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  }
             ],
             sounds: [
-                { label: "Default", file: PATH.AUDIO + "powers/novice/healing/Spell_SH_Resto_Revamp_HealingRain_Loop.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 },
-                { label: "Holy", file: PATH.AUDIO + "powers/novice/healing/Spell_PR_Revamp_Holy_Precast_Large_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 3000 }
+                { label: "Default", file: PATH.AUDIO + "powers/novice/healing/HealingAura.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Holy", file: PATH.AUDIO + "powers/novice/healing/Spell_PR_Revamp_divine_star_cast_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 2000 },
+                { label: "Nature", file: PATH.AUDIO + "powers/novice/healing/Spell_DR_Druid_Nature_Cast_Heavy03.ogg", active: false, delay: 0, volume: 1.0,  duration: 3000 },
+                { label: "Shadow", file: PATH.AUDIO + "powers/novice/healing/SPELL_ShootTechGun_Impact_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 3000 }
             ],
             animationEffects: [],
             activeEffects: []
         },
-        { 
-            name: game.i18n.localize("SAT.Power.Deflection"), //v1
+        { // Deflection v1
+            name: game.i18n.localize("SAT.Power.Deflection"),
             animationType: ANIMATIONTYPE.TARGET,
             template: '',
             animations: [                  
@@ -214,57 +222,43 @@ export function initPowers() {
                 { label: game.i18n.localize("SAT.Power.Deflection"), type: ROLLRESULT.RAISE }
             ]
         },
-        { 
+        { // Fly v1
             name: game.i18n.localize("SAT.Power.Fly"),
             animationType: ANIMATIONTYPE.SPECIAL,
-            animations: [],
-            sounds: [ 
-                { label: "Healing", file: PATH.AUDIO + "/consumables/healing.ogg", active: true, delay: 0, volume: 1.0, duration: 1000 }
+            animations: [
+                
             ],
-            animationEffects: [ {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.token_stage.round.green.01.04", label: "Speed", active: true,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
+            sounds: [ 
+                { label: "WingFlap", file: PATH.AUDIO + "powers/novice/fly/BlackRockV2_Drake_WingFlap_05.ogg", active: true, delay: 0, volume: 1.0, duration: 5000 }
+            ],
+            animationEffects: [ 
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.bluegrey", label: "Blue", active: true,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.purple", label: "Purple", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
             ],
             activeEffects: [
                 { name: 'fly', label: game.i18n.localize("SAT.Effect.FlyNormal"), type: ROLLRESULT.HIT },
                 { name: 'fly', label: game.i18n.localize("SAT.Effect.FlyRaise"), type: ROLLRESULT.RAISE }
             ],
-        }
-    ];
-        Object.freeze(PowerList);
-        /*,
-        { 
-            name: game.i18n.localize("SAT.Power.Protection"),
+        },
+        { // Sound/Silence v1
+            name: game.i18n.localize("SAT.Power.SoundSilence"),
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
-                { file: "jb2a.markers.shield.dark_red.01", label: "Dark Red", active: true, size: 0.5 },
-                { file: "jb2a.markers.shield.blue.01", label: "Blue", active: false, size: 0.5 },
-                { file: "jb2a.markers.shield.green.01", label: "Green", active: false, size: 0.5  }                     
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.template_circle.symbol.normal.music_note.blue", label: "Note Blue", active: true, attachTo: true, size: 1, persist: true, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.template_circle.symbol.normal.music_note.dark_red", label: "Note Red", active: false, attachTo: true, size: 1, persist: true, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.template_circle.symbol.normal.music_note.purple", label: "Note Purple", active: false, attachTo: true, size: 1, persist: true, filter: "ColorMatrix", filterData: {}, startTime: 0  }
             ],
             sounds: [
-                { label: "No Audio", label: "No Audio", file: PATH.AUDIO + "empty_audio.ogg", active: true, delay: 0, volume: 1.0 }
+                { label: "Default", file: PATH.AUDIO + "powers/novice/silence/Spell_DH_Sigil_Silence_Cast_01.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Shadow", file: PATH.AUDIO + "powers/novice/silence/Spell_PR_Revamp_Shadow_Whipser_Cast_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 5000 }
             ],
-            animationEffects: staticCircles02,
+            animationEffects: [],
             activeEffects: [
-                { label: game.i18n.localize("SAT.Effect.ProtectionNormal"), type: ROLLRESULT.HIT },
-                { label: game.i18n.localize("SAT.Effect.ProtectionRaise"), type: ROLLRESULT.RAISE }
+                { name: 'Silence', label: game.i18n.localize("SAT.Effect.SilenceNormal"), type: ROLLRESULT.HIT },
+                { name: 'Silence', label: game.i18n.localize("SAT.Effect.SilenceRaise"), type: ROLLRESULT.RAISE }
             ]
         },
-        { 
-            name: "Burst",
-            animationType: ANIMATIONTYPE.TEMPLATE,
-            templates: ['cone'],
-            animations: [                  
-                { file: "jb2a.breath_weapons02.burst.line.fire.orange.01", label: "Orange", active: true, size: 0.5 },
-                { file: "jb2a.breath_weapons02.burst.cone.arcana.purple.02", label: "Purple", active: true, size: 0.5 }
-                
-            ],
-            sounds: [
-                { label: "No Audio", file: PATH.AUDIO + "empty_audio.ogg", active: true, delay: 0, volume: 1.0 }
-            ],
-            animationEffects: [
-                
-            ],
-            activeEffects: [
-            ]
-        }*/
+    ];
+    Object.freeze(PowerList);
  
 }

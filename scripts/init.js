@@ -31,6 +31,7 @@ import {
 let ready = false;
 Hooks.once('init', () => {
     debug("INIT MODULE");
+    CONFIG.debug.hooks = false;
     Handlebars.registerHelper('clean', function (aString) {
         return aString.replaceAll("'","");
     });
@@ -123,8 +124,6 @@ Hooks.on("preDeleteActiveEffect", (effect, data, userId) => {
 
 Hooks.on("dropCanvasData", async  (data1, data2) => {
     debug("dropCanvasData");
-    debug(data1);
-    debug(data2);
 
 });
 
@@ -149,10 +148,11 @@ Hooks.on("BRSW-CreateItemCardNoRoll", async (data) => {
 });
 
 Hooks.on('renderChatMessage', (message, html) => {
-    if(getNTemplate() == 0) {
-        if(canvas.templates.placeables.length == 0)
-            setNTemplate(-1)
-        else
-        setNTemplate(canvas.templates.placeables.length)
-    }
+
+});
+
+
+Hooks.on("createMeasuredTemplate", (template, temp, id) => {
+    setNTemplate(getNTemplate()+1);
+
 });
