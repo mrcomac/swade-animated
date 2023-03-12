@@ -20,7 +20,12 @@ import {
 } from "./ManagerAnimation.js";
 
 import {
-    my_open_item_config
+    shapeChangeOff
+} from './shape_change.js';
+
+import {
+    my_open_item_config,
+    registerSettings
 } from './ManagerConfiguration.js';
 
 import {
@@ -30,12 +35,13 @@ import {
 
 let ready = false;
 Hooks.once('init', () => {
+    registerSettings();
     debug("INIT MODULE");
     CONFIG.debug.hooks = false;
     Handlebars.registerHelper('clean', function (aString) {
         return aString.replaceAll("'","");
     });
-    //registerSettings();
+    
 });
 
 /**
@@ -110,6 +116,8 @@ async function disableEffect(effect,token_item) {
         stopFly(token_item);
     } else if(effect.label.toLowerCase().includes("burrow")) {
         burrowOff(token_item);
+    } else if(effect.label.toLowerCase().includes("shape change")) {
+        shapeChangeOff(token_item);
     }
 }
 
@@ -147,12 +155,14 @@ Hooks.on("BRSW-CreateItemCardNoRoll", async (data) => {
     debug("Hooks on BRSW-CreateItemCardNoRoll");
 });
 
+/*
 Hooks.on('renderChatMessage', (message, html) => {
 
 });
-
+*/
 
 Hooks.on("createMeasuredTemplate", (template, temp, id) => {
     setNTemplate(getNTemplate()+1);
 
 });
+

@@ -9,6 +9,7 @@
   "SAT.Power.Fly": "Fly",
   "SAT.Power.Burrow": "Burrow",
   "SAT.Power.SoundSilence": "Sound/Silence",
+  "SAT.Power.ShapeChange": "Shape Change",
   
   
   
@@ -34,6 +35,7 @@
   "SAT.Weapons.Warhammer": "Warhammer",
   "SAT.Weapons.Dagger": "Dagger",
   "SAT.Weapons.Claws": "Claws",
+  "SAT.Weapons.Mace": "Mace",
 
   "SAT.Effect.ArcaneProtectionNormal": "Arcane Protection (Normal)",
   "SAT.Effect.ArcaneProtectionRaise": "Arcane Protection (Raise)",
@@ -45,5 +47,11 @@
   "SAT.Effect.BlindRaise": "Blind (Raise)",
   "SAT.Effect.Burrow": "Burrow",
   "SAT.Effect.SilenceNormal": "Silence (Normal)",
-  "SAT.Effect.SilenceRaise": "Silence (Raise)"
+  "SAT.Effect.SilenceRaise": "Silence (Raise)",
+  "SAT.Effect.ShapeChangeNormal": "Shape Change (Normal)",
+  "SAT.Effect.ShapeChangeRaise": "Shape Change (Raise)",
+
+  "SAT.Settings.Debug.Name": "Debug Mode",
+  "SAT.Settings.Debug.Hint": "Enable debug mode",
+  "SAT.Settings.Debug.label": "Debug"
 }

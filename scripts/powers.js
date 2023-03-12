@@ -258,6 +258,23 @@ export function initPowers() {
                 { name: 'Silence', label: game.i18n.localize("SAT.Effect.SilenceRaise"), type: ROLLRESULT.RAISE }
             ]
         },
+        { // Shape Change v1
+            name: game.i18n.localize("SAT.Power.ShapeChange"),
+            animationType: ANIMATIONTYPE.SPECIAL,
+            animations: [                
+            ],
+            sounds: [ 
+                { label: "WingFlap", file: PATH.AUDIO + "powers/novice/fly/BlackRockV2_Drake_WingFlap_05.ogg", active: true, delay: 0, volume: 1.0, duration: 2000 }
+            ],
+            animationEffects: [ 
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.explosion.01.blue", label: "Blue", active: true,  persist: false,  size: 2, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.explosion.01.green", label: "Green", active: false,  persist: false,  size: 2, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
+            ],
+            activeEffects: [
+                { name: 'ShapeChange', label: game.i18n.localize("SAT.Effect.ShapeChangeNormal"), type: ROLLRESULT.HIT },
+                { name: 'ShapeChange', label: game.i18n.localize("SAT.Effect.ShapeChangeRaise"), type: ROLLRESULT.RAISE }
+            ],
+        },
     ];
     Object.freeze(PowerList);
  

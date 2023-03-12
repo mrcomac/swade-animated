@@ -132,7 +132,7 @@ export function initWeapons() {
             animationEffects: [],
             activeEffects: [],
         },
-        { //Dagger Attack v1
+        { //Dagger v1
             name: game.i18n.localize("SAT.Weapons.Dagger"),
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
@@ -150,7 +150,7 @@ export function initWeapons() {
                 
             ],
         },
-        { //Claws Attack v1
+        { //Claws v1
             name: game.i18n.localize("SAT.Weapons.Claws"),
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
@@ -172,7 +172,50 @@ export function initWeapons() {
             activeEffects: [
                 
             ],
+        },
+        { //Bite Attack v1 PENDING
+            name: game.i18n.localize("SAT.Weapons.Bite"),
+            animationType: ANIMATIONTYPE.TARGET,
+            animations: [
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.claws.400px.red", label: "Red", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.claws.400px.dark_red", label: "Dark Red (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.claws.400px.bright_blue", label: "Bright Blue (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.claws.400px.brown", label: "Brown (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+
+            ],
+            sounds: [ 
+                { label: "Zombie", file: PATH.AUDIO + "/weapons/claws/ZombieAggro.ogg", active: true, delay: 0, volume: 1.0,  duration: 1500 },
+                { label: "Super Zombie", file: PATH.AUDIO + "/weapons/claws/SuperZombieAggro.ogg", active: false, delay: 0, volume: 1.0,  duration: 1500 },
+                { label: "Bear", file: PATH.AUDIO + "/weapons/claws/MON_Kah-bear_Attack_01_180306.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Tiger", file: PATH.AUDIO + "/weapons/claws/MON_MechanicalTiger_Attack01.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
+        },
+        { //Mace v1
+            name: game.i18n.localize("SAT.Weapons.Mace"),
+            animationType: ANIMATIONTYPE.TARGET,
+            animations: [
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.mace.melee.01.white.0", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.mace.melee.01.dark_orangepurple.0", label: "Orange Purple (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.mace.melee.01.blue.0", label: "Blue (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.mace.melee.01.orange.0", label: "Orange (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/Hammer.ogg", active: true, delay: 200, volume: 1.0, duration: 4000 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
         }
-    ];
+    ]; 
     Object.freeze(WeaponList);
 }

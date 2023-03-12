@@ -19,6 +19,10 @@ import {
 } from "./constants.js";
 
 import {
+    shape_change
+} from './shape_change.js';
+
+import {
     playRangedOrMeele,
     playOnToken,
     playOnArea,
@@ -86,6 +90,11 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                     debug("playMeAnAnimation onToken",itemData);
                     await playOnToken(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,notWait);
                 }
+            } else if(SwadeItem.name.toLowerCase().includes("shape change")) {   
+                for(let i = 0; i < rolls.targets.length; i++) {
+                    debug("playMeAnAnimation Shape Change",itemData);
+                    await shape_change(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,notWait);
+                }
             }
         }
     }
@@ -149,8 +158,11 @@ export async function applyEffect(item,target,SwadeItem) {
         }
         debug("Effect Doc",effectDoc);
         
-        //effectDoc.flags.swadeanimated = {};
-        //effectDoc.flags.swadeanimated.actorId= target.token.id; //actorId
+        let previousEffect = target.token.actor.effects.filter(i => (i.label.toLowerCase().includes(effectDoc.label.toLowerCase().replace(/\s\(.*\)/, "")) ));
+        if(previousEffect.length > 0) {
+
+            target.token.actor.deleteEmbeddedDocuments('ActiveEffect', [Array.from(previousEffect)[0].id]);
+        }
         target.token.actor.createEmbeddedDocuments('ActiveEffect', [effectDoc]);
         
     }
@@ -168,6 +180,9 @@ export async function applyEffect(item,target,SwadeItem) {
             } else if(SwadeItem.name.toLowerCase().includes("burrow")) { 
                 debug("burrowOn");
                 await burrowOn(target.token,item.animationEffect[0],item.sound[0],animationName,true);
+            } else if(SwadeItem.name.toLowerCase().includes("shape change")) {   
+                debug("playMeAnAnimation Shape Change");
+                await shape_change(target.token,item.animationEffect[0],item.sound[0],animationName,true);
             }
         } else if(item.animationEffect[0].type == ANIMATIONTYPE.TEMPLATE) {
             debug("TEMPLATES: ",getNTemplate());

@@ -2,7 +2,11 @@ import {
     PATH,
     ANIMATIONTYPE,
     CopyObj,
-    debug
+    debug,
+    moduleName,
+    setDebug,
+    setShapeChangeCompendium,
+    SHAPECHANGECOMPENDIUM
 } from './constants.js';
 
 import {
@@ -332,4 +336,46 @@ class DocumentConfigForm extends FormApplication {
             debug(err)
         }
     }
+}
+ 
+
+export function registerSettings() {
+
+  game.settings.register(moduleName, 'debug_mode', {
+    name: 'Debug Mode',
+    hint: 'Enable debug mode to troubleshoot.',
+    scope: 'world',
+    config: true,
+    default: false,
+    type: Boolean,
+    requiresReload: false,
+    onChange: value => {
+        //debug("DEBUG SET: "+Debug);
+        setDebug(value);
+    },
+  });  
+
+  let def_value;
+  if(SHAPECHANGECOMPENDIUM.length == 0) {
+    def_value = "SWADE Animated - Bestiary";
+  } else {
+    def_value = SHAPECHANGECOMPENDIUM;
+  }
+
+  game.settings.register(moduleName, 'shape_change_folder', {
+    name: 'Shape Change Compendium',
+    hint: 'Fill it up with the compendium to use with Shape Change',
+    scope: 'world',
+    config: true,
+    default: def_value,
+    type: String,
+    requiresReload: false,
+    onbChange: value => {
+        //debug("New Compendium: "+SHAPECHANGECOMPENDIUM);
+        setShapeChangeCompendium(value);
+        
+    }
+  });  
+
+
 }

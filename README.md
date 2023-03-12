@@ -12,6 +12,17 @@ Templates are allowed.
 
 [![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/vm48nEE9b9o)
 
+# Supported Items
+
+##### Powers
+Arcane Protection, Blind, Bolt, Burrow, Burst, Deflection, Healing, Fly, Protection,  Shape Change, Sound/Silence
+
+##### Weapons
+Bite, Bow, Claws, Dagger, Mace, Monk Attack, Rapier, Scimitar, Spear, Sword, Warhammer
+
+##### Consumables
+Fly, Healing, Protection, Speed
+
 # Note
 There is no stable version yet. I don't have more than 4 hours per week to work on this. 
 # swade-animated

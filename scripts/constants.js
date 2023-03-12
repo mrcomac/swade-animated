@@ -21,6 +21,22 @@ export const ROLLRESULT = {
 export const moduleName = "swade-animated";
 const MODS = 'modules/';
 
+export let SHAPECHANGECOMPENDIUM = "";
+
+export function getShapeChangeCompendium() {
+    SHAPECHANGECOMPENDIUM = game.settings.get(moduleName, "shape_change_folder");
+    if(SHAPECHANGECOMPENDIUM.length == 0) {
+        SHAPECHANGECOMPENDIUM = "SWADE Animated - Bestiary";
+    }
+    return SHAPECHANGECOMPENDIUM;
+}
+
+
+export function setShapeChangeCompendium(value) {
+    debug("Changing compendium folder for Shape Change: "+value);
+    SHAPECHANGECOMPENDIUM = value;
+}
+
 export const PATH = {
     AUDIO : MODS + moduleName + '/sounds/',
     VIDEO : MODS + moduleName + '/videos/',
@@ -38,6 +54,8 @@ export function setNTemplate(value) {
 export function getNTemplate() {
     return ntemplates;
 }
+
+export const SETTING_PREFIX = 'SAT.Settings.';
 
 export function getHashName(str) {
     let hash = 0;
@@ -85,8 +103,13 @@ export function CopyObj(obj) {
 
 export const TMFXEffectsList = ["Deflection"];
 
-let DEBUG = true;
+let DEBUG = false;
+export function setDebug(value) {
+    console.log("Setting debug");
+    DEBUG = value;
+}
 export function debug(msg, ...args) {
+    DEBUG = game.settings.get(moduleName, "debug_mode");
   if (DEBUG) {
     console.log("[SWADE-Animated]",msg, ...args);
   }
