@@ -184,7 +184,7 @@ export function initWeapons() {
 
             ],
             sounds: [ 
-                { label: "Default", file: PATH.AUDIO + "/weapons/bite/BiteMediumA.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Default", file: PATH.AUDIO + "/weapons/bite/BiteMediumA.ogg", active: true, delay: 0, volume: 1.0,  duration: 900 },
                 { label: "Small", file: PATH.AUDIO + "/weapons/bite/Spell_NPC_Bite_Dinosaur_Small_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 },
                 { label: "Plant", file: PATH.AUDIO + "/weapons/bite/Spell_NPC_Bite_Eat_Plant_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 },
                 { label: "Worm", file: PATH.AUDIO + "/weapons/bite/LavaWorm_Attack_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 }

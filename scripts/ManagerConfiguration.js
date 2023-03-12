@@ -178,12 +178,14 @@ export async function my_open_item_config(item) {
 
 
 function retrieveDefaultItemConfiguration(item,rolls) {
+    debug("retrieveDefaultItemConfiguration");
     
     let configItem = CopyObj(ItemConfigModel);
     let itemData = CopyObj(ItemData);
     //let item = [];
     
     itemData = getItem(item);
+    debug(itemData);
     if(itemData.animationType < 0 ) {
         return configItem;
     }
