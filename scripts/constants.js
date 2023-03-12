@@ -26,7 +26,7 @@ export let SHAPECHANGECOMPENDIUM = "";
 export function getShapeChangeCompendium() {
     SHAPECHANGECOMPENDIUM = game.settings.get(moduleName, "shape_change_folder");
     if(SHAPECHANGECOMPENDIUM.length == 0) {
-        SHAPECHANGECOMPENDIUM = "SWADE Animated - Bestiary";
+        SHAPECHANGECOMPENDIUM = "SWADE Bestiary";
     }
     return SHAPECHANGECOMPENDIUM;
 }
