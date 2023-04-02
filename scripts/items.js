@@ -60,19 +60,33 @@ export function getItem(item) {
     } else if(item.type == "power") {
         for(let i=0;i<PowerList.length;i++) {
             if(item.name.trim().toLocaleLowerCase().includes(PowerList[i].name.trim().toLocaleLowerCase())) {
-                debug("INTERNO");
-                debug(PowerList[i]);
+                debug("Power",PowerList[i]);
                 itemData = PowerList[i];
                 break;
             }
         }
     } else if(item.type == "weapon") {
+        console.log("WEAPON");
         for(let i=0;i<WeaponList.length;i++) {
             if(item.name.trim().toLocaleLowerCase().includes(WeaponList[i].name.trim().toLocaleLowerCase())) {
-                debug(WeaponList[i]);
+                debug("Weapon",WeaponList[i]);
                 itemData = WeaponList[i];
                 break;
             }
+        }
+        if(Object.keys(itemData).length === 0) {
+            for(let i=0;i<WeaponList.length;i++) {
+                if(WeaponList[i]?.alternatives) {
+                    const lowercaseWords = WeaponList[i].alternatives.map(word => word.toLowerCase());
+                    if(lowercaseWords.includes(item.name.trim().toLocaleLowerCase())) {
+                        debug("Alternative Weapon",WeaponList[i]);
+                        itemData = WeaponList[i];
+                    }
+                }
+                if(Object.keys(itemData).length) {
+                    break;
+                }
+            }   
         }
     }
     return  CopyObj(itemData);

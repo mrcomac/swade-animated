@@ -141,7 +141,7 @@ function getUIConfigItem(item) {
         } else {
             UIConfigItem.sound.isDefault = false; 
             UIConfigItem.sound.isCustom = true; 
-            UIConfigItem.sound.file = itemConfig.sound.file;
+            UIConfigItem.sound.file = itemConfig.sound[0].file;
         }
         
         for(let j = 0; j< itemRAW.sounds.length; j++) {
@@ -281,13 +281,13 @@ class DocumentConfigForm extends FormApplication {
         let itemData = getItem(this.object);
         debug("ITEM DATA", itemData);
         itemConfig.template = itemData.template;
-        itemConfig.animationType = parseInt(formData.animationType);
+        itemConfig.animationType = itemData.animationType;
         if(formData.soundType == "default") {
             itemConfig.sound.push(getElementItem(this.object,formData.defaultSound,'sound'));
             itemConfig.sound[0].isDefault = true;
             debug("Sound is configured from default",itemConfig);
         } else {
-            itemConfig.sound = [{isDefault: false, label: "Custom", file: formData.customSound, active: true, delay: 1200, volume: 1.0 }];
+            itemConfig.sound = [{isDefault: false, label: "Custom", file: formData.customSound, duration: 1000, active: true, delay: 0, volume: 1.0 }];
         }
 
         if(itemData.animations.length > 0) {

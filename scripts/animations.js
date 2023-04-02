@@ -85,12 +85,22 @@ export async function playOnArea(target, animation, sound,animationName) {
 
 export async function playRangedOrMeele(source,target,animation,sound,_missed = ROLLRESULT.MISSED,animationName,byUnit) {
     debug("playRangedOrMeele",animation,sound);
+    let repeat = { times: 1, randomInit: 0, randomEnd: 0 };
+    let stretchToConfig = {}
+    if(animation?.repeat) {
+        repeat = animation?.repeat
+    }
+
+    if(animation?.stretchTo) {
+        stretchToConfig = animation.stretchTo;
+    }
 
     let missed = true;
     if(_missed != ROLLRESULT.MISSED) {
+        debug("Attack Missed");
         missed = false;
     }
-    debug(animation);
+    debug(sound);
     if(animation.persist) {
         return await new Sequence()
         .sound()
@@ -103,7 +113,7 @@ export async function playRangedOrMeele(source,target,animation,sound,_missed = 
             .name(String(getHashName(animationName)))
             .startTime(animation.startTime)
             .atLocation(source)
-            .stretchTo(target)
+            .stretchTo(target, stretchToConfig)
             .file(animation.file)
             .filter(animation.filter, animation.filterData)
             .persist(animation.persist)
@@ -122,11 +132,12 @@ export async function playRangedOrMeele(source,target,animation,sound,_missed = 
             .name(String(getHashName(animationName)))
             .atLocation(source)
             .startTime(animation.startTime)
-            .stretchTo(target)
+            .stretchTo(target,stretchToConfig)
             .file(animation.file)
             .filter(animation.filter, animation.filterData)
             .persist(animation.persist)
             .size(animation.size,  { gridUnits: true })
+            .repeats(repeat["times"], repeat["randomInit"], repeat["randomEnd"])
             .waitUntilFinished()
             .missed(missed)
         .play();

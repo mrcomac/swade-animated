@@ -326,11 +326,7 @@ async function set_token_size(scCopy, scSize) {
 }
 
 async function get_creatures() {
-    console.log("DASDSD");
     const compendium = await game.packs.find(p => p.metadata.label == getShapeChangeCompendium());
-    console.log(compendium);
-    console.log("DASDSD");
-    console.log(getShapeChangeCompendium());
 
     if (!compendium) {
         ui.notifications.warn("The compendium couldn't be found!");

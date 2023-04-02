@@ -1,3 +1,4 @@
+//CONFIG.debug.hooks = true
 import {
     MODULE, 
     ROLLRESULT,
@@ -63,8 +64,9 @@ Hooks.on('swadeAction', (swadeActor, swadeItem, actionType, roll, id) => {
     const token = swadeActor.parent?.token || canvas.tokens.placeables.find(token => token.actor?.items?.get(swadeItem.id))
     let targets =Array.from(game.user.targets);
     let rolls = getRollResult(roll, targets, MODULE.SWADE);
+    debug("Final Roll Result",rolls);
     
-    playMeAnAnimation(swadeItem,token,targets,rolls);
+    playMeAnAnimation(swadeItem,token,rolls);
     
 });
 
@@ -144,7 +146,7 @@ Hooks.on("BRSW-RollItem", async (data, html) => {
     const swadeItem = data.item;
     let targets =Array.from(game.user.targets);
     let rolls = getRollResult(data.message, targets, MODULE.BR2);
-    debug("ROLLS",rolls);
+    debug("Final Roll Result",rolls);
     playMeAnAnimation(swadeItem,token,rolls);
     
 });
@@ -166,3 +168,39 @@ Hooks.on("createMeasuredTemplate", (template, temp, id) => {
 
 });
 
+Hooks.on("targetToken", (SwadeUser, target, selected) => {
+    if(selected) {
+        const anim = [
+            "jb2a.ui.indicator.redyellow.02.01",
+            "jb2a.ui.indicator.redyellow.02.02",
+            "jb2a.ui.indicator.redyellow.02.03",
+            "jb2a.ui.indicator.bluegreen.02.01",
+            "jb2a.ui.indicator.bluegreen.02.02",
+            "jb2a.ui.indicator.bluegreen.02.03"
+        ];
+        new Sequence()
+        
+        .effect()
+        .file(anim[Math.floor(Math.random() * 6)])
+        .atLocation(target)
+        .scaleIn(0.5, 300, {ease: "easeOutCubic"})
+        .loopProperty("sprite", "position.x", { values: [-50, 50, 0, 0, 0, 0, 0], duration: 500, ease: "easeInOutCubic"})
+        .loopProperty("sprite", "position.y", { values: [-100, 100, 0, 0, 0, 0, 0], duration: 500, ease: "easeInOutCubic"})
+        .scaleToObject(1.25)
+        .fadeOut(500)
+        .zIndex(1)
+        .duration(3000)
+    
+        .wait(1000)
+    
+        .effect()
+        .file("jb2a.token_stage.round.red.02.01")
+        .atLocation(target)
+        .scaleToObject(1.25)
+        .opacity(0.75)
+        .fadeOut(2000)
+    
+        .play()
+    }
+    
+});
