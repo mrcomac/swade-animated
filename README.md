@@ -9,20 +9,13 @@ Dependencies:
 
 
 After install the module you can go to the item and click on the ANI link to select an option.
-
-<figure class="video_container">
-  <iframe src="https://www.youtube.com/embed/9Xn2PGEN40s" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+[![Watch the video](https://img.youtube.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/9Xn2PGEN40s)
 
 Effects are applied accordingly
-<figure class="video_container">
-  <iframe src="https://www.youtube.com/embed/pfzChspmplY" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+[![Watch the video](https://img.youtube.com/vi/pfzChspmplY/maxresdefault.jpg)](https://youtu.be/pfzChspmplY)
 
 Templates are supported.
-<figure class="video_container">
-  <iframe src="https://www.youtube.com/embed/vm48nEE9b9o" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+[![Watch the video](https://img.youtube.com/vi/vm48nEE9b9o/maxresdefault.jpg)](https://youtu.be/vm48nEE9b9o)
 
 # Supported Items
 
