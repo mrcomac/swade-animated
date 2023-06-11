@@ -1,27 +1,39 @@
 # Overview
 
-Select animation from a list ([it requires JBA Patreon](https://www.patreon.com/JB2A/posts)).
+This module allow players to choose from the character sheet the power/weapons/consumables traits.
 
-[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/9Xn2PGEN40s)
+Dependencies:
+-  JBA or [JBA Patreon](https://www.patreon.com/JB2A/posts)
+- Sequencer
+- Token Magic
 
-Effects are applied accordingly.
 
-[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/pfzChspmplY)
+After install the module you can go to the item and click on the ANI link to select an option.
 
-Templates are allowed.
+<figure class="video_container">
+  <iframe src="https://www.youtube.com/embed/9Xn2PGEN40s" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
 
-[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/vm48nEE9b9o)
+Effects are applied accordingly
+<figure class="video_container">
+  <iframe src="https://www.youtube.com/embed/pfzChspmplY" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+
+Templates are supported.
+<figure class="video_container">
+  <iframe src="https://www.youtube.com/embed/vm48nEE9b9o" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
 
 # Supported Items
 
 ##### Powers
-Arcane Protection, Blind, Bolt, Burrow, Burst, Deflection, Healing, Fly, Protection,  Shape Change, Sound/Silence
+Arcane Protection(v1), Blind(v1), Bolt(v1), Burrow(v1), Burst(v1), Deflection(v1), Healing(v1), Fly(v1), Protection(v1),  Shape Change(v1), Sound/Silence(v1)
 
 ##### Weapons
-Bite, Bow, Claws, Dagger, Mace, Monk Attack, Rapier, Scimitar, Spear, Sword, Warhammer
+Bite(v1), Bow(v1), Carabine(v1), Claws(v1), Dagger(v1), Derringer(v1), Gatling(v1), Knife(v1), Laser(v1), Mace(v1), Monk Attack(v1), Pistol(v1), Rapier(v1), Revolver Single(v1), Revolver Double(v1), Rifle(v1), Scimitarra(v1), Scimitar(v1), Shotgun(v1), Spear(v1), Sword(v1), Warhammer(v1)
 
 ##### Consumables
-Fly, Healing, Protection, Speed
+Fly(v1), Healing(v1), Protection(v1), Speed(v1)
 
 # Note
 There is no stable version yet. I don't have more than 4 hours per week to work on this. 
@@ -33,7 +45,7 @@ J. W. Bjerk (eleazzaar) -- www.jwbjerk.com/art  -- find this and other open art 
 Website: https://www.wowhead.com/
 
 # Sounds
-Website: https://www.wowhead.com/
+Website: https://www.wowhead.com/ (You need to download the sounds to a folder within data folder)
 
 # Scripts
 I didn't reinvent the wheel. I'm using [Sequencer](https://github.com/fantasycalendar/FoundryVTT-Sequencer) and [Token Magic](https://github.com/Feu-Secret/Tokenmagic). Also I'm using the macros created by [EskieMoh@](https://twitter.com/EskieMoh) and [SWADE Immersive Macros](https://github.com/SalieriC/SWADE-Immersive-Macros).

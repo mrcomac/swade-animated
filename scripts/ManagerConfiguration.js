@@ -95,6 +95,7 @@ function getUIConfigItem(item) {
     }
     
     if(itemRAW.animationEffects.length > 0) {
+        UIConfigItem.animationEffect.type = itemRAW.animationEffects.type;
         if(itemRAW.animationEffects[0]?.params) {
             UIConfigItem.animationEffect.enabled = false;
         } else {

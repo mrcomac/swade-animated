@@ -32,10 +32,7 @@ import {
 } from './animations.js';
 
 function isTargetMissed(rolls,target) {
-    console.log("ROLL");
-    console.log(rolls);
-    console.log("TARGET");
-    console.log(target);
+   
 
 }
 export async function playMeAnAnimation(SwadeItem,source,rolls) {   
@@ -65,7 +62,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
             for(let i=0;i<rolls.targets.length;i++) {
                 debug("playMeAnAnimation rangedorMeele",itemData);
                 
-                let missed = isTargetMissed(rolls, rolls.targets[i]);
+                //let missed = isTargetMissed(rolls, rolls.targets[i]);
                 await playRangedOrMeele(source,rolls.targets[i].token,itemData.animation[0],itemData.sound[0],rolls.targets[i].result,animationName,notWait);
             }
             
@@ -185,7 +182,7 @@ export async function applyEffect(item,target,SwadeItem) {
         if(item.animation.length  == 0) {
             EFFECTSOUND = item.sound[0];
         }
-        if(item.animationType == ANIMATIONTYPE.SPECIAL) {
+        if(item.animationEffect[0].type == ANIMATIONTYPE.SPECIAL) {
             if(TMFXEffectsList.includes(effectName) && item.animationEffect.length > 0) {
                 applyEffectTMFX(target.token,item.animationEffect[0]);            
             } else if(SwadeItem.name.toLowerCase().includes("fly")) { 
@@ -197,7 +194,7 @@ export async function applyEffect(item,target,SwadeItem) {
                 debug("playMeAnAnimation Shape Change");
                 await shape_change(target.token,item.animationEffect[0],item.sound[0],animationName,true);
             }
-        } else if(item.animationType == ANIMATIONTYPE.TEMPLATE) {
+        } else if(item.animationEffect[0].type == ANIMATIONTYPE.TEMPLATE) {
             debug("TEMPLATES: ",getNTemplate());
             if(getNTemplate()==0) {
                 debug("playMeAnAnimation onToken",item);
