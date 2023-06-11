@@ -7,6 +7,8 @@ Dependencies:
 - Sequencer
 - Token Magic
 
+Supports:
+- Better Rolls 2 for Savage Worlds
 
 After install the module you can go to the item and click on the ANI link to select an option.
 [![Watch the video](https://img.youtube.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/9Xn2PGEN40s)
