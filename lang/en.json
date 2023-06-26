@@ -30,7 +30,7 @@
   "SAT.Weapons.MonkAttack": "Monk Attack",
   "SAT.Weapons.Knife": "Knife",
   "SAT.Weapons.Rapier": "Rapier",
-  "SAT.Weapons.Scimitar": "Scimitar",
+  "SAT.Weapons.Scimitar": "Scimitar", 
   "SAT.Weapons.Spear": "Spear",
   "SAT.Weapons.Warhammer": "Warhammer",
   "SAT.Weapons.Dagger": "Dagger",
@@ -46,6 +46,7 @@
   "SAT.Weapons.Rifle": "Rifle",
   "SAT.Weapons.Derringer": "Derringer",
   "SAT.Weapons.Carabine": "Carabine",
+  "SAT.Weapons.ProtonStream": "Proton Stream",
 
   "SAT.Effect.ArcaneProtectionNormal": "Arcane Protection (Normal)",
   "SAT.Effect.ArcaneProtectionRaise": "Arcane Protection (Raise)",
@@ -60,6 +61,8 @@
   "SAT.Effect.SilenceRaise": "Silence (Raise)",
   "SAT.Effect.ShapeChangeNormal": "Shape Change (Normal)",
   "SAT.Effect.ShapeChangeRaise": "Shape Change (Raise)",
+  "SAT.Effect.ProtonStreamNormal": "Proton Stream",
+  
 
   "SAT.Settings.Debug.Name": "Debug Mode",
   "SAT.Settings.Debug.Hint": "Enable debug mode",

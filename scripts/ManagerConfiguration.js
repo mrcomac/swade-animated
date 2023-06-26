@@ -190,38 +190,42 @@ function retrieveDefaultItemConfiguration(item,rolls) {
     if(itemData.animationType < 0 ) {
         return configItem;
     }
+    console.log("ITEMDATA")
+    console.log(configItem)
 
-    configItem.animationType = itemData.animationType;
-    configItem.template = itemData.template;
-
-    for( let i = 0; itemData.animations.length; i++) {
-        if(itemData.animations[i].active) {
-            configItem.animation.push(itemData.animations[i]);
-            configItem.animation[0].isDefault = true;
-            break;
-        }
-    }
+    if(Object.keys(itemData).length > 0) {
+        configItem.animationType = itemData.animationType;
+        configItem.template = itemData.template;
     
-    for( let i = 0; itemData.sounds.length; i++) {
-        if(itemData.sounds[i].active) {
-            configItem.sound.push(itemData.sounds[i]);
-            configItem.sound[0].isDefault = true;
-            break;
+        for( let i = 0; itemData.animations.length; i++) {
+            if(itemData.animations[i].active) {
+                configItem.animation.push(itemData.animations[i]);
+                configItem.animation[0].isDefault = true;
+                break;
+            }
         }
-    }
-
-    for( let i = 0; itemData.animationEffects.length; i++) {
-        if(itemData.animationEffects[i].active) {
-            configItem.animationEffect.push(itemData.animationEffects[i]);
-            configItem.animationEffect[0].isDefault = true;
-            break;
+        
+        for( let i = 0; itemData.sounds.length; i++) {
+            if(itemData.sounds[i].active) {
+                configItem.sound.push(itemData.sounds[i]);
+                configItem.sound[0].isDefault = true;
+                break;
+            }
         }
-    }
 
-    configItem.activeEffects = itemData.activeEffects;
-          
-   
-    debug("retrieveDefaultItemConfiguration",configItem);
+        for( let i = 0; itemData.animationEffects.length; i++) {
+            if(itemData.animationEffects[i].active) {
+                configItem.animationEffect.push(itemData.animationEffects[i]);
+                configItem.animationEffect[0].isDefault = true;
+                break;
+            }
+        }
+
+        configItem.activeEffects = itemData.activeEffects;
+            
+    
+        debug("retrieveDefaultItemConfiguration",configItem);
+    }
     return configItem;
 }
 

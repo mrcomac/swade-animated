@@ -16,8 +16,7 @@ import {
 
 import {
     playMeAnAnimation,
-    initAnimations,
-    applyEffect
+    initAnimations
 } from "./ManagerAnimation.js";
 
 import {
@@ -35,6 +34,7 @@ import {
 } from './animations.js';
 
 let ready = false;
+
 Hooks.once('init', () => {
     registerSettings();
     debug("INIT MODULE");
@@ -96,6 +96,7 @@ Hooks.on('swadeConsumeItem', (swadeItem, charges, usage) => {
     playMeAnAnimation(swadeItem,token,rolls);
 });
 
+
 /**
  * Effect Hooks
  */
@@ -105,13 +106,20 @@ Hooks.on("createActiveEffect", (effect, data, userId) => {
 });
 
 async function disableEffect(effect,token_item) {
-    debug("DISABLE TMFX EFFECT");
-    debug("Token ID: "+token_item.id);
+    console.log("DISABLE EFFECT: ",effect);
     if(TMFXEffectsList.includes(effect.label)) {
         token_item.TMFXdeleteFilters(effect.label);
     } else {
-        let label = getHashName(effect.label);
-        await Sequencer.EffectManager.endEffects({ name: String(label), object: token_item });
+        //let label = getHashName(effect.label);
+        if(effect.flags?.swadeanimated) {
+            console.log("DISABLE IT", String(effect.flags?.swadeanimated?.animationName))
+            let label = String(effect.flags?.swadeanimated?.animationName)
+            await Sequencer.EffectManager.endEffects({ name: label });
+        } else {
+            let label = getHashName(effect.label);
+            await Sequencer.EffectManager.endEffects({ name: label, object: token_item });
+        }
+        
     }
     
     if(effect.label.toLowerCase().includes("fly")) {
@@ -169,7 +177,7 @@ Hooks.on("createMeasuredTemplate", (template, temp, id) => {
 });
 
 Hooks.on("targetToken", (SwadeUser, target, selected) => {
-    if(selected) {
+    /*if(selected) {
         const anim = [
             "jb2a.ui.indicator.redyellow.02.01",
             "jb2a.ui.indicator.redyellow.02.02",
@@ -201,6 +209,6 @@ Hooks.on("targetToken", (SwadeUser, target, selected) => {
         .fadeOut(2000)
     
         .play()
-    }
+    }*/
     
 });

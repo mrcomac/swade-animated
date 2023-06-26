@@ -84,7 +84,9 @@ export async function playOnArea(target, animation, sound,animationName) {
 }
 
 export async function playRangedOrMeele(source,target,animation,sound,_missed = ROLLRESULT.MISSED,animationName,byUnit) {
-    debug("playRangedOrMeele",animation,sound);
+    console.log("playRangedOrMeele",animation,sound);
+    console.log("ANIMATION HASH", animationName);
+    console.log("ANIMATION HASH", getHashName(animationName));
     let repeat = { times: 1, randomInit: 0, randomEnd: 0 };
     let stretchToConfig = {}
     if(animation?.repeat) {
@@ -102,24 +104,54 @@ export async function playRangedOrMeele(source,target,animation,sound,_missed = 
     }
     debug(sound);
     if(animation.persist) {
-        return await new Sequence()
-        .sound()
-            .file(sound.file)
-            .delay(sound.delay)
-            .volume(sound.volume)
-            .duration(sound.duration)
-            .fadeOutAudio(500)
-        .effect()
-            .name(String(getHashName(animationName)))
-            .startTime(animation.startTime)
-            .atLocation(source)
-            .stretchTo(target, stretchToConfig)
-            .file(animation.file)
-            .filter(animation.filter, animation.filterData)
-            .persist(animation.persist)
-            .size(animation.size,  { gridUnits: true })
-            .missed(missed)
-        .play();
+        let persist = true
+        if(missed) persist = false
+        
+        if(animation?.persistBehaviour?.type === "rangedAfter") {
+            return await new Sequence()
+            .sound()
+                .file(sound.file)
+                .delay(sound.delay)
+                .volume(sound.volume)
+                .duration(sound.duration)
+                .fadeOutAudio(500)
+            .effect()
+                .startTime(animation.startTime)
+                .atLocation(source)
+                .stretchTo(target, stretchToConfig)
+                .file(animation.file)
+                .filter(animation.filter, animation.filterData)
+                .waitUntilFinished(animation.persistBehaviour.waitUntilFinished)
+                .size(animation.size,  { gridUnits: true })
+                .missed(missed)
+            .effect()
+                .name(String(getHashName(animationName)))
+                .file(animation.file)
+                .atLocation(source)
+                .stretchTo(target, stretchToConfig)
+                .persist(persist)
+                .timeRange(animation.persistBehaviour.startTime,animation.persistBehaviour.endTime)
+            .play();
+        } else {
+            return await new Sequence()
+            .sound()
+                .file(sound.file)
+                .delay(sound.delay)
+                .volume(sound.volume)
+                .duration(sound.duration)
+                .fadeOutAudio(500)
+            .effect()
+                .name(String(getHashName(animationName)))
+                .startTime(animation.startTime)
+                .atLocation(source)
+                .stretchTo(target, stretchToConfig)
+                .file(animation.file)
+                .filter(animation.filter, animation.filterData)
+                .persist(persist)
+                .size(animation.size,  { gridUnits: true })
+                .missed(missed)
+            .play();
+        }
     } else {
         return await new Sequence()
         .sound()

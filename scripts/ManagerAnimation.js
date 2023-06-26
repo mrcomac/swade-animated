@@ -15,7 +15,9 @@ import {
     NOSOUND,
     ROLLRESULT,
     setNTemplate,
-    getNTemplate
+    getNTemplate,
+    getHashName,
+    CopyObj
 } from "./constants.js";
 
 import {
@@ -31,12 +33,23 @@ import {
     burrowOn
 } from './animations.js';
 
+
+let socket;
+Hooks.once("ready", () => {
+    socket = socketlib.registerModule("swade-animated");
+    socket.register("applyDoc", applyDoc);
+    
+});
+
+
 function isTargetMissed(rolls,target) {
    
 
 }
+
 export async function playMeAnAnimation(SwadeItem,source,rolls) {   
     let itemData = {};
+    let animationName = "temp";
     itemData = retrieveItemConfiguration(SwadeItem);
     debug("playMeAnAnimation function", itemData);
     console.log("ROLL");
@@ -52,7 +65,8 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
     }
 
     if(itemData.isValid && itemData.animation.length > 0) {
-        let animationName = "temp";
+        animationName = itemData.animation[0].file+"-"+source.id
+        
         if(itemData.animationType == ANIMATIONTYPE.RANGED || itemData.animationType == ANIMATIONTYPE.MELEE) {
             debug("Ranged or Melee animated");
             let notWait = false;
@@ -112,7 +126,9 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
     
     for(let j = 0; j < rolls.targets.length; j++) {
         if(rolls.targets[j].result != ROLLRESULT.MISSED)
-            applyEffect(itemData,rolls.targets[j],SwadeItem);
+            //console.log(`The GM client calculated: ${result}`);
+            //game.socketlib..executeAsGM(handler, parameters...);
+            applyEffect(itemData,rolls.targets[j],SwadeItem, animationName,source);
     }
     if(itemData.animationEffect.length > 0) {
         if(itemData.animationType == ANIMATIONTYPE.TEMPLATE) {
@@ -135,45 +151,77 @@ function applyEffectTMFX(token,effect) {
     token.TMFXaddFilters(effect.params);
 }
 
+async function applyDoc(target_id, source_id, previous_id, effectName,animationName) {
+    console.log("APPLY DOC");
+    debug("there is an effect to apply");
+    let target = game.scenes.current.tokens.filter(el => el.id === target_id)[0]
+    console.log("TARGET PASSED")
+    console.log(target)
+    console.log(target.actor)
+    let source = game.scenes.current.tokens.filter(el => el.id === source_id)[0]
+    console.log("SOURCE PASSED")
+    console.log(source)
+    const compendium = await game.packs.find(p=>p.metadata.label=="SWADE Animated");
+    if (!compendium) {
+        debug( "Macros of SWADE: The compendium couldn't be found." );
+        return;
+    }
+    let Citems = await compendium.getDocuments();
+    let Eitems = await Citems.filter(p=> (p.type=='edge') && p.name=="AllEffects" );
+    debug(Eitems);
+    let allEffects = Array.from(Eitems[0].effects);
 
-export async function applyEffect(item,target,SwadeItem) {
-    debug("applyEffect",item);
+    let effectDoc = {};
+    for(let n = 0; n < allEffects.length; n++) {
+        console.log("EFFECT IN COMP")
+        console.log(allEffects[n].name+"=="+effectName)
+        if(allEffects[n].name == effectName) {
+            effectDoc = CopyObj(allEffects[n]);
+            //animationName = allEffects[n].name;
+        }
+    }
     
-    let animationName = "effect";
+        
+    console.log("Effect Doc BEFORE")
+    console.log(effectDoc);
+    
+    effectDoc.flags.swadeanimated = {}
+    effectDoc.flags.swadeanimated.animationName = getHashName(animationName)
+    //effectDoc.update(Data);
+    effectDoc.name = effectDoc.name + "("+source.name+")";
+    console.log("Effect Doc AFTER",effectDoc);
+
+    //return;
+    if(previous_id != 0) {
+        target.actor.deleteEmbeddedDocuments('ActiveEffect', [previous_id]);
+    }
+    target.actor.createEmbeddedDocuments('ActiveEffect', [effectDoc]);
+}
+
+export async function applyEffect(item,target,SwadeItem,animationName,source) {
+    debug("applyEffect",item);
+    //console.log("EFFECT",source)
+    
+    //animationName = "effect";
     let effectName = "";
     if(item.activeEffects.length) {
-        debug("there is an effect to apply");
-        const compendium = await game.packs.find(p=>p.metadata.label=="SWADE Animated");
-        if (!compendium) {
-            debug( "Macros of SWADE: The compendium couldn't be found." );
-            return;
-          }
-          let Citems = await compendium.getDocuments();
-        let Eitems = await Citems.filter(p=> (p.type=='edge') && p.name=="AllEffects" );
-        debug(Eitems);
-        let allEffects = Array.from(Eitems[0].effects);
-        
         for(let j = 0; j < item.activeEffects.length; j++) {
             if(item.activeEffects[j].type == target.result) {
-                effectName = item.activeEffects[j].label;
+                effectName = item.activeEffects[j].name;
             }
         }
+        let previousEffect = target.token.actor.effects.filter(i => (i.name.toLowerCase().includes(effectDoc.name.toLowerCase().replace(/\s\(.*\)/, "")) ));
         debug("Applying this effect: "+effectName);
-        let effectDoc = {};
-        for(let n = 0; n < allEffects.length; n++) {
-            if(allEffects[n].label == effectName) {
-                effectDoc = allEffects[n];
-                animationName = allEffects[n].label;
-            }
-        }
-        debug("Effect Doc",effectDoc);
-        
-        let previousEffect = target.token.actor.effects.filter(i => (i.label.toLowerCase().includes(effectDoc.label.toLowerCase().replace(/\s\(.*\)/, "")) ));
-        if(previousEffect.length > 0) {
+        let prev = Array.from(previousEffect)
+        let previous_pass = 0
+        if(prev.length > 0)  previous_pass = prev[0].id
 
-            target.token.actor.deleteEmbeddedDocuments('ActiveEffect', [Array.from(previousEffect)[0].id]);
-        }
-        target.token.actor.createEmbeddedDocuments('ActiveEffect', [effectDoc]);
+        //effectDoc.label = effectDoc.label + "("+source.name+")"
+        console.log("TARGET")
+        console.log(target.token.id)
+        await socket.executeAsGM("applyDoc", target.token.id, source.id, previous_pass, effectName,animationName ); //socket.executeAsGM("add", 5, 3);
+           
+        
         
     }
 

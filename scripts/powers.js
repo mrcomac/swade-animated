@@ -201,8 +201,8 @@ export function initPowers() {
                 {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.purple", label: "Purple", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
             ],
             activeEffects: [
-                { name: 'fly', label: game.i18n.localize("SAT.Effect.FlyNormal"), type: ROLLRESULT.HIT },
-                { name: 'fly', label: game.i18n.localize("SAT.Effect.FlyRaise"), type: ROLLRESULT.RAISE }
+                { name: game.i18n.localize("SAT.Effect.FlyNormal"), label: game.i18n.localize("SAT.Effect.FlyNormal"), type: ROLLRESULT.HIT },
+                { name: game.i18n.localize("SAT.Effect.FlyRaise"), label: game.i18n.localize("SAT.Effect.FlyRaise"), type: ROLLRESULT.RAISE }
             ],
         },
         { // Protection v1

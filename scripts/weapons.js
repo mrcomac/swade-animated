@@ -236,6 +236,24 @@ export function initWeapons() {
                 
             ],
         },
+        { //Proton v1
+            name: game.i18n.localize("SAT.Weapons.ProtonStream"),
+            animationType: ANIMATIONTYPE.RANGED,
+            animations: [
+                {file: "jb2a.scorching_ray.01.red", label: "Red", active: true, size: 1, persist: true, filter: "ColorMatrix", filterData: { }, startTime: 0, persistBehaviour: { type: 'rangedAfter', waitUntilFinished: -700, startTime: 500, endTime: 700  } }
+
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/laser/proton-stream.mp3", active: true, delay: 0, volume: 1.0,  duration: 1000 }
+            ],
+            animationEffects: [
+                //{file: "jb2a.scorching_ray.01.red", label: "Red", active: true, size: 1, persist: true, filter: "ColorMatrix", filterData: { }, startTime: 500, endTime: 700 }
+            ],
+            activeEffects: [
+                { name: 'Proton Stream', label: game.i18n.localize("SAT.Effect.ProtonStreamNormal"), type: ROLLRESULT.HIT },
+                { name: 'Proton Stream', label: game.i18n.localize("SAT.Effect.ProtonStreamNormal"), type: ROLLRESULT.RAISE }
+            ],
+        },
         { //Rapier v1
             name: game.i18n.localize("SAT.Weapons.Rapier"),
             animationType: ANIMATIONTYPE.MELEE,
