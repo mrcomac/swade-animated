@@ -9,6 +9,10 @@ assignees: ''
 
 *[Please be aware if you are not able to fill the items below I won't be able to help. Also those text below, including this one, are descriptions for each section, please remove accordingly]*
 
+**Item**
+- Type: [ example: power, weapon, consumable, N/A ]
+- Name: [ example: sword, fly, reflection, N/A ]
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
