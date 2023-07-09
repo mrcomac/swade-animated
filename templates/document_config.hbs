@@ -73,13 +73,16 @@
                         &nbsp;Custom Sound</label>
                     <input type="text" name="customSound" placeholder="{{ options.customSoundPH }}" value="{{ options.sound.file }}">
                     
-                    <p class="notes">For more sounds please check the <a href="https://www.wowhead.com/" target="_blank">WoW Head</a>. Be aware you need to download the audio file to your foundry. WoW Head doesn't allow run audio files from their website.</p>
+                    <p class="notes">For more sounds please check the <a href="https://www.wowhead.com/" target="_blank">WoW Head</a>. You need to download the audio file to your server. WoW Head doesn't allow to run the audio from there.</p>
             </div>
     </section>
     {{/if}}
     <footer class="sheet-footer flexrow">
-        <button type="submit" name="submit">
+        <button type="submit" id="submit" name="submit">
             <i class="far fa-save"></i> SAVE
+        </button>
+        <button type="submit" id="reset" name="submit">
+            <i class="far fa-refresh"></i> RESET
         </button>
     </footer>
 </form>

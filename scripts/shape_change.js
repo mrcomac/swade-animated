@@ -1,6 +1,7 @@
 import { playOnToken } from './animations.js';
 import {
-    getShapeChangeCompendium
+    getShapeChangeCompendium,
+    debug
 } from './constants.js';
 
 let officialClass = '<div>'
@@ -12,20 +13,28 @@ export async function shape_change(target_token, animation, sound, animationName
     else if (game.modules.get("swade-core-rules")?.active) { officialClass = '<div class="swade-core">' }
 
     let creatures = await get_creatures();
-    let shapeChangeConfig = target_token.actor.items.find(p => p.name.toLowerCase() == "shape change");
     let the_buttons;
-    if (shapeChangeConfig.flags?.swadeanimated?.shapechange) {
+
+    if (target_token.actor.flags?.swadeanimated?.shapeChangeConfig) {
         the_buttons = {
             one: {
                 label: `<i class="fas fa-paw"></i>Shape Change`,
                 callback: async (html) => {
                     const scID = html.find(`#selected_sc`)[0].value;
-                    await apply_shape(target_token, scID, html.find(`#raise`)[0].checked, shapeChangeConfig.flags.swadeanimated.shapechange.active,animation,sound,animationName);
+                    await apply_shape(target_token, scID, html.find(`#raise`)[0].checked, animation,sound,animationName);
                 }
             }
         }
-
-        //}
+    } else {
+        the_buttons = {
+            one: {
+                label: `<i class="fas fa-paw"></i>Shape Change`,
+                callback: async (html) => {
+                    const scID = html.find(`#selected_sc`)[0].value;
+                    await apply_shape(target_token, scID, html.find(`#raise`)[0].checked, animation,sound,animationName);
+                }
+            }
+        }
     }
     let creatureOptions;
     for (let each of creatures) {
@@ -66,13 +75,15 @@ export async function shape_change(target_token, animation, sound, animationName
 }
 
 export async function shapeChangeOff(token) {
-    let shapeChangeConfig = token.actor.items.find(p => p.name.toLowerCase() == "shape change");
-    if (shapeChangeConfig.flags?.swadeanimated?.shapechange.active) {
+    debug("shapeChangeOff");
+    //let shapeChangeConfig = token.actor.items.find(p => p.name.toLowerCase() == "shape change");
+    if (token.actor.flags?.swadeanimated?.shapeChangeConfig.active) {
         revert_form(token);
     }
 }
 async function revert_form(token) {
-    let shapeChangeConfig = token.actor.items.find(p => p.name.toLowerCase() == "shape change");
+    debug("Revert form");
+    let shapeChangeConfig = token.actor.flags.swadeanimated.shapeChangeConfig;
     let shapeChange = {
         'active': false,
         'attributes': '',
@@ -84,27 +95,29 @@ async function revert_form(token) {
     };
 
     let updateData = {
-        "system.attributes.agility.die.sides": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.agility_side,
-        "system.attributes.agility.die.modifier": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.agility_mod,
-        "system.attributes.strength.die.sides": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.strength_side,
-        "system.attributes.strength.die.modifier": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.strength_mod,
-        "system.attributes.vigor.die.sides": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.vigor_side,
-        "system.attributes.vigor.die.modifier": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.vigor_mod,
-        "system.stats.size": shapeChangeConfig.flags?.swadeanimated?.shapechange.scale,
+        "system.attributes.agility.die.sides": shapeChangeConfig.attributes.agility_side,
+        "system.attributes.agility.die.modifier": shapeChangeConfig.attributes.agility_mod,
+        "system.attributes.strength.die.sides": shapeChangeConfig.attributes.strength_side,
+        "system.attributes.strength.die.modifier": shapeChangeConfig.attributes.strength_mod,
+        "system.attributes.vigor.die.sides": shapeChangeConfig.attributes.vigor_side,
+        "system.attributes.vigor.die.modifier": shapeChangeConfig.attributes.vigor_mod
     };
-
     token.document.update(
         {
-            'img': shapeChangeConfig.flags?.swadeanimated?.shapechange.img,
-            'name': shapeChangeConfig.flags?.swadeanimated?.shapechange.name
+            'img': shapeChangeConfig.img,
+            'name': shapeChangeConfig.name
         });
 
-    token.actor.update(shapeChangeConfig.flags?.swadeanimated?.shapechange.stats);
+    debug("REVERTING ACTOR STATS")
+    token.actor.update(shapeChangeConfig.stats);
+    debug("REVERTING ACTOR ATTRIBUTES")
     token.actor.update(updateData);
-    await set_token_size(token, shapeChangeConfig.flags?.swadeanimated?.shapechange.scale);
+    debug("REVERTING ACTOR SIZE")
+    await set_token_size(token, shapeChangeConfig.stats.scale);
 
     let actual_skills = token.actor.items.filter(item => item.type === "skill")
-    let original_skills = shapeChangeConfig.flags?.swadeanimated?.shapechange.items;
+    let original_skills = shapeChangeConfig.items;
+    debug("REMOVE/CHANGE THESE SKILSS")
     for (let skill of actual_skills) {
         let has_skill = original_skills.find(s => (s.name.toLowerCase() === skill.name.toLowerCase()))
         if (has_skill) {
@@ -117,7 +130,7 @@ async function revert_form(token) {
         }
     }
 
-    let itemsToRemove = shapeChangeConfig.flags?.swadeanimated?.shapechange.toRemove;
+    let itemsToRemove = shapeChangeConfig.toRemove;
     let itemList = token.actor.items.filter(i => (i.type === "edge" || i.type === "hindrance"));
     for (let itemName of itemsToRemove) {
         let item = itemList.find(i => (i.name.toLowerCase() === itemName.toLowerCase()));
@@ -129,12 +142,12 @@ async function revert_form(token) {
     const Data = {
         flags: {
             swadeanimated: {
-                shapechange: shapeChange
+                shapeChangeConfig: shapeChange
             }
         }
     }
     try {
-        shapeChangeConfig.update(Data);
+        token.actor.update(Data);
     } catch (err) {
         console.log(err);
     }
@@ -149,8 +162,8 @@ async function revert_statuses(token) {
         "system.attributes.strength.die.sides": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.strength_side,
         "system.attributes.strength.die.modifier": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.strength_mod,
         "system.attributes.vigor.die.sides": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.vigor_side,
-        "system.attributes.vigor.die.modifier": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.vigor_mod,
-        "system.stats.size": shapeChangeConfig.flags?.swadeanimated?.shapechange.scale,
+        "system.attributes.vigor.die.modifier": shapeChangeConfig.flags?.swadeanimated?.shapechange.attributes.vigor_mod
+       // "system.stats.size": shapeChangeConfig.flags?.swadeanimated?.shapechange.scale,
     };
 
     await token.document.update(
@@ -186,14 +199,22 @@ async function revert_statuses(token) {
     }
 }
 
-async function apply_shape(token, scID, raise, doNotSave,animation,sound,animationName) {
+async function apply_shape(token, scID, raise, animation,sound,animationName) {
     
-
-    if(doNotSave) {
+    
+    /*if(doNotSave) {
         await revert_statuses(token);
+    }*/
+    let actor = token.actor;
+    let shapeChangeConfig = {}
+    let doNotSave = false
+
+    if(actor.flags?.swadeanimated?.shapeChangeConfig) {
+        shapeChangeConfig = actor.flags?.swadeanimated?.shapeChangeConfig
+        if(actor.flags?.swadeanimated?.shapeChangeConfig.active) doNotSave = true;
     }
 
-    let shapeChangeConfig = token.actor.items.find(p => p.name.toLowerCase() == "shape change");
+    //let shapeChangeConfig = token.actor.items.find(p => p.name.toLowerCase() == "shape change");
     let creatures = await get_creatures();
     let scPreset = creatures.find(a => (a.id === scID)).toObject();
     let items = token.actor.items.filter(item => item.type === "skill")
@@ -203,6 +224,23 @@ async function apply_shape(token, scID, raise, doNotSave,animation,sound,animati
     }
 
     let new_skills = scPreset.items.filter(item => item.type === "skill");
+
+    //remove skills from previous shape
+    if(doNotSave) {
+        let actual_skills = token.actor.items.filter(item => item.type === "skill")
+        let original_skills = shapeChangeConfig.items;
+        for (let skill of actual_skills) {
+            let has_skill = original_skills.find(s => (s.name.toLowerCase() === skill.name.toLowerCase()))
+            if (has_skill) {
+                await skill.update({
+                    "system.die.sides": has_skill.side,
+                    "system.die.modifier": has_skill.modifier
+                });
+            } else {
+                actor.deleteEmbeddedDocuments('Item', [skill._id]);
+            }
+        }
+    }
 
     for (let skill of new_skills) {
         let has_skill = items.find(s => (s.name.toLowerCase() === skill.name.toLowerCase()
@@ -258,8 +296,8 @@ async function apply_shape(token, scID, raise, doNotSave,animation,sound,animati
         'items': original_skills,
         'toRemove': itemsToRemove,
         'img': token.document.texture.src,
-        'name': token.document.name,
-        'scale': token.actor.system.stats.size
+        'name': token.document.name
+        //'scale': token.actor.system.stats.size
     };
 
     let updateStr = scPreset.system.attributes.strength.die.sides;
@@ -274,8 +312,8 @@ async function apply_shape(token, scID, raise, doNotSave,animation,sound,animati
         "system.attributes.strength.die.sides": updateStr,
         "system.attributes.strength.die.modifier": scPreset.system.attributes.strength.die.modifier,
         "system.attributes.vigor.die.sides": updateVig,
-        "system.attributes.vigor.die.modifier": scPreset.system.attributes.vigor.die.modifier,
-        "system.stats.size": scPreset.system.stats.size,
+        "system.attributes.vigor.die.modifier": scPreset.system.attributes.vigor.die.modifier
+       // "system.stats.size": scPreset.system.stats.size,
     };
     await playOnToken(token,animation,sound,animationName,true);
     await token.document.update({ 'img': scPreset.prototypeToken.texture.src });
@@ -287,14 +325,14 @@ async function apply_shape(token, scID, raise, doNotSave,animation,sound,animati
     const Data = {
         flags: {
             swadeanimated: {
-                shapechange: shapeChange
+                shapeChangeConfig: shapeChange
             }
         }
     }
 
     if (!doNotSave) {
         try {
-            shapeChangeConfig.update(Data);
+            await actor.update(Data);
             // Fallback that deletes all AEs that are marked as temporary:
 
         } catch (err) {
@@ -304,6 +342,7 @@ async function apply_shape(token, scID, raise, doNotSave,animation,sound,animati
 }
 
 async function set_token_size(scCopy, scSize) {
+    debug("Set Token Size")
     if (scSize <= 2 && scSize >= 0) {
         await scCopy.document.update({ "height": 1, "width": 1, "scale": 1 })
     } else if (scSize <= 5 && scSize >= 3) {

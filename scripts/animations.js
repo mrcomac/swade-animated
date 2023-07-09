@@ -5,6 +5,7 @@ import {
 } from './constants.js';
 
 export async function playOnToken(token, animation, sound,animationName, notWait=false) {
+    animationName = animationName +","+animation.label+","+token.id;
     debug("playOnToken: ",animation,sound);
     if(animation.persist || notWait) {
         return await new Sequence()
@@ -45,6 +46,7 @@ export async function playOnToken(token, animation, sound,animationName, notWait
 }
 
 export async function playOnArea(target, animation, sound,animationName) {
+    animationName = animationName +","+animation.label+","+target.id;
     debug("playOnArea: ",animation,sound);
     if(animation.persist) {
         return await new Sequence()
@@ -83,14 +85,43 @@ export async function playOnArea(target, animation, sound,animationName) {
     
 }
 
+export async function playStream(target, source, animation, sound, animationName) {
+    debug("PLAY STREAM")
+    animationName = animationName +","+animation.label+","+target.id;
+    if(animation?.timeRange) {
+        return  await new Sequence()
+            .sound()
+            .file(sound.file)
+            .volume(sound.volume)
+            .effect()       
+        .file(animation.file)
+            .atLocation(source)
+            .stretchTo(target)
+            .waitUntilFinished(animation.waitUntilFinished)
+        .effect()
+            .name(String(getHashName(animationName)))
+            .file(animation.file)
+            .atLocation(source)
+            .stretchTo(target,  animation.stretchTo)
+            .persist(true)
+            .timeRange(animation.timeRange.start, animation.timeRange.end)
+            .play();
+    }
+
+}
+
 export async function playRangedOrMeele(source,target,animation,sound,_missed = ROLLRESULT.MISSED,animationName,byUnit) {
-    console.log("playRangedOrMeele",animation,sound);
-    console.log("ANIMATION HASH", animationName);
-    console.log("ANIMATION HASH", getHashName(animationName));
+    animationName = animationName +","+animation.label+","+target.id;
+    debug("playRangedOrMeele",animation,sound);
     let repeat = { times: 1, randomInit: 0, randomEnd: 0 };
     let stretchToConfig = {}
+    let attachTo = false;
     if(animation?.repeat) {
         repeat = animation?.repeat
+    }
+
+    if(animation?.attachTo) {
+        attachTo = true;
     }
 
     if(animation?.stretchTo) {
@@ -104,54 +135,24 @@ export async function playRangedOrMeele(source,target,animation,sound,_missed = 
     }
     debug(sound);
     if(animation.persist) {
-        let persist = true
-        if(missed) persist = false
-        
-        if(animation?.persistBehaviour?.type === "rangedAfter") {
-            return await new Sequence()
+        return await new Sequence()
             .sound()
-                .file(sound.file)
-                .delay(sound.delay)
-                .volume(sound.volume)
-                .duration(sound.duration)
-                .fadeOutAudio(500)
+            .file(sound.file)
+            .delay(sound.delay)
+            .volume(sound.volume)
+            .duration(sound.duration)
+            .fadeOutAudio(500)
             .effect()
-                .startTime(animation.startTime)
-                .atLocation(source)
-                .stretchTo(target, stretchToConfig)
-                .file(animation.file)
-                .filter(animation.filter, animation.filterData)
-                .waitUntilFinished(animation.persistBehaviour.waitUntilFinished)
-                .size(animation.size,  { gridUnits: true })
-                .missed(missed)
-            .effect()
-                .name(String(getHashName(animationName)))
-                .file(animation.file)
-                .atLocation(source)
-                .stretchTo(target, stretchToConfig)
-                .persist(persist)
-                .timeRange(animation.persistBehaviour.startTime,animation.persistBehaviour.endTime)
+            .name(String(getHashName(animationName)))
+            .timeRange(animation.startTime, animation.endTime)
+            .atLocation(source)
+            .stretchTo(target, stretchToConfig)
+            .file(animation.file)
+            .filter(animation.filter, animation.filterData)
+            .persist(animation.persist)
+            .size(animation.size, { gridUnits: true })
+            .missed(missed)
             .play();
-        } else {
-            return await new Sequence()
-            .sound()
-                .file(sound.file)
-                .delay(sound.delay)
-                .volume(sound.volume)
-                .duration(sound.duration)
-                .fadeOutAudio(500)
-            .effect()
-                .name(String(getHashName(animationName)))
-                .startTime(animation.startTime)
-                .atLocation(source)
-                .stretchTo(target, stretchToConfig)
-                .file(animation.file)
-                .filter(animation.filter, animation.filterData)
-                .persist(persist)
-                .size(animation.size,  { gridUnits: true })
-                .missed(missed)
-            .play();
-        }
     } else {
         return await new Sequence()
         .sound()
@@ -224,7 +225,7 @@ export async function burrowOn(token,animation,sound,animationName) {
 
 export async function stopFly(token) {
     //await Sequencer.EffectManager.endEffects({ name: "Fly", object: token });
-    new Sequence()
+    await new Sequence()
         .animation()
             .on(token)
             .opacity(1)
@@ -232,6 +233,7 @@ export async function stopFly(token) {
 }
 
 export function  fly(token,animation,sound,animationName,notWait) {
+    animationName = animationName +","+animation.label+","+token.id;
     debug("fly: ",token,animation,sound,animationName);
     new Sequence()
         .sound()
@@ -279,7 +281,8 @@ export function  fly(token,animation,sound,animationName,notWait) {
     .play();
 }
 
-export function  playOnTemplate(animation,sound, _missed, animationName="nonPersistent") {
+export function  playOnTemplate(animation,sound, _missed, animationName="nonPersistent", token) {
+    animationName = animationName +","+animation.label+","+token.id;
     debug("playOnTemplate",animationName,animation,sound)
 
     let template = canvas.templates?.placeables?.[canvas.templates.placeables.length - 1]?.document;

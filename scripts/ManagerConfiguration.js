@@ -95,7 +95,6 @@ function getUIConfigItem(item) {
     }
     
     if(itemRAW.animationEffects.length > 0) {
-        UIConfigItem.animationEffect.type = itemRAW.animationEffects.type;
         if(itemRAW.animationEffects[0]?.params) {
             UIConfigItem.animationEffect.enabled = false;
         } else {
@@ -159,15 +158,17 @@ function getUIConfigItem(item) {
 export function retrieveItemConfiguration(item,rolls) {
     let itemConfig = CopyObj(ItemConfigModel);
     if(item.flags?.swadeanimated?.config) {
-        itemConfig = CopyObj(item.flags.swadeanimated.config);
-        itemConfig.isValid = true;
-        debug("CONFIG FROM ITEM",itemConfig);
-
-    } else {
-        itemConfig = retrieveDefaultItemConfiguration(item,rolls);
-        itemConfig.isValid = true;
-        debug("CONFIG FROM DEFAULT",itemConfig);
-    }
+        if(item.flags.swadeanimated.config.isValid) {
+            itemConfig = CopyObj(item.flags.swadeanimated.config);
+            itemConfig.isValid = true;
+            debug("CONFIG FROM ITEM",itemConfig);
+            return itemConfig;
+        }
+    } 
+    itemConfig = retrieveDefaultItemConfiguration(item,rolls);
+    itemConfig.isValid = true;
+    debug("CONFIG FROM DEFAULT",itemConfig);
+    
     return itemConfig;
 }
 
@@ -183,49 +184,46 @@ function retrieveDefaultItemConfiguration(item,rolls) {
     
     let configItem = CopyObj(ItemConfigModel);
     let itemData = CopyObj(ItemData);
-    //let item = [];
     
     itemData = getItem(item);
     debug(itemData);
     if(itemData.animationType < 0 ) {
         return configItem;
     }
-    console.log("ITEMDATA")
-    console.log(configItem)
 
-    if(Object.keys(itemData).length > 0) {
-        configItem.animationType = itemData.animationType;
-        configItem.template = itemData.template;
+    configItem.animationType = itemData.animationType;
+    configItem.template = itemData.template;
     
-        for( let i = 0; itemData.animations.length; i++) {
-            if(itemData.animations[i].active) {
-                configItem.animation.push(itemData.animations[i]);
-                configItem.animation[0].isDefault = true;
-                break;
-            }
-        }
-        
-        for( let i = 0; itemData.sounds.length; i++) {
-            if(itemData.sounds[i].active) {
-                configItem.sound.push(itemData.sounds[i]);
-                configItem.sound[0].isDefault = true;
-                break;
-            }
-        }
+    if( Object.keys(itemData).length === 0) return configItem;
 
-        for( let i = 0; itemData.animationEffects.length; i++) {
-            if(itemData.animationEffects[i].active) {
-                configItem.animationEffect.push(itemData.animationEffects[i]);
-                configItem.animationEffect[0].isDefault = true;
-                break;
-            }
+    for( let i = 0; itemData?.animations.length; i++) {
+        if(itemData.animations[i].active) {
+            configItem.animation.push(itemData.animations[i]);
+            configItem.animation[0].isDefault = true;
+            break;
         }
-
-        configItem.activeEffects = itemData.activeEffects;
-            
-    
-        debug("retrieveDefaultItemConfiguration",configItem);
     }
+    
+    for( let i = 0; itemData.sounds.length; i++) {
+        if(itemData.sounds[i].active) {
+            configItem.sound.push(itemData.sounds[i]);
+            configItem.sound[0].isDefault = true;
+            break;
+        }
+    }
+
+    for( let i = 0; itemData.animationEffects.length; i++) {
+        if(itemData.animationEffects[i].active) {
+            configItem.animationEffect.push(itemData.animationEffects[i]);
+            configItem.animationEffect[0].isDefault = true;
+            break;
+        }
+    }
+
+    configItem.activeEffects = itemData.activeEffects;
+          
+   
+    debug("retrieveDefaultItemConfiguration",configItem);
     return configItem;
 }
 
@@ -273,64 +271,12 @@ class DocumentConfigForm extends FormApplication {
             await this[action](event);
     }
 
-    async _updateObject(_, formData) {
-        //Merge in version
-        debug("SAVE");
-        if(this.object.type== 'consumable') {
-            return;
-        }
-        
-        let itemConfig = CopyObj(ItemConfigModel);
-        formData = { ...{ _version: saConfigVersion }, ...formData };
-        debug(formData);
-        let itemData = getItem(this.object);
-        debug("ITEM DATA", itemData);
-        itemConfig.template = itemData.template;
-        itemConfig.animationType = itemData.animationType;
-        if(formData.soundType == "default") {
-            itemConfig.sound.push(getElementItem(this.object,formData.defaultSound,'sound'));
-            itemConfig.sound[0].isDefault = true;
-            debug("Sound is configured from default",itemConfig);
-        } else {
-            itemConfig.sound = [{isDefault: false, label: "Custom", file: formData.customSound, duration: 1000, active: true, delay: 0, volume: 1.0 }];
-        }
-
-        if(itemData.animations.length > 0) {
-            if(formData.isDefaultAnimation == "true") {
-                itemConfig.animation.push(getElementItem(this.object,formData.defaultAnimation,'animation'));
-                itemConfig.animation[0].isDefault = true;
-                itemConfig.animation[0].active = true;
-                debug("Animation is configured from default",itemConfig);
-            } else {
-                itemConfig.animation = [{type: itemData.animationType,  isDefault: false, file: formData.customAnimation, label: "Custom", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  }];
-                                        
-            }
-        } else {
-            itemConfig.animation = [];
-        }
-        
-        if(formData.effectAnimationType) {
-            if(formData.effectAnimationType == "default") {
-                itemConfig.animationEffect.push(getElementItem(this.object,formData.defaultEffect,'animationEffect'));
-                itemConfig.animationEffect[0].isDefault = true;
-                debug("Effect Animation is configured from default",itemConfig);
-            } else {
-                itemConfig.animationEffect = [{type: itemData.animationType, isDefault: false, file: formData.customEffectAnimation, label: "Custom", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0}];
-            }
-        } else if(itemData.animationEffects.length > 0) {
-            if(itemData.animationEffects[0].params)
-                itemConfig.animationEffect.push(itemData.animationEffects[0]);
-        }
-
-        itemConfig.activeEffects = itemData.activeEffects;
-        
-      itemConfig.isValid = true;
-      debug("Item ready to save",itemConfig);
-
-      const Data = {
+    async _resetItem() {
+        let reset = CopyObj(ItemConfigModel)
+        const Data = {
             flags: {
                 swadeanimated: {
-                    config: itemConfig 
+                    config: reset
                 }
             }
         }
@@ -341,6 +287,81 @@ class DocumentConfigForm extends FormApplication {
             debug(`Flags set on ${this.object.name}.`, this.object);
         } catch (err) {
             debug(err)
+        }
+    }
+    async _updateObject(event, formData) {
+        //Merge in version
+        if(event?.submitter?.innerText.toLowerCase().includes("reset")) {
+            this._resetItem();
+            return;
+        } else if(event?.submitter?.innerText.toLowerCase().includes("save")) {
+            debug("SAVE");
+            if(this.object.type== 'consumable') {
+                return;
+            }
+            
+            let itemConfig = CopyObj(ItemConfigModel);
+            formData = { ...{ _version: saConfigVersion }, ...formData };
+            debug(formData);
+            let itemData = getItem(this.object);
+            debug("ITEM DATA", itemData);
+            itemConfig.template = itemData.template;
+            itemConfig.animationType = itemData.animationType;
+            if(formData.soundType == "default") {
+                itemConfig.sound.push(getElementItem(this.object,formData.defaultSound,'sound'));
+                itemConfig.sound[0].isDefault = true;
+                debug("Sound is configured from default",itemConfig);
+            } else {
+                itemConfig.sound = [{isDefault: false, label: "Custom", file: formData.customSound, duration: 1000, active: true, delay: 0, volume: 1.0 }];
+            }
+
+            if(itemData.animations.length > 0) {
+                if(formData.isDefaultAnimation == "true") {
+                    itemConfig.animation.push(getElementItem(this.object,formData.defaultAnimation,'animation'));
+                    itemConfig.animation[0].isDefault = true;
+                    itemConfig.animation[0].active = true;
+                    debug("Animation is configured from default",itemConfig);
+                } else {
+                    itemConfig.animation = [{type: itemData.animationType,  isDefault: false, file: formData.customAnimation, label: "Custom", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  }];
+                                            
+                }
+            } else {
+                itemConfig.animation = [];
+            }
+            
+            if(formData.effectAnimationType) {
+                if(formData.effectAnimationType == "default") {
+                    itemConfig.animationEffect.push(getElementItem(this.object,formData.defaultEffect,'animationEffect'));
+                    itemConfig.animationEffect[0].isDefault = true;
+                    debug("Effect Animation is configured from default",itemConfig);
+                } else {
+                    itemConfig.animationEffect = [{type: itemData.animationType, isDefault: false, file: formData.customEffectAnimation, label: "Custom", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0}];
+                }
+            } else if(itemData.animationEffects.length > 0) {
+                if(itemData.animationEffects[0].params)
+                    itemConfig.animationEffect.push(itemData.animationEffects[0]);
+            }
+
+            itemConfig.activeEffects = itemData.activeEffects;
+            
+        itemConfig.isValid = true;
+        debug("Item ready to save",itemConfig);
+
+        const Data = {
+                flags: {
+                    swadeanimated: {
+                        config: itemConfig 
+                    }
+                }
+            }
+        
+            try {
+                this.object.update(Data);
+                // Fallback that deletes all AEs that are marked as temporary:
+                debug(`Flags set on ${this.object.name}.`, this.object);
+            } catch (err) {
+                debug(err)
+            }
         }
     }
 }

@@ -1,34 +1,27 @@
 # Overview
 
-This module allow players to choose from the character sheet the power/weapons/consumables traits.
+Select animation from a list ([it requires JBA Patreon](https://www.patreon.com/JB2A/posts)).
 
-Dependencies:
--  JBA or [JBA Patreon](https://www.patreon.com/JB2A/posts)
-- Sequencer
-- Token Magic
+[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/9Xn2PGEN40s)
 
-Supports:
-- Better Rolls 2 for Savage Worlds
+Effects are applied accordingly.
 
-After install the module you can go to the item and click on the ANI link to select an option.
-[![Watch the video](https://img.youtube.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/9Xn2PGEN40s)
+[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/pfzChspmplY)
 
-Effects are applied accordingly
-[![Watch the video](https://img.youtube.com/vi/pfzChspmplY/maxresdefault.jpg)](https://youtu.be/pfzChspmplY)
+Templates are allowed.
 
-Templates are supported.
-[![Watch the video](https://img.youtube.com/vi/vm48nEE9b9o/maxresdefault.jpg)](https://youtu.be/vm48nEE9b9o)
+[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/vm48nEE9b9o)
 
 # Supported Items
 
 ##### Powers
-Arcane Protection(v1), Blind(v1), Bolt(v1), Burrow(v1), Burst(v1), Deflection(v1), Healing(v1), Fly(v1), Protection(v1),  Shape Change(v1), Sound/Silence(v1)
+Arcane Protection, Blind, Bolt, Burrow, Burst, Deflection, Healing, Fly, Protection,  Shape Change, Sound/Silence
 
 ##### Weapons
-Bite(v1), Bow(v1), Carabine(v1), Claws(v1), Dagger(v1), Derringer(v1), Gatling(v1), Knife(v1), Laser(v1), Mace(v1), Monk Attack(v1), Pistol(v1), Rapier(v1), Revolver Single(v1), Revolver Double(v1), Rifle(v1), Scimitarra(v1), Scimitar(v1), Shotgun(v1), Spear(v1), Sword(v1), Warhammer(v1)
+Bite, Bow, Claws, Dagger, Mace, Monk Attack, Rapier, Scimitar, Spear, Sword, Warhammer
 
 ##### Consumables
-Fly(v1), Healing(v1), Protection(v1), Speed(v1)
+Fly, Healing, Protection, Speed
 
 # Note
 There is no stable version yet. I don't have more than 4 hours per week to work on this. 
@@ -40,7 +33,7 @@ J. W. Bjerk (eleazzaar) -- www.jwbjerk.com/art  -- find this and other open art 
 Website: https://www.wowhead.com/
 
 # Sounds
-Website: https://www.wowhead.com/ (You need to download the sounds to a folder within data folder)
+Website: https://www.wowhead.com/
 
 # Scripts
 I didn't reinvent the wheel. I'm using [Sequencer](https://github.com/fantasycalendar/FoundryVTT-Sequencer) and [Token Magic](https://github.com/Feu-Secret/Tokenmagic). Also I'm using the macros created by [EskieMoh@](https://twitter.com/EskieMoh) and [SWADE Immersive Macros](https://github.com/SalieriC/SWADE-Immersive-Macros).

@@ -9,6 +9,7 @@ export const ANIMATIONTYPE = {
     TARGET: 3,
     TEMPLATE: 4,
     ITEMBASED: 5, //the type if template, ranged or melee will be decided by the item behaviour
+    STREAM: 7,
     SPECIAL: 10
 };
 

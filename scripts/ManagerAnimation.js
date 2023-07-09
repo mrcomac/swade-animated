@@ -1,6 +1,5 @@
 import {
-    retrieveItemConfiguration,
-    ItemConfigModel
+    retrieveItemConfiguration
 } from './ManagerConfiguration.js';
 
 import {
@@ -9,7 +8,6 @@ import {
 
 import {
     ANIMATIONTYPE,
-    PATH,
     debug,
     TMFXEffectsList,
     NOSOUND,
@@ -30,30 +28,19 @@ import {
     playOnArea,
     fly,
     playOnTemplate,
-    burrowOn
+    burrowOn,
+    playStream
 } from './animations.js';
 
-
-let socket;
-Hooks.once("ready", () => {
-    socket = socketlib.registerModule("swade-animated");
-    socket.register("applyDoc", applyDoc);
-    
-});
-
-
 function isTargetMissed(rolls,target) {
-   
+    console.log("Not supported yet");
 
 }
-
-export async function playMeAnAnimation(SwadeItem,source,rolls) {   
+export async function playMeAnAnimation(SwadeItem,source,rolls) {
+    let animationName = String(source.id); 
     let itemData = {};
-    let animationName = "temp";
     itemData = retrieveItemConfiguration(SwadeItem);
     debug("playMeAnAnimation function", itemData);
-    console.log("ROLL");
-    console.log(rolls);
     if(rolls.targets.length == 0) {
         if(rolls.rawValue >= 8) {
             rolls.targets = [ { token: source, result: ROLLRESULT.RAISE } ];
@@ -65,8 +52,6 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
     }
 
     if(itemData.isValid && itemData.animation.length > 0) {
-        animationName = itemData.animation[0].file+"-"+source.id
-        
         if(itemData.animationType == ANIMATIONTYPE.RANGED || itemData.animationType == ANIMATIONTYPE.MELEE) {
             debug("Ranged or Melee animated");
             let notWait = false;
@@ -76,7 +61,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
             for(let i=0;i<rolls.targets.length;i++) {
                 debug("playMeAnAnimation rangedorMeele",itemData);
                 
-                //let missed = isTargetMissed(rolls, rolls.targets[i]);
+                let missed = isTargetMissed(rolls, rolls.targets[i]);
                 await playRangedOrMeele(source,rolls.targets[i].token,itemData.animation[0],itemData.sound[0],rolls.targets[i].result,animationName,notWait);
             }
             
@@ -98,7 +83,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                 }
             } else {
                 debug("playMeAnAnimation onTemplate",itemData);
-                playOnTemplate(itemData.animation[0],itemData.sound[0], ROLLRESULT.HIT, animationName);
+                playOnTemplate(itemData.animation[0],itemData.sound[0], ROLLRESULT.HIT, animationName,source);
             }
             setNTemplate(0);
             
@@ -120,15 +105,19 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                     await shape_change(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,notWait);
                 }
             }
+        } else if(itemData.animationType == ANIMATIONTYPE.STREAM) {
+            debug("PLAY STREAM")
+            for(let i = 0; i < rolls.targets.length; i++) {
+                debug("playMeAnAnimation Shape Change",itemData);
+                await playStream(rolls.targets[i].token, source, itemData.animation[0],itemData.sound[0],animationName);
+            }
         }
     }
 
     
     for(let j = 0; j < rolls.targets.length; j++) {
         if(rolls.targets[j].result != ROLLRESULT.MISSED)
-            //console.log(`The GM client calculated: ${result}`);
-            //game.socketlib..executeAsGM(handler, parameters...);
-            applyEffect(itemData,rolls.targets[j],SwadeItem, animationName,source);
+            applyEffect(itemData,rolls.targets[j],SwadeItem,animationName,source);
     }
     if(itemData.animationEffect.length > 0) {
         if(itemData.animationType == ANIMATIONTYPE.TEMPLATE) {
@@ -137,6 +126,13 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
     }
     
 }
+
+let socket;
+
+Hooks.once("socketlib.ready", () => {
+	socket = socketlib.registerModule("swade-animated");
+	socket.register("applyEffectDoc", applyEffectDoc);
+});
 
 /*
 (async) <PlaceableObject>.TMFXaddFilters(<params array>)
@@ -151,20 +147,12 @@ function applyEffectTMFX(token,effect) {
     token.TMFXaddFilters(effect.params);
 }
 
-async function applyDoc(target_id, source_id, previous_id, effectName,animationName) {
-    console.log("APPLY DOC");
-    debug("there is an effect to apply");
-    let target = game.scenes.current.tokens.filter(el => el.id === target_id)[0]
-    console.log("TARGET PASSED")
-    console.log(target)
-    console.log(target.actor)
-    let source = game.scenes.current.tokens.filter(el => el.id === source_id)[0]
-    console.log("SOURCE PASSED")
-    console.log(source)
+async function applyEffectDoc(actor_id,effectName,animationName,sourceName,animationType) {
+    let actor = game.actors.get(actor_id);
     const compendium = await game.packs.find(p=>p.metadata.label=="SWADE Animated");
     if (!compendium) {
-        debug( "Macros of SWADE: The compendium couldn't be found." );
-        return;
+            debug( "Macros of SWADE: The compendium couldn't be found." );
+            return;
     }
     let Citems = await compendium.getDocuments();
     let Eitems = await Citems.filter(p=> (p.type=='edge') && p.name=="AllEffects" );
@@ -173,55 +161,52 @@ async function applyDoc(target_id, source_id, previous_id, effectName,animationN
 
     let effectDoc = {};
     for(let n = 0; n < allEffects.length; n++) {
-        console.log("EFFECT IN COMP")
-        console.log(allEffects[n].name+"=="+effectName)
-        if(allEffects[n].name == effectName) {
+        if(allEffects[n].label == effectName) {
             effectDoc = CopyObj(allEffects[n]);
-            //animationName = allEffects[n].name;
         }
     }
+    let Data = {
+        label: effectDoc.label+"("+sourceName+")"
+    };
+    effectDoc.name = effectDoc.name+"("+sourceName+")";
     
-        
-    console.log("Effect Doc BEFORE")
-    console.log(effectDoc);
-    
-    effectDoc.flags.swadeanimated = {}
-    effectDoc.flags.swadeanimated.animationName = getHashName(animationName)
-    //effectDoc.update(Data);
-    effectDoc.name = effectDoc.name + "("+source.name+")";
-    console.log("Effect Doc AFTER",effectDoc);
-
-    //return;
-    if(previous_id != 0) {
-        target.actor.deleteEmbeddedDocuments('ActiveEffect', [previous_id]);
+    if(effectDoc.flags?.swadeanimated?.animation) {
+        effectDoc.flags.swadeanimated.animation = String(getHashName(animationName));
+        effectDoc.flags.swadeanimated.animationType = animationType;
+    } else {
+        effectDoc.flags["swadeanimated"] = {
+            animation: String(getHashName(animationName)),
+            animationType: animationType
+        }
     }
-    target.actor.createEmbeddedDocuments('ActiveEffect', [effectDoc]);
+
+    debug("Effect Doc",effectDoc);
+            
+    //let previousEffect = actor.effects.filter(i => (i.name.toLowerCase().includes(effectDoc.name.toLowerCase().replace(/\s\(.*\)/, "")) ));
+    let previousEffect = actor.effects.filter(i => (i.name.toLowerCase().includes(effectDoc.name.toLowerCase().replace(/\s\(Raise\)|\(Normal\)/, "")) ));
+    if(previousEffect.length > 0) {
+        actor.deleteEmbeddedDocuments('ActiveEffect', [Array.from(previousEffect)[0].id]);
+    }
+    actor.createEmbeddedDocuments('ActiveEffect', [effectDoc]);
+
 }
 
 export async function applyEffect(item,target,SwadeItem,animationName,source) {
     debug("applyEffect",item);
-    //console.log("EFFECT",source)
     
-    //animationName = "effect";
+    //let animationName = "effect";
     let effectName = "";
     if(item.activeEffects.length) {
+        debug("there is an effect to apply");
+        
+        
         for(let j = 0; j < item.activeEffects.length; j++) {
             if(item.activeEffects[j].type == target.result) {
-                effectName = item.activeEffects[j].name;
+                effectName = item.activeEffects[j].label;
             }
         }
-        let previousEffect = target.token.actor.effects.filter(i => (i.name.toLowerCase().includes(effectDoc.name.toLowerCase().replace(/\s\(.*\)/, "")) ));
         debug("Applying this effect: "+effectName);
-        let prev = Array.from(previousEffect)
-        let previous_pass = 0
-        if(prev.length > 0)  previous_pass = prev[0].id
-
-        //effectDoc.label = effectDoc.label + "("+source.name+")"
-        console.log("TARGET")
-        console.log(target.token.id)
-        await socket.executeAsGM("applyDoc", target.token.id, source.id, previous_pass, effectName,animationName ); //socket.executeAsGM("add", 5, 3);
-           
-        
+        socket.executeAsGM("applyEffectDoc", target.token.actor.id,effectName,animationName +","+item.animationEffect[0].label+","+target.token.id,source.name, item.animationType);
         
     }
 
@@ -230,7 +215,7 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
         if(item.animation.length  == 0) {
             EFFECTSOUND = item.sound[0];
         }
-        if(item.animationEffect[0].type == ANIMATIONTYPE.SPECIAL) {
+        if(item.animationType == ANIMATIONTYPE.SPECIAL) {
             if(TMFXEffectsList.includes(effectName) && item.animationEffect.length > 0) {
                 applyEffectTMFX(target.token,item.animationEffect[0]);            
             } else if(SwadeItem.name.toLowerCase().includes("fly")) { 
@@ -242,15 +227,19 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
                 debug("playMeAnAnimation Shape Change");
                 await shape_change(target.token,item.animationEffect[0],item.sound[0],animationName,true);
             }
-        } else if(item.animationEffect[0].type == ANIMATIONTYPE.TEMPLATE) {
+        } else if(item.animationType == ANIMATIONTYPE.TEMPLATE) {
             debug("TEMPLATES: ",getNTemplate());
             if(getNTemplate()==0) {
                 debug("playMeAnAnimation onToken",item);
                 await playOnToken(target.token,item.animationEffect[0],EFFECTSOUND,animationName,false);
             } else {
                 debug("playMeAnAnimation onTemplate",item);
-                playOnTemplate(item.animationEffect[0],EFFECTSOUND, ROLLRESULT.HIT, animationName);
+                playOnTemplate(item.animationEffect[0],EFFECTSOUND, ROLLRESULT.HIT, animationName,target.token);
             }
+        } else if(item.animationType == ANIMATIONTYPE.RANGED) {
+            playRangedOrMeele(source,target.token,item.animationEffect[0],EFFECTSOUND,ROLLRESULT.HIT,animationName,true)
+        } else if(item.animationType == ANIMATIONTYPE.STREAM) {
+            await playStream(target.token, source, item.animationEffect[0],item.sound[0],animationName);
         } else {
             if(item.animationEffect[0].attachTo) {
                 await playOnToken(target.token,item.animationEffect[0],EFFECTSOUND,animationName);
@@ -264,3 +253,4 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
 export function initAnimations() {
     iniIt();
 }
+

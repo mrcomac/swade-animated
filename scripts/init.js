@@ -1,4 +1,5 @@
 //CONFIG.debug.hooks = true
+// re-implementar a animacao proton
 import {
     MODULE, 
     ROLLRESULT,
@@ -16,7 +17,8 @@ import {
 
 import {
     playMeAnAnimation,
-    initAnimations
+    initAnimations,
+    applyEffect
 } from "./ManagerAnimation.js";
 
 import {
@@ -34,7 +36,6 @@ import {
 } from './animations.js';
 
 let ready = false;
-
 Hooks.once('init', () => {
     registerSettings();
     debug("INIT MODULE");
@@ -87,6 +88,8 @@ Hooks.on('getItemSheetHeaderButtons', (sheet, buttons) => {
 
 Hooks.on('swadeConsumeItem', (swadeItem, charges, usage) => {
     debug("Hooks on  swadeConsumeItem");
+    if(swadeItem.type !== "consumable") return;
+
     const token = swadeItem.parent?.token || canvas.tokens.placeables.find(token => token.actor?.items?.get(swadeItem.id));
     let rolls = {
         targets: [ { token: token, result: ROLLRESULT.HIT } ],
@@ -95,7 +98,6 @@ Hooks.on('swadeConsumeItem', (swadeItem, charges, usage) => {
     };
     playMeAnAnimation(swadeItem,token,rolls);
 });
-
 
 /**
  * Effect Hooks
@@ -106,28 +108,27 @@ Hooks.on("createActiveEffect", (effect, data, userId) => {
 });
 
 async function disableEffect(effect,token_item) {
-    console.log("DISABLE EFFECT: ",effect);
-    if(TMFXEffectsList.includes(effect.label)) {
-        token_item.TMFXdeleteFilters(effect.label);
-    } else {
-        //let label = getHashName(effect.label);
-        if(effect.flags?.swadeanimated) {
-            console.log("DISABLE IT", String(effect.flags?.swadeanimated?.animationName))
-            let label = String(effect.flags?.swadeanimated?.animationName)
-            await Sequencer.EffectManager.endEffects({ name: label });
+    if(token_item?.id) {
+        debug("Token ID: "+token_item.id);
+        if(TMFXEffectsList.includes(effect.label)) {
+            debug("DISABLE TMFX EFFECT");
+            token_item.TMFXdeleteFilters(effect.label);
         } else {
-            let label = getHashName(effect.label);
-            await Sequencer.EffectManager.endEffects({ name: label, object: token_item });
+            //let label = getHashName(effect.label);
+            if(effect.flags?.swadeanimated?.animation) {
+                if(effect.flags.swadeanimated?.animationType == ANIMATIONTYPE.RANGED || effect.flags.swadeanimated?.animationType == ANIMATIONTYPE.STREAM)
+                    await Sequencer.EffectManager.endEffects({ name: String(effect.flags.swadeanimated.animation) });
+                else
+                await Sequencer.EffectManager.endEffects({ name: String(effect.flags.swadeanimated.animation), object: token_item });
+            }
         }
-        
-    }
-    
-    if(effect.label.toLowerCase().includes("fly")) {
-        stopFly(token_item);
-    } else if(effect.label.toLowerCase().includes("burrow")) {
-        burrowOff(token_item);
-    } else if(effect.label.toLowerCase().includes("shape change")) {
-        shapeChangeOff(token_item);
+        if(effect.label.toLowerCase().includes("fly")) {
+            stopFly(token_item);
+        } else if(effect.label.toLowerCase().includes("burrow")) {
+            burrowOff(token_item);
+        } else if(effect.label.toLowerCase().includes("shape change")) {
+            shapeChangeOff(token_item);
+        }
     }
 }
 
@@ -177,38 +178,6 @@ Hooks.on("createMeasuredTemplate", (template, temp, id) => {
 });
 
 Hooks.on("targetToken", (SwadeUser, target, selected) => {
-    /*if(selected) {
-        const anim = [
-            "jb2a.ui.indicator.redyellow.02.01",
-            "jb2a.ui.indicator.redyellow.02.02",
-            "jb2a.ui.indicator.redyellow.02.03",
-            "jb2a.ui.indicator.bluegreen.02.01",
-            "jb2a.ui.indicator.bluegreen.02.02",
-            "jb2a.ui.indicator.bluegreen.02.03"
-        ];
-        new Sequence()
-        
-        .effect()
-        .file(anim[Math.floor(Math.random() * 6)])
-        .atLocation(target)
-        .scaleIn(0.5, 300, {ease: "easeOutCubic"})
-        .loopProperty("sprite", "position.x", { values: [-50, 50, 0, 0, 0, 0, 0], duration: 500, ease: "easeInOutCubic"})
-        .loopProperty("sprite", "position.y", { values: [-100, 100, 0, 0, 0, 0, 0], duration: 500, ease: "easeInOutCubic"})
-        .scaleToObject(1.25)
-        .fadeOut(500)
-        .zIndex(1)
-        .duration(3000)
     
-        .wait(1000)
-    
-        .effect()
-        .file("jb2a.token_stage.round.red.02.01")
-        .atLocation(target)
-        .scaleToObject(1.25)
-        .opacity(0.75)
-        .fadeOut(2000)
-    
-        .play()
-    }*/
     
 });
