@@ -15,7 +15,8 @@ import {
     setNTemplate,
     getNTemplate,
     getHashName,
-    CopyObj
+    CopyObj,
+    effectsList
 } from "./constants.js";
 
 import {
@@ -149,7 +150,7 @@ function applyEffectTMFX(token,effect) {
 
 async function applyEffectDoc(actor_id,effectName,animationName,sourceName,animationType) {
     let actor = game.actors.get(actor_id);
-    const compendium = await game.packs.find(p=>p.metadata.label=="SWADE Animated");
+    /*const compendium = await game.packs.find(p=>p.metadata.label=="SWADE Animated");
     if (!compendium) {
             debug( "Macros of SWADE: The compendium couldn't be found." );
             return;
@@ -157,12 +158,12 @@ async function applyEffectDoc(actor_id,effectName,animationName,sourceName,anima
     let Citems = await compendium.getDocuments();
     let Eitems = await Citems.filter(p=> (p.type=='edge') && p.name=="AllEffects" );
     debug(Eitems);
-    let allEffects = Array.from(Eitems[0].effects);
+    let allEffects = Array.from(Eitems[0].effects);*/
 
     let effectDoc = {};
-    for(let n = 0; n < allEffects.length; n++) {
-        if(allEffects[n].label == effectName) {
-            effectDoc = CopyObj(allEffects[n]);
+    for(let n = 0; n < effectsList.length; n++) {
+        if(effectsList[n].label == effectName) {
+            effectDoc = CopyObj(effectsList[n]);
         }
     }
     let Data = {
