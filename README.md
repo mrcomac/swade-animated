@@ -1,16 +1,17 @@
 # Overview
 
-Select animation from a list ([it requires JBA Patreon](https://www.patreon.com/JB2A/posts)).
+## How to change power's animation
+![](readme/howto_change_animation.gif)
 
-[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/9Xn2PGEN40s)
+## How to customise the animation
+![](readme/howto_custom_animation.gif)
 
-Effects are applied accordingly.
+## How to cast a power that uses a template
+![](readme/howto_template_animation.gif)
 
-[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/pfzChspmplY)
+## How to use Shape Change
+![](readme/howto_shape_animation.gif)
 
-Templates are allowed.
-
-[![Select from a list](https://i3.ytimg.com/vi/9Xn2PGEN40s/maxresdefault.jpg)](https://youtu.be/vm48nEE9b9o)
 
 # Supported Items
 ##### Powers

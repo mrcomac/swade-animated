@@ -149,16 +149,7 @@ function applyEffectTMFX(token,effect) {
 }
 
 async function applyEffectDoc(actor_id,effectName,animationName,sourceName,animationType) {
-    let actor = game.actors.get(actor_id);
-    /*const compendium = await game.packs.find(p=>p.metadata.label=="SWADE Animated");
-    if (!compendium) {
-            debug( "Macros of SWADE: The compendium couldn't be found." );
-            return;
-    }
-    let Citems = await compendium.getDocuments();
-    let Eitems = await Citems.filter(p=> (p.type=='edge') && p.name=="AllEffects" );
-    debug(Eitems);
-    let allEffects = Array.from(Eitems[0].effects);*/
+    let token = game.canvas.tokens.get(actor_id);
 
     let effectDoc = {};
     for(let n = 0; n < effectsList.length; n++) {
@@ -182,13 +173,11 @@ async function applyEffectDoc(actor_id,effectName,animationName,sourceName,anima
     }
 
     debug("Effect Doc",effectDoc);
-            
-    //let previousEffect = actor.effects.filter(i => (i.name.toLowerCase().includes(effectDoc.name.toLowerCase().replace(/\s\(.*\)/, "")) ));
-    let previousEffect = actor.effects.filter(i => (i.name.toLowerCase().includes(effectDoc.name.toLowerCase().replace(/\s\(Raise\)|\(Normal\)/, "")) ));
+    let previousEffect = token.actor.effects.filter(i => (i.name.toLowerCase().includes(effectDoc.name.toLowerCase().replace(/\s\(Raise\)|\(Normal\)/, "")) ));
     if(previousEffect.length > 0) {
-        actor.deleteEmbeddedDocuments('ActiveEffect', [Array.from(previousEffect)[0].id]);
+        token.actor.deleteEmbeddedDocuments('ActiveEffect', [Array.from(previousEffect)[0].id]);
     }
-    actor.createEmbeddedDocuments('ActiveEffect', [effectDoc]);
+    token.actor.createEmbeddedDocuments('ActiveEffect', [effectDoc]);
 
 }
 
@@ -207,7 +196,7 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
             }
         }
         debug("Applying this effect: "+effectName);
-        socket.executeAsGM("applyEffectDoc", target.token.actor.id,effectName,animationName +","+item.animationEffect[0].label+","+target.token.id,source.name, item.animationType);
+        socket.executeAsGM("applyEffectDoc", target.token.id,effectName,animationName +","+item.animationEffect[0].label+","+target.token.id,source.name, item.animationType);
         
     }
 
