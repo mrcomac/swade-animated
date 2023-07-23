@@ -27,13 +27,16 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Logs**
-Please, follow the following steps to reproduce the error and send to us the console log.
+Please, follow the steps below to reproduce the error and send to us the console log.
 1. Enable Debug Mode from module's configure
 1 Open your console in your browser
 2. Prepare the scene, open all you need.
 3. Clear your console output
 4. Reproduce the error
 5. Copy the output and past the output in this section.
+```
+console output here
+```
 
 **Environment details (please complete the following information):**
  - FoundryVTT version [e.g. Version 10 build 291]: 
