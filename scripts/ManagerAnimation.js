@@ -121,8 +121,10 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
             applyEffect(itemData,rolls.targets[j],SwadeItem,animationName,source);
     }
     if(itemData.animationEffect.length > 0) {
-        if(itemData.animation[0].type == ANIMATIONTYPE.TEMPLATE) {
-            setNTemplate(0);
+        if(itemData.animation.length > 0) {
+            if(itemData?.animation[0].type == ANIMATIONTYPE.TEMPLATE) {
+                setNTemplate(0);
+            }
         }
     }
     
