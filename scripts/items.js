@@ -45,6 +45,13 @@ export function iniIt() {
     initConsumables();
 }
 
+const escapeRegExpMatch = function(s) {
+    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+};
+const isExactMatch = function(str, match) {
+  return new RegExp(`\\b${escapeRegExpMatch(match)}\\b`).test(str)
+}
+
 export function getItem(item) {
     debug("GETITEM");
     debug(item);
@@ -66,29 +73,45 @@ export function getItem(item) {
             }
         }
     } else if(item.type == "weapon") {
-        console.log("WEAPON");
-        for(let i=0;i<WeaponList.length;i++) {
-            if(item.name.trim().toLocaleLowerCase().includes(WeaponList[i].name.trim().toLocaleLowerCase())) {
-                debug("Weapon",WeaponList[i]);
-                itemData = WeaponList[i];
-                break;
+        if(item.system.category.trim().length > 0) {
+            for(let i=0;i<WeaponList.length;i++) {
+                if(WeaponList[i].category.trim().toLocaleLowerCase() === item.system.category.trim().toLocaleLowerCase()) {
+                    debug("Weapon",WeaponList[i]);
+                    itemData = WeaponList[i];
+                    break;
+                }
             }
         }
         if(Object.keys(itemData).length === 0) {
+            debug("SEARCH BY NAME")
             for(let i=0;i<WeaponList.length;i++) {
-                if(WeaponList[i]?.alternatives) {
-                    const lowercaseWords = WeaponList[i].alternatives.map(word => word.toLowerCase());
-                    if(lowercaseWords.includes(item.name.trim().toLocaleLowerCase())) {
-                        debug("Alternative Weapon",WeaponList[i]);
-                        itemData = WeaponList[i];
-                    }
-                }
-                if(Object.keys(itemData).length) {
+                if(new RegExp("(\\s|\\(|,)\\b"+WeaponList[i].name.trim().toLowerCase()+"\\b(\\s|\\)|,)").test(" "+item.name.trim().toLowerCase()+" ")) {
+                    debug("Weapon",WeaponList[i]);
+                    itemData = WeaponList[i];
                     break;
                 }
-            }   
+            }
+
+            if(Object.keys(itemData).length === 0) {
+                debug("SEARCH BY ALTERNATIVES")
+                for(let i=0;i<WeaponList.length;i++) {
+                    if(WeaponList[i]?.alternatives) {
+                        let alternativeNames = WeaponList[i].alternatives;
+                        for(let j = 0; j < alternativeNames.length; j++) {
+                            if(new RegExp("(\\s|\\(|,)\\b"+alternativeNames[j].trim().toLowerCase()+"\\b(\\s|\\)|,)").test(" "+item.name.trim().toLowerCase()+" ")) {
+                                debug("Alternative Weapon",WeaponList[i]);
+                                itemData = WeaponList[i];
+                            }
+                        }
+                    }
+                    if(Object.keys(itemData).length) {
+                        break;
+                    }
+                }   
+            }
         }
     }
+    debug("OBJECT ITEM", itemData)
     return  CopyObj(itemData);
 }
 

@@ -226,14 +226,20 @@ export function initPowers() {
             name: game.i18n.localize("SAT.Power.Fly"),
             animationType: ANIMATIONTYPE.SPECIAL,
             animations: [
-                
+                //jb2a.swirling_feathers.outburst.01.textured.0
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.swirling_feathers.outburst.01.textured.0", label: "Feathers", active: true,  persist: false,  size: 3, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
             ],
             sounds: [ 
                 { label: "WingFlap", file: PATH.AUDIO + "powers/novice/fly/BlackRockV2_Drake_WingFlap_05.ogg", active: true, delay: 0, volume: 1.0, duration: 5000 }
             ],
             animationEffects: [ 
-                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.bluegrey", label: "Blue", active: true,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
-                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.purple", label: "Purple", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.bluegrey", label: "Celestial", active: true,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.red", label: "Infernal", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.bluewhite", label: "Avian", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.red", label: "Red Dragon", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.green", label: "Green Dragon", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.bluewhite", label: "White Dragon", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
+                {type: ANIMATIONTYPE.SPECIAL, file: "jb2a.whirlwind.purple", label: "Black Dragon", active: false,  persist: false,  size: 1, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 }
             ],
             activeEffects: [
                 { name: game.i18n.localize("SAT.Effect.FlyNormal"), label: game.i18n.localize("SAT.Effect.FlyNormal"), type: ROLLRESULT.HIT },

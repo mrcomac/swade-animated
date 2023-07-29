@@ -14,6 +14,8 @@ export function initWeapons() {
     WeaponList = [
         { //Knife v1
             name: game.i18n.localize("SAT.Weapons.Knife"),
+            category: "",
+            alternatives: ['Bayonet'],
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.dagger.melee.fire.dark_purple", label: "Dark Purple", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
@@ -21,7 +23,7 @@ export function initWeapons() {
 
             ],
             sounds: [ 
-                { label: "Default", file: PATH.AUDIO + "/weapons/knife.mp3", active: true, delay: 0, volume: 1.0,  duration: 1000 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/knife.mp3", active: true, delay: 500, volume: 1.0,  duration: 1000 }
             ],
             animationEffects: [
                 
@@ -30,8 +32,29 @@ export function initWeapons() {
                 
             ],
         },
+        { //Dynamite v1
+            name: game.i18n.localize("SAT.Weapons.Dynamite"),
+            category: "Dynamite",
+            alternatives: ["Dynamite/Nitro"],
+            animationType: ANIMATIONTYPE.RANGED,
+            animations: [
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.throwable.throw.dynamite.01.orange", label: "Orange (Patreon)", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+                
+
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/explosion.ogg", active: true, delay: 2000, volume: 1.0,  duration: 3000 }
+            ],
+            animationEffects: [ 
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.explosion.01.orange", label: "Orange", active: true, size: 3, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+            ],
+            activeEffects: [
+                
+            ],
+        },
         { //Bow v1
             name: game.i18n.localize("SAT.Weapons.Bow"),
+            category: "",
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
                 {type: ANIMATIONTYPE.RANGED, file: "jb2a.arrow.physical.white", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { hue: -1 }, startTime: 0 },
@@ -48,6 +71,7 @@ export function initWeapons() {
         },
         { //sword v1
           name: game.i18n.localize("SAT.Weapons.Sword"),
+          category: "",
           animationType: ANIMATIONTYPE.MELEE,
           animations: [
               {type: ANIMATIONTYPE.MELEE, file: "jb2a.greatsword.melee.standard.white", label: "Great Sword", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
@@ -66,6 +90,7 @@ export function initWeapons() {
         },
         { //Monk Attack v1
             name: game.i18n.localize("SAT.Weapons.MonkAttack"),
+            category: "",
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.flurry_of_blows.physical.blue",        label: "Blue", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
@@ -84,6 +109,7 @@ export function initWeapons() {
         },
         { // Rapier v1
             name: game.i18n.localize("SAT.Weapons.Rapier"),
+            category: "",
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.rapier.melee.01.white.0", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
@@ -101,6 +127,7 @@ export function initWeapons() {
         },
         { // Scimitar v1
             name: game.i18n.localize("SAT.Weapons.Scimitar"),
+            category: "",
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.scimitar.melee.01.white.0", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
@@ -118,6 +145,7 @@ export function initWeapons() {
         },
         { // Spear v1
             name: game.i18n.localize("SAT.Weapons.Spear"),
+            category: "",
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.spear.melee.01.white.2", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
@@ -135,6 +163,7 @@ export function initWeapons() {
         },
         { // Warhammer v1
             name: game.i18n.localize("SAT.Weapons.Warhammer"),
+            category: "",
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.warhammer.melee.01.white.0", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
@@ -150,8 +179,30 @@ export function initWeapons() {
             animationEffects: [],
             activeEffects: [],
         },
+        { //Club v1
+            name: game.i18n.localize("SAT.Weapons.Club"),
+            category: "",
+            alternatives: ["Club, War"],
+            animationType: ANIMATIONTYPE.MELEE,
+            animations: [
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.club.melee.01.white.0", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.club.melee.01.white.1", label: "White Version 2", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.club.melee.01.dark_orangepurple.0", label: "Dark Orange (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/club.mp3", active: true, delay: 1200, volume: 1.0,  duration: 600 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
+        },
         { //Dagger v1
             name: game.i18n.localize("SAT.Weapons.Dagger"),
+            category: "",
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.dagger.melee.fire.dark_purple", label: "Dark Purple", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
@@ -170,6 +221,7 @@ export function initWeapons() {
         },
         { //Claws v1
             name: game.i18n.localize("SAT.Weapons.Claws"),
+            category: "",
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
                 {type: ANIMATIONTYPE.TARGET, file: "jb2a.claws.400px.red", label: "Red", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
@@ -193,6 +245,7 @@ export function initWeapons() {
         },
         { //Bite v1
             name: game.i18n.localize("SAT.Weapons.Bite"),
+            category: "",
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
                 {type: ANIMATIONTYPE.TARGET, file: "jb2a.bite.400px.red", label: "Red", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
@@ -216,6 +269,7 @@ export function initWeapons() {
         },
         { //Mace v1
             name: game.i18n.localize("SAT.Weapons.Mace"),
+            category: "",
             animationType: ANIMATIONTYPE.TARGET,
             animations: [
                 {type: ANIMATIONTYPE.TARGET, file: "jb2a.mace.melee.01.white.0", label: "White", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
@@ -236,12 +290,13 @@ export function initWeapons() {
         },
         { //Laser v1
             name: game.i18n.localize("SAT.Weapons.Laser"),
+            category: "",
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.lasershot.blue", label: "Blue", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
-                {file: "jb2a.lasershot.green", label: "Green", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
-                {file: "jb2a.lasershot.orange", label: "Orange", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
-                {file: "jb2a.lasershot.red", label: "Red", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.lasershot.blue", label: "Blue", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.lasershot.green", label: "Green", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.lasershot.orange", label: "Orange", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.lasershot.red", label: "Red", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
 
             ],
             sounds: [ 
@@ -256,9 +311,10 @@ export function initWeapons() {
         },
         { //Pistol v1
             name: game.i18n.localize("SAT.Weapons.Pistol"),
+            category: "",
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
 
             ],
             sounds: [ 
@@ -273,14 +329,15 @@ export function initWeapons() {
         },
         { // Revolver Single v1
             name: game.i18n.localize("SAT.Weapons.RevolverSingle"),
-            alternatives: [ "Colt Army", "Colt Buntline Special", "Colt Dragoon", "Colt Navy", "Colt Peacemaker", "Revolver LeMat" ],
+            category: "Single Action Revolver",
+            alternatives: [ "Colt Army", "Colt Buntline Special", "Colt Dragoon", "Colt Navy", "Colt Peacemaker", "LeMat Revolver" ],
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
     
             ],
             sounds: [ 
-                { label: "Default", file: PATH.AUDIO + "/weapons/fire/revolver-single-action.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 }
+                { label: "Default", file: PATH.AUDIO + "/weapons/fire/revolver-single-action.ogg", active: true, delay: 0, volume: 1.0,  duration: 2000 }
             ],
             animationEffects: [
                 
@@ -291,10 +348,11 @@ export function initWeapons() {
         }, 
         { // Revolver Double v1
             name: game.i18n.localize("SAT.Weapons.RevolverDouble"),
-            alternatives: ["Colt Frontier", "Colt Lightning", "Colt Rainmaker", "Colt Thunderer", "Revolver Starr" ],
+            category: "Double Action Revolver",
+            alternatives: ["Colt Frontier", "Colt Lightning", "Colt Rainmaker", "Colt Thunderer", "Starr Revolver" ],
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
     
             ],
             sounds: [ 
@@ -307,26 +365,9 @@ export function initWeapons() {
                 
             ],
         },
-        { // Gatling v1
-            name: game.i18n.localize("SAT.Weapons.Machinegun"),
-            alternatives: [ "Gatling Gun", "Steam Gatling", "Gatling Carbine" ],
-            animationType: ANIMATIONTYPE.RANGED,
-            animations: [
-                {file: "jb2a.bullet.03.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 10, randomInit: 50, randomEnd: 100 }, startTime: 0 }
-    
-            ],
-            sounds: [ 
-                { label: "Default", file: PATH.AUDIO + "/weapons/fire/gatling.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 }
-            ],
-            animationEffects: [
-                
-            ],
-            activeEffects: [
-                
-            ],
-        },
         { //ProtonSteam v1
             name: game.i18n.localize("SAT.Weapons.ProtonStream"),
+            category: "",
             animationType: ANIMATIONTYPE.STREAM,
             animations: [
 
@@ -347,18 +388,21 @@ export function initWeapons() {
         },
         { // Shotgun v1
             name: game.i18n.localize("SAT.Weapons.Shotgun"),
+            category: "",
             alternatives: [ "Sawed-off Winchester" ],
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.bullet.02.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
-                {file: "jb2a.bullet.02.blue", label: "Blue", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
-                {file: "jb2a.bullet.02.green", label: "Green", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
-                {file: "jb2a.bullet.02.purple", label: "Purple", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
-                {file: "jb2a.bullet.02.red", label: "Red", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.blue", label: "Blue (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.green", label: "Green (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.purple", label: "Purple (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.red", label: "Red (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.2}, repeat: { times: 3, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.orange", label: "Orange (Carbine Mode)", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 }
     
             ],
             sounds: [ 
-                { label: "Default", file: PATH.AUDIO + "/weapons/fire/shotgun.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 }
+                { label: "Shotgun", file: PATH.AUDIO + "/weapons/fire/shotgun.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Carbine", file: PATH.AUDIO + "/weapons/fire/carbine.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 }
             ],
             animationEffects: [
                 
@@ -369,14 +413,15 @@ export function initWeapons() {
         },
         { // Rifle v1
             name: game.i18n.localize("SAT.Weapons.Rifle"),
-            alternatives: [ "ballard ’72", "bullard express", "Winchester ‘73", "Evans", "Musket", "Winchester ‘76" ],
+            category: "Rifle",
+            alternatives: [ "ballard ’72", "bullard express", "Winchester ‘73", "Evans Old Model Sporter", "Musket", "Winchester ‘76", "Colt-Paterson Model ’36", "Sawed-off Winchester", "Sharp’s Big 50" ],
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.bullet.02.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.03.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 }
     
             ],
             sounds: [ 
-                { label: "Default", file: PATH.AUDIO + "/weapons/fire/rifle.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 }
+                { label: "Rifle", file: PATH.AUDIO + "/weapons/fire/rifle.ogg", active: true, delay: 0, volume: 1.0,  duration: 2000 }
             ],
             animationEffects: [
                 
@@ -386,15 +431,24 @@ export function initWeapons() {
             ],
         },
         { // Carabine v1
-            name: game.i18n.localize("SAT.Weapons.Carabine"),
-            alternatives: [ "Sharps '55 ", "Spencer", "Bullard Express" ],
+            name: game.i18n.localize("SAT.Weapons.Carbine"),
+            category: "",
+            alternatives: [ "Gatling Carbine", "Sharps ’55", "Spencer", "Bullard Express", "LeMat Carbine & Underbarrel Shotgun" ],
+            weaponCategory: "Carbine",
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.bullet.02.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.blue", label: "Blue (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.green", label: "Green (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.purple", label: "Purple (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 },
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.02.red", label: "Red (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 }
+
     
             ],
             sounds: [ 
-                { label: "Default", file: PATH.AUDIO + "/weapons/fire/carabine.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 }
+                { label: "Carbine", file: PATH.AUDIO + "/weapons/fire/carbine.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 },
+                { label: "Shotgun", file: PATH.AUDIO + "/weapons/fire/shotgun.ogg", active: false, delay: 0, volume: 1.0,  duration: 2000 },
+                { label: "Rifle", file: PATH.AUDIO + "/weapons/fire/rifle.ogg", active: false, delay: 0, volume: 1.0,  duration: 2000 }
             ],
             animationEffects: [
                 
@@ -405,10 +459,11 @@ export function initWeapons() {
         },
         { // Derringer v1
             name: game.i18n.localize("SAT.Weapons.Derringer"),
+            category: "",
             alternatives: [ "English 1840 Model", "Rupertus Pepperbox", "Wesson Dagger-Pistol" ],
             animationType: ANIMATIONTYPE.RANGED,
             animations: [
-                {file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 0.5, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 }
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.01.orange", label: "Orange", active: true, size: 0.5, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 1, randomInit: 0, randomEnd: 0 }, startTime: 0 }
     
             ],
             sounds: [ 
@@ -421,6 +476,25 @@ export function initWeapons() {
                 
             ],
         },
+        { // Gatling v1
+            name: game.i18n.localize("SAT.Weapons.Machinegun"),
+            category: "gatling",
+            alternatives: [ "Gatling Gun", "Steam Gatling", "Gatling Carbine" ],
+            animationType: ANIMATIONTYPE.RANGED,
+            animations: [
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.bullet.03.orange", label: "Orange", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, stretchTo: {randomOffset: 0.5}, repeat: { times: 10, randomInit: 50, randomEnd: 100 }, startTime: 0 }
+    
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/fire/gatling.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
+        }
     ];
     
     Object.freeze(WeaponList);

@@ -47,7 +47,9 @@
   "SAT.Weapons.Derringer": "Derringer",
   "SAT.Weapons.Carabine": "Carabine",
   "SAT.Weapons.ProtonStream": "Proton Stream",
-
+  "SAT.Weapons.Dynamite": "Dynamite",
+  "SAT.Weapons.Club": "Club",
+  
   "SAT.Effect.ArcaneProtectionNormal": "Arcane Protection (Normal)",
   "SAT.Effect.ArcaneProtectionRaise": "Arcane Protection (Raise)",
   "SAT.Effect.ProtectionNormal": "Protection (Normal)",

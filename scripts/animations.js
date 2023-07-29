@@ -4,6 +4,12 @@ import {
     ROLLRESULT
 } from './constants.js';
 
+//Select Wing Speed: Default = 0, Max = 2499
+let wingSpeed = 0;
+let wingHeight = 0;
+//Define Wing Image
+let wingDefinition = [];
+
 export async function playOnToken(token, animation, sound,animationName, notWait=false) {
     animationName = animationName +","+animation.label+","+token.id;
     debug("playOnToken: ",animation,sound);
@@ -223,62 +229,231 @@ export async function burrowOn(token,animation,sound,animationName) {
     .play();
 }
 
+//Fly Animation
+//Author: EskieMoh#2969
+//Tweaked by: BashfulBob#8687
+//Select Wing Type: Celestial, Infernal, Avian, Dragon
+
 export async function stopFly(token) {
-    //await Sequencer.EffectManager.endEffects({ name: "Fly", object: token });
-    await new Sequence()
-        .animation()
-            .on(token)
-            .opacity(1)
-        .play();
+    endFlying(token)
 }
 
-export function  fly(token,animation,sound,animationName,notWait) {
-    animationName = animationName +","+animation.label+","+token.id;
-    debug("fly: ",token,animation,sound,animationName);
-    new Sequence()
-        .sound()
-            .file(sound.file)
-            .delay(sound.delay)
-            .volume(sound.volume)
-            .duration(sound.duration)
-            .fadeOutAudio(500)
-        .effect()
-            .file(animation.file)
-            .size(animation.size,  { gridUnits: true })
-            .atLocation(token)
-            //.scaleToObject(1.75)
-            .belowTokens()
-            //.waitUntilFinished()
-        .animation()
-            .on(token)
-            .opacity(0)
 
-        .effect()
-            .from(token)
-            .name( String(getHashName(animationName)) )
-            .atLocation(token)   
-            .opacity(1)
-            .duration(800)
-            .anchor({ x: 0.55, y: 0.9 })
-            .animateProperty("sprite", "position.y", { from: 50, to: 0, duration: 500})
-            .loopProperty("sprite", "position.y", {  from:0 ,to:-50, duration: 2500, pingPong: true, delay:500})
-            .attachTo(token, {bindAlpha: false})
-            .zIndex(2)
-            .persist()
-        .effect()
-            .from(token, { offset: { y: 0 } })
-            .name(String(getHashName(animationName)))
-            .atLocation(token)
-            .scaleToObject(0.9)
-            .duration(1000)
-            .opacity(0.5)
-            .belowTokens()
-            .filter("ColorMatrix", { brightness: -1 })
-            .filter("Blur", { blurX: 5, blurY: 10 })
-            .attachTo(token, {bindAlpha: false})
-            .zIndex(1)
-            .persist()
-    .play();
+let wingType = "";
+
+export function fly(token,animation,sound,animationName,notWait) {
+    animationName = animationName +","+animation.label+","+token.id;
+    wingHeight = 0.9-(token.document.width*0.05);
+    debug("fly: ",token,animation,sound,animationName);
+    assignWingType(animation.label)
+    var wingSequence = new Sequence();
+	wingDefinition.forEach(wingType => { AddWing(wingSequence, wingType[0], wingType[1], wingType[2], wingType[3], wingType[4], token,animationName); });  // img, wingId, side
+	AddFloating(wingSequence, token, animation, sound, animationName);
+	wingSequence.play();
+}
+function assignWingType(wingType) {
+    wingDefinition = [];
+    
+	switch(wingType) {
+		
+		case "Celestial":
+			wingSpeed = 0;
+			wingDefinition.push([`2biyKFk.png`,1,'left',-10,1]);
+			wingDefinition.push([`2biyKFk.png`,1,'right',-10,1]);
+			wingDefinition.push([`uN33sO6.png`,2,'left',-10,1]);
+			wingDefinition.push([`uN33sO6.png`,2,'right',-10,1]);
+			break;
+		case "Infernal":
+			wingSpeed = 250;
+			wingDefinition.push([`rO2JCPz.png`,1,'left',-10,1]);
+			wingDefinition.push([`rO2JCPz.png`,1,'right',-10,1]);
+			wingDefinition.push([`cBF4IIR.png`,2,'left',-10,1]);
+			wingDefinition.push([`cBF4IIR.png`,2,'right',-10,1]);
+			break;
+		case "Avian":
+			wingSpeed = 0;
+			wingDefinition.push([`sR4Ur8h.png`,1,'left',-10,1]);
+			wingDefinition.push([`sR4Ur8h.png`,1,'right',-10,1]);
+			wingDefinition.push([`9iqdmjZ.png`,2,'left',-10,1]);
+			wingDefinition.push([`9iqdmjZ.png`,2,'right',-10,1]);
+			break;
+		case "Red Dragon":
+			wingSpeed = 0;
+			wingDefinition.push([`xAmFxhW.png`,1,'left',-10, 1.5]);
+			wingDefinition.push([`xAmFxhW.png`,1,'right',-10, 1.5]);
+			wingDefinition.push([`3PCV7YP.png`,2,'left',-10, 1.5]);
+			wingDefinition.push([`3PCV7YP.png`,2,'right',-10, 1.5]);
+			break;
+		case "Blue Dragon":
+			wingSpeed = 1000;
+			wingDefinition.push([`A5DAUp3.png`,1,'left',-10, 1.5]);
+			wingDefinition.push([`A5DAUp3.png`,1,'right',-10, 1.5]);
+			wingDefinition.push([`atlIrtl.png`,2,'left',-10, 1.5]);
+			wingDefinition.push([`atlIrtl.png`,2,'right',-10, 1.5]);
+			break;
+		case "Green Dragon":
+			wingSpeed = 0;
+			wingDefinition.push([`q82GHFf.png`,1,'left',-10, 1.5]);
+			wingDefinition.push([`q82GHFf.png`,1,'right',-10, 1.5]);
+			wingDefinition.push([`g2GK7NW.png`,2,'left',-10, 1.5]);
+			wingDefinition.push([`g2GK7NW.png`,2,'right',-10, 1.5]);
+			break;
+		case "White Dragon":
+			wingSpeed = 0;
+			wingDefinition.push([`Sac1174.png`,1,'left',-10, 1.5]);
+			wingDefinition.push([`Sac1174.png`,1,'right',-10, 1.5]);
+			wingDefinition.push([`hfzupc7.png`,2,'left',-10, 1.5]);
+			wingDefinition.push([`hfzupc7.png`,2,'right',-10, 1.5]);
+			break;
+		case "Black Dragon":
+			wingSpeed = 0;
+			wingDefinition.push([`VotClWQ.png`,1,'left',-10, 1.5]);
+			wingDefinition.push([`VotClWQ.png`,1,'right',-10, 1.5]);
+			wingDefinition.push([`fgzxRd0.png`,2,'left',-10, 1.5]);
+			wingDefinition.push([`fgzxRd0.png`,2,'right',-10, 1.5]);
+			break;
+
+		default:	// No Wings
+		        	break;
+	}
+}
+
+function AddFloating(Sequence, token, animation, sound, animationName) {
+    
+	Sequence
+		.effect()
+		.file(animation.file)
+		.atLocation(token)
+		.scaleToObject(1.75)
+		.belowTokens()
+
+		.animation()
+		.on(token)
+		.opacity(0)
+		.rotate(0);	
+	
+	// Shadow
+	Sequence
+		.effect()
+		.from(token)
+		.name(String(getHashName(animationName)))
+		.atLocation(token)
+		.scaleToObject(token.document.texture.scaleX-0.1)
+		.duration(1000)
+		.opacity(0.5)
+		.belowTokens()
+		.filter("ColorMatrix", { brightness: -1 })
+		.filter("Blur", { blurX: 5, blurY: 10 })
+		.attachTo(token, {bindAlpha: false})
+		.zIndex(1)
+		.persist()
+		.private()	
+	
+	// Float
+	Sequence
+		.effect()
+		.from(token)
+		.name(String(getHashName(animationName)))
+		.atLocation(token)   
+		.opacity(1)
+		.duration(800)
+		.anchor({ x: 0.55, y: 0.9 })
+		.loopProperty("sprite", "position.y", {  from:0 ,to:-0.25, duration: 2500-wingSpeed, pingPong: true, delay:500-wingSpeed, ease: "easeInOutCubic", gridUnits:true})
+		.attachTo(token, {bindAlpha: false, followRotation: false})
+		.zIndex(10)
+		.persist()
+		.waitUntilFinished()
+		//.thenDo(endFlying);
+}
+
+async function endFlying(token) {
+	new Sequence()
+	
+		.animation()
+		.on(token)
+		.opacity(1)
+		
+		.effect()
+		.file("jb2a.extras.tmfx.border.circle.outpulse.01.fast")
+		.atLocation(token)
+		.scaleToObject(2)
+		.opacity(0.15)
+
+
+		.play();	
+}
+
+function AddWing(Sequence, fileWingImg, wingId, sideId, rotationVal, wingSize, token,animationName) {
+	// wingId = 1 -> Inner wing pivot, ie shoulder
+	// wingId = 2 -> Outer wing pivot, ie pinfeathers
+	// wingId = 3 -> Lower wing pivot, ie tail
+	// sideId = 'left', 'right'
+	
+	let wingImg = 'modules/swade-animated/images/fly/' + fileWingImg;
+	let anchorScaleX = (sideId == 'left') ? token.document.texture.scaleX-0.15 : -token.document.texture.scaleX+1.25;
+	let tokenAlignment = (sideId == 'left') ? "top-left" : "top-right";
+	let mirrorVal = (sideId == 'left') ? 1 : -1;
+
+	let durationVal = (wingId==2) ? 10 : 10000;
+	let rotationAdj  = (wingId==2) ? 3 : 1;
+	//		from: (42 + rotationAdj)*mirrorVal, 
+	//		to: ((-15 * rotationAdj)*mirrorVal), 
+
+	let rotateFrom = rotationVal*rotationAdj*-1*mirrorVal;
+	let rotateTo = rotationVal*rotationAdj*mirrorVal;
+	let wingHeightAdj = (wingId==3) ? -1*wingHeight : wingHeight;
+	let size = wingSize*(token.document.texture.scaleX*0.8)
+	
+	var SeqEffect = Sequence
+		.effect()
+		.name(String(getHashName(animationName)))
+		.file(wingImg)
+		.persist()
+		.atLocation(token)
+		.scaleToObject(size)
+		.duration(durationVal)
+		.anchor({ x: anchorScaleX, y: wingHeightAdj-((wingSize-1)/2)})
+		.rotate(rotationVal*mirrorVal)
+		.attachTo(token, {align: tokenAlignment, bindAlpha: false, bindVisibility: false, followRotation: false});
+
+	if(sideId == 'right') {		SeqEffect.mirrorX();	}
+	
+	if(wingId==2) {
+		SeqEffect
+			.loopProperty("sprite", "position.x", { 
+				from: -0.0, 
+				to: 0.17*(token.w / canvas.grid.size)*mirrorVal, 
+				duration: 2500-wingSpeed, 
+				ease: "easeInOutCubic", 
+				pingPong: true, 
+				gridUnits:true})
+	}
+
+	SeqEffect
+		//Flying Movement
+		.loopProperty("sprite", "position.y", {  
+			from:0 ,
+			to:-0.25, 
+			duration: 2500-wingSpeed, 
+			pingPong: true, 
+			delay:500-wingSpeed, 
+			gridUnits: true})
+		//Wing Flap
+		.loopProperty("sprite", "rotation", { 
+			from: (42 + rotationAdj)*mirrorVal, 
+			to: ((-15 * rotationAdj)*mirrorVal), 
+			duration: 2500-wingSpeed, 
+			ease: "easeInOutCubic", 
+			pingPong: true})
+		.loopProperty("sprite", "position.y", { 
+			from: 0, 
+			to: 0.25, 
+			duration: 2500-wingSpeed, 
+			ease: "easeInOutCubic", 
+			pingPong: true, 
+			gridUnits:true})
+		.zIndex(8+rotationAdj)
+		.private();
 }
 
 export function  playOnTemplate(animation,sound, _missed, animationName="nonPersistent", token) {

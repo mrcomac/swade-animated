@@ -60,7 +60,8 @@ Hooks.once('ready', () => {
  */
 
 Hooks.on('swadeAction', (swadeActor, swadeItem, actionType, roll, id) => {
-    debug("Hooks on swadeAction");
+    if(actionType != 'formula') return;
+    debug("Hooks on swadeAction",actionType);
     debug(swadeItem);
     const token = swadeActor.parent?.token || canvas.tokens.placeables.find(token => token.actor?.items?.get(swadeItem.id))
     let targets =Array.from(game.user.targets);
@@ -123,6 +124,7 @@ async function disableEffect(effect,token_item) {
             }
         }
         if(effect.label.toLowerCase().includes("fly")) {
+            await Sequencer.EffectManager.endEffects({ name: String(effect.flags.swadeanimated.animation)});
             stopFly(token_item);
         } else if(effect.label.toLowerCase().includes("burrow")) {
             burrowOff(token_item);

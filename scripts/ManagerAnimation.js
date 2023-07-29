@@ -53,7 +53,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
     }
 
     if(itemData.isValid && itemData.animation.length > 0) {
-        if(itemData.animationType == ANIMATIONTYPE.RANGED || itemData.animationType == ANIMATIONTYPE.MELEE) {
+        if(itemData.animation[0].type == ANIMATIONTYPE.RANGED || itemData.animation[0].type == ANIMATIONTYPE.MELEE) {
             debug("Ranged or Melee animated");
             let notWait = false;
             if(rolls.targets.length > 0) {
@@ -66,7 +66,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                 await playRangedOrMeele(source,rolls.targets[i].token,itemData.animation[0],itemData.sound[0],rolls.targets[i].result,animationName,notWait);
             }
             
-        } else if(itemData.animationType == ANIMATIONTYPE.TARGET) {
+        } else if(itemData.animation[0].type == ANIMATIONTYPE.TARGET) {
             let notWait = false;
             if(rolls.targets.length > 1) {
                 notWait = true;
@@ -75,7 +75,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                 debug("playMeAnAnimation onToken",itemData);
                 await playOnToken(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,notWait);
             }
-        } else if(itemData.animationType == ANIMATIONTYPE.TEMPLATE) {
+        } else if(itemData.animation[0].type == ANIMATIONTYPE.TEMPLATE) {
             debug("TEMPLATE: ",getNTemplate());
             if(getNTemplate()==0) {
                 for(let i = 0; i < rolls.targets.length; i++) {
@@ -88,7 +88,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
             }
             setNTemplate(0);
             
-        } else if(itemData.animationType == ANIMATIONTYPE.SPECIAL) {
+        } else if(itemData.animation[0].type == ANIMATIONTYPE.SPECIAL) {
             let notWait = false;
             if(SwadeItem.name.toLowerCase().includes("fly")) {   
                 for(let i = 0; i < rolls.targets.length; i++) {
@@ -106,7 +106,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
                     await shape_change(rolls.targets[i].token,itemData.animation[0],itemData.sound[0],animationName,notWait);
                 }
             }
-        } else if(itemData.animationType == ANIMATIONTYPE.STREAM) {
+        } else if(itemData.animation[0].type == ANIMATIONTYPE.STREAM) {
             debug("PLAY STREAM")
             for(let i = 0; i < rolls.targets.length; i++) {
                 debug("playMeAnAnimation Shape Change",itemData);
@@ -121,7 +121,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
             applyEffect(itemData,rolls.targets[j],SwadeItem,animationName,source);
     }
     if(itemData.animationEffect.length > 0) {
-        if(itemData.animationType == ANIMATIONTYPE.TEMPLATE) {
+        if(itemData.animation[0].type == ANIMATIONTYPE.TEMPLATE) {
             setNTemplate(0);
         }
     }
@@ -205,7 +205,7 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
         if(item.animation.length  == 0) {
             EFFECTSOUND = item.sound[0];
         }
-        if(item.animationType == ANIMATIONTYPE.SPECIAL) {
+        if(item.animationEffect[0].type == ANIMATIONTYPE.SPECIAL) {
             if(TMFXEffectsList.includes(effectName) && item.animationEffect.length > 0) {
                 applyEffectTMFX(target.token,item.animationEffect[0]);            
             } else if(SwadeItem.name.toLowerCase().includes("fly")) { 
@@ -217,7 +217,7 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
                 debug("playMeAnAnimation Shape Change");
                 await shape_change(target.token,item.animationEffect[0],item.sound[0],animationName,true);
             }
-        } else if(item.animationType == ANIMATIONTYPE.TEMPLATE) {
+        } else if(item.animationEffect[0].type == ANIMATIONTYPE.TEMPLATE) {
             debug("TEMPLATES: ",getNTemplate());
             if(getNTemplate()==0) {
                 debug("playMeAnAnimation onToken",item);
@@ -226,9 +226,9 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
                 debug("playMeAnAnimation onTemplate",item);
                 playOnTemplate(item.animationEffect[0],EFFECTSOUND, ROLLRESULT.HIT, animationName,target.token);
             }
-        } else if(item.animationType == ANIMATIONTYPE.RANGED) {
+        } else if(item.animationEffect[0].type == ANIMATIONTYPE.RANGED) {
             playRangedOrMeele(source,target.token,item.animationEffect[0],EFFECTSOUND,ROLLRESULT.HIT,animationName,true)
-        } else if(item.animationType == ANIMATIONTYPE.STREAM) {
+        } else if(item.animationEffect[0].type == ANIMATIONTYPE.STREAM) {
             await playStream(target.token, source, item.animationEffect[0],item.sound[0],animationName);
         } else {
             if(item.animationEffect[0].attachTo) {
