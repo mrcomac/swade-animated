@@ -1,7 +1,7 @@
 {
   "title": "SWADE Animated",
   "description": "Animation for SWADE",
-  "version": "0.0.3",
+  "version": "placeholder",
   "authors": [
     {
       "name": "Marcos",
@@ -23,9 +23,9 @@
     "scripts/init.js"
   ],
   "socket": true,
-  "url": "https://github.com/mrcomac/swade-animated",
-  "manifest": "https://github.com/mrcomac/swade-animated/releases/latest/download/module.json",
-  "download": "https://github.com/mrcomac/swade-animated/archive/refs/tags/0.0.3/swade-animated.zip",
+  "url": "placeholder",
+  "manifest": "placeholder",
+  "download": "placeholder",
   "id": "swade-animated",
   "relationships": {
     "requires": [
@@ -57,6 +57,6 @@
   },
   "compatibility": {
     "minimum": "10",
-    "verified": "11"
+    "verified": "11.306"
   }
 }

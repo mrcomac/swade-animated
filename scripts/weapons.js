@@ -32,6 +32,34 @@ export function initWeapons() {
                 
             ],
         },
+        { //Breath Weapon v1
+            name: game.i18n.localize("SAT.Weapons.Breath"),
+            category: "",
+            alternatives: [],
+            animationType: ANIMATIONTYPE.TEMPLATE,
+            animations: [
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.breath_weapons02.burst.cone.fire.orange.01", label: "Fire", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.breath_weapons02.burst.cone.arcana.dark_black.01", label: "Arcana Black (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.breath_weapons02.burst.cone.fire.green.01", label: "Acid Green (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.breath_weapons02.burst.cone.holy.yellow.01", label: "Holy Yellow (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.breath_weapons02.burst.cone.ice.01", label: "Ice (Patreon)", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                
+
+            ],
+            sounds: [ 
+                { label: "Fire (Dragon)", file: PATH.AUDIO + "/weapons/breath_dragon_fire.mp3", active: true, delay: 0, volume: 1.0,  duration: 5000 },
+                { label: "Ice (Dragon)", file: PATH.AUDIO + "/weapons/breath_dragon_ice.mp3", active: false, delay: 0, volume: 1.0,  duration: 2000 },
+                { label: "Ice (wind)", file: PATH.AUDIO + "/weapons/breath_wind_artic.mp3", active: false, delay: 0, volume: 1.0,  duration: 5000 },
+                { label: "Frost", file: PATH.AUDIO + "/weapons/breath_frost.ogg", active: false, delay: 0, volume: 1.0,  duration: 5000 },
+                { label: "Nightmare", file: PATH.AUDIO + "/weapons/breath_nightmare.ogg", active: false, delay: 0, volume: 1.0,  duration: 5000 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
+        },
         { //Dynamite v1
             name: game.i18n.localize("SAT.Weapons.Dynamite"),
             category: "Dynamite",
