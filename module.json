@@ -20,7 +20,7 @@
     }
   ],
   "esmodules": [
-    "dist/swade-animated.min.js"
+    "./scripts/init.js"
   ],
   "socket": true,
   "url": "placeholder",
