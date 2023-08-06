@@ -20,13 +20,16 @@
     }
   ],
   "esmodules": [
-    "scripts/init.js"
+    "dist/swade-animated.min.js"
   ],
   "socket": true,
   "url": "placeholder",
   "manifest": "placeholder",
   "download": "placeholder",
   "id": "swade-animated",
+  "protected": false,
+  "coreTranslation": false,
+  "library": false,
   "relationships": {
     "requires": [
       {
