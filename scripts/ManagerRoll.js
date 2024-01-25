@@ -120,7 +120,7 @@ function getMeleeResult(results) {
 function getSWADERollResult(_roll) {
     let roll = CopyObj(TheRoll);
     roll.rawValue = _roll._total;
-    if(_roll.terms[0].terms[0].includes("Fighting")) {
+    if(_roll.terms[0].options.flavor == "Fighting") {
         roll.type = ANIMATIONTYPE.MELEE;
     } else {
         roll.type = ANIMATIONTYPE.RANGED;
