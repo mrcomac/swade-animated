@@ -174,6 +174,56 @@ export function initPowers() {
             animationEffects: [],
             activeEffects: []
         },
+        { // Fury of the Petro Loa v1
+            name: game.i18n.localize("SAT.Power.FuryofthePetroLoa"),
+            animationType: ANIMATIONTYPE.TARGET,
+            animations: [
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.transmutation.complete.yellow", label: "Yellow", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.necromancy.complete.green", label: "Green", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.illusion.complete.purple", label: "Purple", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.evocation.complete.red", label: "Red", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.abjuration.complete.blue", label: "Blue", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+            ],
+            sounds: [
+                { label: "Default", file: PATH.AUDIO + "powers/novice/healing/HealingAura.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Holy", file: PATH.AUDIO + "powers/novice/healing/Spell_PR_Revamp_divine_star_cast_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 2000 },
+                { label: "Nature", file: PATH.AUDIO + "powers/novice/healing/Spell_DR_Druid_Nature_Cast_Heavy03.ogg", active: false, delay: 0, volume: 1.0,  duration: 3000 },
+                { label: "Shadow", file: PATH.AUDIO + "powers/novice/healing/SPELL_ShootTechGun_Impact_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 3000 }
+            ],
+            animationEffects: [],
+            activeEffects: []
+        },
+        { // Beast Friend v1
+            name: game.i18n.localize("SAT.Power.BeastFriend"),
+            animationType: ANIMATIONTYPE.TARGET,
+            animations: [
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.hunters_mark.pulse.01.green", label: "Green", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+            ],
+            sounds: [
+                { label: "Nature", file: PATH.AUDIO + "powers/novice/healing/Spell_DR_Druid_Nature_Cast_Heavy03.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 },
+            ],
+            animationEffects: [],
+            activeEffects: []
+        },
+        { // Aspect of the Rada Loa v1
+            name: game.i18n.localize("SAT.Power.AspectoftheRadaLoa"),
+            animationType: ANIMATIONTYPE.TARGET,
+            animations: [
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.transmutation.complete.yellow", label: "Yellow", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.necromancy.complete.green", label: "Green", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.illusion.complete.purple", label: "Purple", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.evocation.complete.red", label: "Red", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+                {type: ANIMATIONTYPE.TEMPLATE, file: "jb2a.magic_signs.rune.abjuration.complete.blue", label: "Blue", active: false, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  },
+            ],
+            sounds: [
+                { label: "Default", file: PATH.AUDIO + "powers/novice/healing/HealingAura.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
+                { label: "Holy", file: PATH.AUDIO + "powers/novice/healing/Spell_PR_Revamp_divine_star_cast_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 2000 },
+                { label: "Nature", file: PATH.AUDIO + "powers/novice/healing/Spell_DR_Druid_Nature_Cast_Heavy03.ogg", active: false, delay: 0, volume: 1.0,  duration: 3000 },
+                { label: "Shadow", file: PATH.AUDIO + "powers/novice/healing/SPELL_ShootTechGun_Impact_01.ogg", active: false, delay: 0, volume: 1.0,  duration: 3000 }
+            ],
+            animationEffects: [],
+            activeEffects: []
+        },
         { // Deflection v1
             name: game.i18n.localize("SAT.Power.Deflection"),
             animationType: ANIMATIONTYPE.TARGET,
