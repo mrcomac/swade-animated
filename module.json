@@ -14,8 +14,9 @@
   "bugs": "https://github.com/mrcomac/swade-animated/issues",
   "media": [
     {
-      "type": "cover",
-      "url": "https://savageuniverse.com/assets/img/SW_LOGO_FP.webp"
+      "type": "setup",
+      "url": "https://savageuniverse.com/assets/img/SW_LOGO_FP.webp",
+      "thumbnail": "https://savageuniverse.com/assets/img/SW_LOGO_FP.webp"
     }
   ],
   "languages": [
