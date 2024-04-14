@@ -12,13 +12,47 @@ export let WeaponList = [];
  */
 export function initWeapons() {
     WeaponList = [
+        { //Default Melee v1
+            name: game.i18n.localize("SAT.Trait.Melee"),
+            category: "",
+            alternatives: [],
+            animationType: ANIMATIONTYPE.MELEE,
+            animations: [
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_generic.slash.01.orange.0", label: "Default", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
+
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/club.mp3", active: true, delay: 0, volume: 1.0,  duration: 600 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
+        },
+        { //Default Ranged v1
+            name: game.i18n.localize("SAT.Trait.Ranged"),
+            category: "",
+            animationType: ANIMATIONTYPE.RANGED,
+            animations: [
+                {type: ANIMATIONTYPE.RANGED, file: "jb2a.template_line_piercing.generic.01.orange", label: "Default", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {} , startTime: 0 },
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/Projectile_Arrow_Impact01.ogg", active: true, delay: 500, volume: 1.0, duration: 500 }
+            ],
+            animationEffects: [
+            ],
+            activeEffects: [
+            ],
+        },
         { //Knife v1
             name: game.i18n.localize("SAT.Weapons.Knife"),
             category: "",
             alternatives: ['Bayonet'],
             animationType: ANIMATIONTYPE.MELEE,
             animations: [
-                {type: ANIMATIONTYPE.MELEE, file: "jb2a.dagger.melee.fire.dark_purple", label: "Dark Purple", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.dagger.melee.02.white", label: "Default", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 },
                 {type: ANIMATIONTYPE.MELEE, file: "jb2a.dagger.melee.fire.blue",        label: "Blue", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0 }
 
             ],
@@ -431,6 +465,48 @@ export function initWeapons() {
             sounds: [ 
                 { label: "Shotgun", file: PATH.AUDIO + "/weapons/fire/shotgun.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 },
                 { label: "Carbine", file: PATH.AUDIO + "/weapons/fire/carbine.ogg", active: false, delay: 0, volume: 1.0,  duration: 1000 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
+        },
+        { // Scythe v1
+            name: game.i18n.localize("SAT.Weapons.Scythe"),
+            category: "",
+            alternatives: [],
+            animationType: ANIMATIONTYPE.MELEE,
+            animations: [
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.05.scythe.01.0", label: "Option 1", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.05.scythe.01.1", label: "Option 2", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.05.scythe.01.2", label: "Option 3", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.05.scythe.01.3", label: "Option 4", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  }
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
+            ],
+            animationEffects: [
+                
+            ],
+            activeEffects: [
+                
+            ],
+        },
+        { // Scythe v1
+            name: game.i18n.localize("SAT.Weapons.Sickle"),
+            category: "",
+            alternatives: [],
+            animationType: ANIMATIONTYPE.MELEE,
+            animations: [
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.01.sickle.01.0", label: "Option 1", active: true, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.05.sickle.01.1", label: "Option 2", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.05.sickle.01.2", label: "Option 3", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  },
+                {type: ANIMATIONTYPE.MELEE, file: "jb2a.melee_attack.05.sickle.01.3", label: "Option 4", active: false, size: 1, persist: false, filter: "ColorMatrix", filterData: { }, startTime: 0  }
+            ],
+            sounds: [ 
+                { label: "Default", file: PATH.AUDIO + "/weapons/sword01.ogg", active: true, delay: 1200, volume: 1.0, duration: 1000 }
             ],
             animationEffects: [
                 

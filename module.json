@@ -11,6 +11,13 @@
   "styles": [
     "scripts/configuration/tooltip.css"
   ],
+  "bugs": "https://github.com/mrcomac/swade-animated/issues",
+  "media": [
+    {
+      "type": "cover",
+      "url": "https://savageuniverse.com/assets/img/SW_LOGO_FP.webp"
+    }
+  ],
   "languages": [
     {
       "lang": "en",
@@ -48,6 +55,12 @@
         "manifest": "https://raw.githubusercontent.com/Feu-Secret/Tokenmagic/master/tokenmagic/module.json",
         "compatibility": {},
         "type": "module"
+      },
+      {
+        "id": "lib-wrapper",
+        "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+        "compatibility": {},
+        "type": "module"
       }
     ],
     "systems": [
@@ -60,6 +73,7 @@
   },
   "compatibility": {
     "minimum": "10",
-    "verified": "11.306"
+    "verified": "11.315",
+    "maximum": ""
   }
 }

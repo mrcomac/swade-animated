@@ -121,7 +121,7 @@ export async function playMeAnAnimation(SwadeItem,source,rolls) {
             applyEffect(itemData,rolls.targets[j],SwadeItem,animationName,source);
     }
     if(itemData.animationEffect.length > 0) {
-        if(itemData.animation[0].type == ANIMATIONTYPE.TEMPLATE) {
+        if(itemData.animationEffect[0]?.type == ANIMATIONTYPE.TEMPLATE) {
             setNTemplate(0);
         }
     }
@@ -202,7 +202,7 @@ export async function applyEffect(item,target,SwadeItem,animationName,source) {
 
     if(item.animationEffect.length > 0) {
         let EFFECTSOUND = NOSOUND;
-        if(item.animation.length  == 0) {
+        if(item.animation.length  == 0 || item.animation[0]?.type == ANIMATIONTYPE.NONE) {
             EFFECTSOUND = item.sound[0];
         }
         if(item.animationEffect[0].type == ANIMATIONTYPE.SPECIAL) {

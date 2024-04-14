@@ -4,6 +4,7 @@ export const MODULE = {
 };
 
 export const ANIMATIONTYPE = {
+    NONE: 0,
     MELEE:  1,
     RANGED: 2,
     TARGET: 3,

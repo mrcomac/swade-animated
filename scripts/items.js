@@ -54,7 +54,7 @@ const isExactMatch = function(str, match) {
 
 export function getItem(item) {
     debug("GETITEM");
-    debug(item);
+    console.log(item);
     let itemData ={};
     if(item.type == "consumable") {
         debug("Consumable");
@@ -109,6 +109,20 @@ export function getItem(item) {
                     }
                 }   
             }
+        }
+    }
+    // no object found, return the default
+    if(Object.keys(itemData).length === 0) {
+        if(item.type == "weapon") {
+            if(item.system.actions.trait == game.i18n.localize("SAT.Trait.Melee")) {
+                itemData = WeaponList[0]
+            } else {
+                itemData = WeaponList[1]
+            }
+        } else if(item.type == "power") {
+            itemData = PowerList[0]
+        } else if(item.type == "consumable") {
+            itemData = ConsumableList[0]
         }
     }
     debug("OBJECT ITEM", itemData)

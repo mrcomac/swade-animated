@@ -23,6 +23,19 @@ Sound/Silence [in progress]
 
 export function initPowers() {
     PowerList = [
+        { // Default v1
+            name: game.i18n.localize("SAT.Power.Default"),
+            animationType: ANIMATIONTYPE.TARGET,
+            animations: [
+            ],
+            sounds: [
+                { label: "Default", file: PATH.AUDIO + "powers/novice/healing/HealingAura.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 }
+            ],
+            animationEffects: [
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.cast_generic.01.yellow.0", label: "Default", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  }
+            ],
+            activeEffects: []
+        },
         {  //Bolt v1
             name: game.i18n.localize("SAT.Power.Bolt"),
             animationType: ANIMATIONTYPE.RANGED,

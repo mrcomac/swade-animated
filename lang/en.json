@@ -13,6 +13,7 @@
   "SAT.Power.FuryofthePetroLoa": "Fury of the Petro Loa",
   "SAT.Power.AspectoftheRadaLoa": "Aspect of the Rada Loa",
   "SAT.Power.BeastFriend": "Beast Friend",
+  "SAT.Power.Default": "Default",
   
   
   "SAT.Consumable.Damage": "Damage",
@@ -52,6 +53,7 @@
   "SAT.Weapons.Dynamite": "Dynamite",
   "SAT.Weapons.Club": "Club",
   "SAT.Weapons.Breath": "Breath Weapon",
+  "SAT.Weapons.Scythe": "Scythe",
   
   "SAT.Effect.ArcaneProtectionNormal": "Arcane Protection (Normal)",
   "SAT.Effect.ArcaneProtectionRaise": "Arcane Protection (Raise)",
@@ -71,5 +73,8 @@
 
   "SAT.Settings.Debug.Name": "Debug Mode",
   "SAT.Settings.Debug.Hint": "Enable debug mode",
-  "SAT.Settings.Debug.label": "Debug"
+  "SAT.Settings.Debug.label": "Debug",
+
+  "SAT.Trait.Melee": "Fighting",
+  "SAT.Trait.Ranged": "Ranged"
 }

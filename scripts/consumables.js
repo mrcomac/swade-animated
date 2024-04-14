@@ -9,6 +9,18 @@ export let ConsumableList = [];
 
 export function initConsumables() {
     ConsumableList = [
+        { // Default v1
+            name: game.i18n.localize("SAT.Power.Default"),
+            animations: [
+                {type: ANIMATIONTYPE.TARGET, file: "jb2a.cast_generic.water.02.blue.0", label: "Default", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  }
+            ],
+            sounds: [
+                { label: "Default", file: PATH.AUDIO + "consumables/heavy_swallowwav-14682.mp3", active: true, delay: 0, volume: 1.0,  duration: 1000 }
+            ],
+            animationEffects: [
+            ],
+            activeEffects: []
+        },
         { // Protection v1
             name: game.i18n.localize("SAT.Power.Protection"),
             animations: [
@@ -43,7 +55,7 @@ export function initConsumables() {
             name: game.i18n.localize("SAT.Power.Healing"),
             animations: [],
             sounds: [
-                { label: "Default", file: PATH.AUDIO + "powers/novice/healing/Spell_SH_Resto_Revamp_HealingRain_Loop.ogg", active: true, delay: 0, volume: 1.0,  duration: 3000 }
+                { label: "Default", file: PATH.AUDIO + "consumables/healing.ogg", active: true, delay: 0, volume: 1.0,  duration: 1000 }
             ],
             animationEffects: [
                 {type: ANIMATIONTYPE.TARGET, file: "jb2a.healing_generic.burst.greenorange", label: "Green/Orange", active: true, attachTo: true, size: 1, persist: false, filter: "ColorMatrix", filterData: {}, startTime: 0  }
