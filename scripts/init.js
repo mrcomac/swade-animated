@@ -63,12 +63,21 @@ Hooks.on('swadeAction', (swadeActor, swadeItem, actionType, roll, id) => {
     if(actionType != 'formula') return;
     debug("Hooks on swadeAction",actionType);
     debug(swadeItem);
-    const token = swadeActor.parent?.token || canvas.tokens.placeables.find(token => token.actor?.items?.get(swadeItem.id))
+    let selectedTokens = canvas.tokens.controlled;
+    let token = {};
+    if (selectedTokens.length > 1) {
+        token = selectedTokens.find(token => token.actor?.items?.get(swadeItem.id));
+    } else if (selectedTokens.length < 1 ){
+        ui.notifications.info('No selected tokens found');
+    } else {
+        token = selectedTokens[0];
+    }
+    selectedTokens.length
     let targets =Array.from(game.user.targets);
     let rolls = getRollResult(roll, targets, MODULE.SWADE);
     debug("Final Roll Result",rolls);
-    
-    playMeAnAnimation(swadeItem,token,rolls);
+    if(Object.keys(token).length !== 0)
+        playMeAnAnimation(swadeItem,token,rolls);
     
 });
 
